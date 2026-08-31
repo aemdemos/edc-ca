@@ -32,7 +32,7 @@ header nav[aria-expanded='true'] { /* @boilerplate */
   min-height: 100dvh; /* @boilerplate */
 }
 
-@media (width >= 900px) { /* @boilerplate */
+@media (width >= 992px) { /* @boilerplate */
   header nav { /* @boilerplate */
     display: flex; /* @boilerplate */
     justify-content: space-between; /* @boilerplate */
@@ -130,7 +130,7 @@ header nav[aria-expanded='true'] .nav-hamburger-icon::after { /* @boilerplate */
   transform: rotate(-45deg); /* @boilerplate */
 }
 
-@media (width >= 900px) { /* @boilerplate */
+@media (width >= 992px) { /* @boilerplate */
   header nav .nav-hamburger { /* @boilerplate */
     display: none; /* @boilerplate */
     visibility: hidden; /* @boilerplate */
@@ -183,7 +183,7 @@ header nav .nav-sections ul > li > ul > li { /* @boilerplate */
   font-weight: 400; /* @boilerplate */
 }
 
-@media (width >= 900px) { /* @boilerplate */
+@media (width >= 992px) { /* @boilerplate */
   header nav .nav-sections { /* @boilerplate */
     display: block; /* @boilerplate */
     visibility: visible; /* @boilerplate */
@@ -315,7 +315,7 @@ header .breadcrumbs ol li[aria-current] { /* @boilerplate */
   color: var(--text-color); /* @boilerplate */
 }
 
-@media (width >= 900px) { /* @boilerplate */
+@media (width >= 992px) { /* @boilerplate */
   header .breadcrumbs { /* @boilerplate */
     display: block; /* @boilerplate */
     max-width: var(--header-nav-max-width-desktop); /* @boilerplate */

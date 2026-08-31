@@ -36,7 +36,7 @@ Define your brand's design tokens in `styles/styles.css` under `:root`:
 }
 
 /* Scale up headings on desktop */
-@media (width >= 900px) {
+@media (width >= 992px) {
   :root {
     --heading-font-size-xxl: 48px;
     --heading-font-size-xl: 36px;
@@ -59,7 +59,7 @@ Define fonts in `styles/fonts.css` (loaded conditionally for performance):
 }
 ```
 
-Fonts are loaded conditionally by `scripts.js` — only on desktop (>= 900px) or when cached in `sessionStorage`. This prevents font-loading from blocking LCP on mobile.
+Fonts are loaded conditionally by `scripts.js` — only on desktop (>= 992px) or when cached in `sessionStorage`. This prevents font-loading from blocking LCP on mobile.
 
 ### 3.3 Buttons
 

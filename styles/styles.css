@@ -463,7 +463,7 @@ main > .section:first-of-type { /* @boilerplate */
   margin-top: 0; /* @boilerplate */
 }
 
-@media (width >= 900px) { /* @boilerplate */
+@media (width >= 992px) { /* @boilerplate */
   :root { /* @boilerplate */
     /* body sizes increased by 2px */
     --body-font-size-xl: 24px; /* @boilerplate */

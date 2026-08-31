@@ -8,13 +8,13 @@
   overflow-x: auto; /* @boilerplate */
 }
 
-@media (width >= 600px) { /* @boilerplate */
+@media (width >= 576px) { /* @boilerplate */
   .tabs .tabs-list { /* @boilerplate */
     font-size: var(--body-font-size-s); /* @boilerplate */
   }
 }
 
-@media (width >= 900px) { /* @boilerplate */
+@media (width >= 992px) { /* @boilerplate */
   .tabs .tabs-list { /* @boilerplate */
     font-size: var(--body-font-size-m); /* @boilerplate */
   }

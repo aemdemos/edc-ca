@@ -24,7 +24,7 @@
   margin-top: var(--form-gap-tight); /* @boilerplate */
 }
 
-@media (width >= 600px) { /* @boilerplate */
+@media (width >= 576px) { /* @boilerplate */
   .form fieldset { /* @boilerplate */
     grid-template-columns: repeat(2, auto); /* @boilerplate  layout strategy: 2-up fields at tablet */
     gap: var(--form-gap-tight) var(--form-field-gap); /* @boilerplate */
@@ -37,7 +37,7 @@
   }
 }
 
-@media (width >= 900px) { /* @boilerplate */
+@media (width >= 992px) { /* @boilerplate */
   .form fieldset { /* @boilerplate */
     grid-template-columns: repeat(3, auto); /* @boilerplate  layout strategy: 3-up fields at desktop */
   }
@@ -92,7 +92,7 @@
   width: max-content; /* @boilerplate */
 }
 
-@media (width >= 600px) { /* @boilerplate */
+@media (width >= 576px) { /* @boilerplate */
   .form input,
   .form select,
   .form textarea { /* @boilerplate */
@@ -104,7 +104,7 @@
   }
 }
 
-@media (width >= 900px) { /* @boilerplate */
+@media (width >= 992px) { /* @boilerplate */
   .form input,
   .form select,
   .form textarea { /* @boilerplate */

@@ -29,7 +29,7 @@ body.modal-open { /* @boilerplate */
   margin-top: var(--modal-content-margin-top); /* @boilerplate */
 }
 
-@media (width >= 900px) { /* @boilerplate */
+@media (width >= 992px) { /* @boilerplate */
   .modal dialog { /* @boilerplate */
     width: var(--modal-width-desktop); /* @boilerplate */
   }

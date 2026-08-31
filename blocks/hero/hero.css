@@ -32,7 +32,7 @@
   height: 100%; /* @boilerplate */
 }
 
-@media (width >= 900px) { /* @boilerplate */
+@media (width >= 992px) { /* @boilerplate */
   .hero { /* @boilerplate */
     padding: var(--hero-padding-desktop); /* @boilerplate */
   }
