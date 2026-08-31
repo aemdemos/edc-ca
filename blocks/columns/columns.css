@@ -17,7 +17,7 @@
   display: block; /* @boilerplate */
 }
 
-@media (width >= 900px) { /* @boilerplate */
+@media (width >= 992px) { /* @boilerplate */
   .columns > div { /* @boilerplate */
     align-items: center; /* @boilerplate */
     flex-direction: unset; /* @boilerplate */

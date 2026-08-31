@@ -194,9 +194,9 @@ Typography:
 --heading-font-weight: 600;
 ```
 
-Type scale (mobile base; reduced at >= 900px):
+Type scale (mobile base; reduced at >= 992px):
 
-| Token | Mobile | Desktop (>= 900px) |
+| Token | Mobile | Desktop (>= 992px) |
 |-------|--------|--------------------|
 | `--body-font-size-m` | 22px | 18px |
 | `--body-font-size-s` | 19px | 16px |
@@ -237,13 +237,14 @@ Fallback `@font-face` rules in `styles.css` (`roboto-fallback`, `roboto-condense
 
 ### Breakpoints
 
-Mobile-first, `min-width` only. The primary breakpoint in this project is **900px** (desktop).
+Mobile-first, `min-width` only. The primary breakpoint in this project is **992px** (desktop).
 
 | Name | Min-Width | Usage |
 |------|-----------|-------|
 | Mobile | 0 (default) | Base styles |
-| Tablet | 600px | `@media (width >= 600px)` |
-| Desktop | 900px | `@media (width >= 900px)` — type-scale shift, section/nav layout |
+| Small tablet | 576px | `@media (width >= 576px)` |
+| Tablet | 768px | `@media (width >= 768px)` (available; adopt only where a block needs a distinct tablet tier) |
+| Desktop | 992px | `@media (width >= 992px)` — type-scale shift, section/nav layout |
 | Wide | 1200px | `--max-width-site` content cap |
 
 ### Section Styles
@@ -270,7 +271,7 @@ Twenty blocks ship with the project. Many call `getBlockId()` to assign unique i
 | `footer` | Site footer | — | Loads footer fragment from `footer` metadata path (default `/footer`) via `loadFragment` |
 | `form` | Renders a form from a JSON definition | — | Fetches form JSON, builds fields via `form-fields.js`, groups `fieldset`s, sets `data-action` submit href |
 | `fragment` | Inline another document as content | — | `loadFragment(path)` fetches `.plain.html`, sanitizes via DOMPurify, copies section classes onto host; also drives auto-blocking of `/fragments/` links |
-| `header` | Site navigation / header | `nav-drop` (dropdown sections), `nav-hamburger` (mobile) | Loads nav fragment from `nav` metadata; desktop/mobile behavior via `matchMedia(900px)`; ESC + focus-out close handling |
+| `header` | Site navigation / header | `nav-drop` (dropdown sections), `nav-hamburger` (mobile) | Loads nav fragment from `nav` metadata; desktop/mobile behavior via `matchMedia(992px)`; ESC + focus-out close handling |
 | `hero` | Full-bleed hero with background image | CSS-only block | No JS (`hero.js` is empty); styled via `hero.css` + `hero-tokens.css`; picture positioned behind heading |
 | `modal` | Modal dialog | — | No `decorate`; links to `/modals/` auto-open via `autolinkModals` in `scripts.js`; exports `createModal`/`openModal`; uses native `<dialog>` |
 | `quote` | Blockquote with attribution | — | `.quote-quotation` + `.quote-attribution`; wraps `<em>` attribution in `<cite>` (DOMPurify-sanitized); ARIA region |

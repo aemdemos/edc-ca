@@ -6,7 +6,7 @@
   max-width: var(--quote-max-width); /* @boilerplate */
 }
 
-@media (width >= 900px) { /* @boilerplate */
+@media (width >= 992px) { /* @boilerplate */
   .quote blockquote { /* @boilerplate */
     padding: var(--quote-padding-desktop); /* @boilerplate */
   }

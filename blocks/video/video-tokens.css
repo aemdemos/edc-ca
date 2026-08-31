@@ -1,6 +1,6 @@
 /* video design tokens */
 :root { /* @boilerplate */
-  --video-max-width: 900px; /* @boilerplate */
+  --video-max-width: 992px; /* @boilerplate */
   --video-margin: var(--spacing-m) auto; /* @boilerplate */
   --video-aspect-ratio: 16 / 9; /* @boilerplate */
   --video-placeholder-play-size: 44px; /* @boilerplate */

@@ -441,7 +441,7 @@ async function loadEager(doc) {
   }
 
   /* if desktop (proxy for fast connection) or fonts already loaded, load fonts.css */
-  if (window.matchMedia('(min-width: 900px)').matches || sessionStorage.getItem('fonts-loaded')) {
+  if (window.matchMedia('(min-width: 992px)').matches || sessionStorage.getItem('fonts-loaded')) {
     loadFonts();
   }
 }

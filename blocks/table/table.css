@@ -12,13 +12,13 @@
   font-size: var(--body-font-size-xs); /* @boilerplate */
 }
 
-@media (width >= 600px) { /* @boilerplate */
+@media (width >= 576px) { /* @boilerplate */
   .table.block table { /* @boilerplate */
     font-size: var(--body-font-size-s); /* @boilerplate */
   }
 }
 
-@media (width >= 900px) { /* @boilerplate */
+@media (width >= 992px) { /* @boilerplate */
   .table.block table { /* @boilerplate */
     font-size: var(--body-font-size-m); /* @boilerplate */
   }

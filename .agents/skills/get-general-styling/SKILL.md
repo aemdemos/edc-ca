@@ -1483,26 +1483,28 @@ The **desktop breakpoint** is the single most important one — it determines wh
 
 #### Heuristic: Mapping to EDS breakpoints
 
-EDS uses two main breakpoints in `styles/styles.css`:
-- **900px** — the primary mobile/desktop switch (the `@media (width >= 900px)` block)
-- This is used for `:root` variable overrides and section layout
+EDS uses four breakpoints in `styles/styles.css` and block CSS:
+- **576px** — small-mobile → large-mobile/small-tablet switch (`@media (width >= 576px)`)
+- **768px** — tablet switch (`@media (width >= 768px)`)
+- **992px** — the primary mobile/desktop switch (the `@media (width >= 992px)` block); this is used for `:root` variable overrides and section/nav layout
+- **1200px** — wide breakpoint (`--max-width-site` content cap; rarely used for layout rules directly)
 
-Decision logic for `edsMapping.desktopBreakpoint` (the value to use in all `@media` rules in `styles/styles.css` and block CSS):
+Decision logic for `edsMapping.desktopBreakpoint` (the value to use for the primary mobile/desktop `@media` rules in `styles/styles.css` and block CSS):
 
-1. **If the site's primary desktop breakpoint is 768px** → set `desktopBreakpoint` to `900px`. The 132px difference is negligible — EDS's 900px captures the same intent.
-2. **If the site's primary desktop breakpoint is 900px–1024px** → set `desktopBreakpoint` to the site's value. It's close enough to EDS default to replace it directly.
-3. **If the site's primary desktop breakpoint is >1024px** → this is probably a "wide" breakpoint, not desktop. Look for a lower breakpoint (tablet) that serves as the real mobile/desktop split.
-4. **If the site's primary desktop breakpoint is <768px** (e.g., 600px) → set `desktopBreakpoint` to `900px` and note the discrepancy.
+1. **If the site's primary desktop breakpoint is 768px–1024px** → set `desktopBreakpoint` to `992px`, EDS's native desktop tier.
+2. **If the site's primary desktop breakpoint is >1024px** → this is probably a "wide" breakpoint, not desktop. Look for a lower breakpoint (tablet) that serves as the real mobile/desktop split.
+3. **If the site's primary desktop breakpoint is <768px** (e.g., 600px) → set `desktopBreakpoint` to `992px` and note the discrepancy.
+4. **If the site also has a distinct tablet breakpoint** separate from its desktop breakpoint (typically in the 576px–767px range) → map it to EDS's native `768px` tier and record it as `edsMapping.tabletBreakpoint`, rather than collapsing it into `desktopBreakpoint`.
 
 **IMPORTANT:** `desktopBreakpoint` is the **CSS-ready value** — the exact pixel value to use in `@media (width >= Xpx)` throughout the project. It is NOT the raw site value. The raw site value is stored separately in `siteRawDesktopBreakpoint` for reference only. Every `@media` rule in `styles/styles.css` and in block CSS files MUST use `desktopBreakpoint`, never `siteRawDesktopBreakpoint`.
 
 | Breakpoint range | Typical purpose | EDS mapping |
 |-----------------|----------------|-------------|
-| 320–480px | Small → large mobile | No EDS equivalent needed |
-| 481–767px | Large mobile → tablet | No EDS equivalent needed |
-| 768–1024px | Tablet → desktop | → `desktopBreakpoint` (the CSS-ready value used in all `@media` rules) |
-| 1025–1279px | Desktop → wide | → secondary breakpoint (optional) |
-| 1280px+ | Wide → ultra-wide | → for content max-width only |
+| 320–575px | Small → large mobile | No EDS equivalent needed |
+| 576–767px | Large mobile → tablet | → `576px` tier (optional secondary breakpoint) |
+| 768–991px | Tablet → desktop | → `768px` tier (`edsMapping.tabletBreakpoint`, optional) |
+| 992–1199px | Desktop | → `desktopBreakpoint` (the CSS-ready value used in the primary `@media` rules) |
+| 1200px+ | Wide → ultra-wide | → `1200px`, for content max-width / wide layout only |
 
 ### 6.6 Write output
 
@@ -3159,7 +3161,7 @@ Save to `migration-work/design-system-extracted.json`:
   "sourceUrl": "{source URL}",
   "sourceDomain": "{domain, e.g. www.americanhome.co.jp}",
   "timestamp": "{ISO timestamp}",
-  "desktopBreakpoint": "{the CSS-ready breakpoint value from breakpoints.json edsMapping.desktopBreakpoint, e.g. '900px'}",
+  "desktopBreakpoint": "{the CSS-ready breakpoint value from breakpoints.json edsMapping.desktopBreakpoint, e.g. '992px'}",
   "summary": {
     "cssVariablesDefined": 28,
     "fontsIdentified": ["Noto Sans JP"],

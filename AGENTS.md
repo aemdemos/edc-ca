@@ -55,7 +55,7 @@ When facing trade-offs, follow this order: *Intuitive* (author-friendly) > *Simp
   - PageSpeed must score 100 (see https://www.aem.live/developer/keeping-it-100)
 - **Responsiveness:** 
   - Default styles target mobile (no `max-width` queries)
-  - Define breakpoints at 600/900/1200px
+  - Define breakpoints at 576/768/992/1200px
 - **Localization:** 
   - No hard-coded user-facing text (e.g. labels, error messages)
   - Make all strings configurable or data-driven
@@ -151,8 +151,8 @@ Key principles:
   font-size: var(--heading-font-size-m);
 }
 
-/* Tablet+ */
-@media (width >= 600px) {
+/* Small-tablet+ */
+@media (width >= 576px) {
   .my-block {
     padding: 2rem;
     background-color: var(--color-light);
@@ -160,7 +160,7 @@ Key principles:
 }
 
 /* Desktop+ */
-@media (width >= 900px) {
+@media (width >= 992px) {
   .my-block {
     flex-direction: row;
     padding: 4rem;
@@ -172,7 +172,7 @@ Key principles:
 CSS rules:
 - **All selectors scoped to block**: `.my-block .item`, never just `.item`
 - **Mobile-first**: Base styles for mobile, `min-width >=`("greater than") media queries for larger. Never use `<=` ("less than"), instead prefer to override/unset earlier CSS rules.
-- **Breakpoints**: 600px (tablet), 900px (desktop), 1200px (wide) — use only what's needed. Consolidate all breakpoint-specific rules into 1 media-query per CSS file, do not create individual media-queries per CSS rule.
+- **Breakpoints**: 576px (small tablet), 768px (tablet), 992px (desktop), 1200px (wide) — use only what's needed. Consolidate all breakpoint-specific rules into 1 media-query per CSS file, do not create individual media-queries per CSS rule.
 - **CSS custom properties**: Use `var(--token)` for all colors, fonts, sizes
 - **No `-container` / `-wrapper`** class names — those conflict with section wrappers
 - **No Tailwind or frameworks** — vanilla CSS only

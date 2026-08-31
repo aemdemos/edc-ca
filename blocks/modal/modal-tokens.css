@@ -3,7 +3,7 @@
   --modal-backdrop-background: rgb(19 19 19 / 75%); /* @boilerplate */
   --modal-width-mobile: calc(100vw - 48px); /* @boilerplate */
   --modal-width-desktop: calc(100vw - 64px); /* @boilerplate */
-  --modal-max-width: 900px; /* @boilerplate */
+  --modal-max-width: 992px; /* @boilerplate */
   --modal-content-padding: var(--spacing-m); /* @boilerplate */
   --modal-content-padding-desktop: var(--spacing-l); /* @boilerplate */
   --modal-content-margin-top: 44px; /* @boilerplate */
