@@ -3,7 +3,7 @@ import {
   collectTextNodes, createArtDirectionPicture, DEFAULT_BLOCK_SINGLE_PICTURE_BREAKPOINTS,
 } from '../utils.js';
 
-const MAX_SECTION_BACKGROUND_IMAGES = 5;
+const MAX_SECTION_BACKGROUND_IMAGES = 3;
 
 /* === SECTION BACKGROUND DECORATION === */
 
@@ -61,7 +61,7 @@ function resolveSafeBackgroundImageUrl(url) {
 /**
  * Sets inline background-color and optionally prepends a decorative .bg-image layer.
  * Keys match section model fields and {@link readBlockConfig}: `background-color`,
- * `background-image` … `background-image-5` (art-direction renditions — see
+ * `background-image` … `background-image-3` (art-direction renditions — see
  * /docs/art-direction-images.md).
  * @param {HTMLElement} section
  * @param {Record<string, unknown>} meta
@@ -76,8 +76,6 @@ export function applySectionBackgroundDecorations(section, meta = {}) {
     metaStringValue(meta['background-image']).trim(),
     metaStringValue(meta['background-image-2']).trim(),
     metaStringValue(meta['background-image-3']).trim(),
-    metaStringValue(meta['background-image-4']).trim(),
-    metaStringValue(meta['background-image-5']).trim(),
   ]
     .slice(0, MAX_SECTION_BACKGROUND_IMAGES)
     .map(resolveSafeBackgroundImageUrl)

@@ -153,10 +153,10 @@ export function getVimeoEmbedHtml(url, autoplay = false, background = false) {
 
 
 /* -------------------------------------------------------------------------- */
-/* Responsive picture: up to 5 images per cell (art-direction <picture>) */
+/* Responsive picture: up to 3 images per cell (art-direction <picture>) */
 /* -------------------------------------------------------------------------- */
 
-const MAX_BLOCK_CELL_IMAGES = 5;
+const MAX_BLOCK_CELL_IMAGES = 3;
 
 /** Default breakpoints for single-image cells (same defaults as `createOptimizedPicture` in aem.js). */
 export const DEFAULT_BLOCK_SINGLE_PICTURE_BREAKPOINTS = [
@@ -193,23 +193,16 @@ function unwrapForcedParagraph(cell) {
 }
 
 /**
- * Art-direction `media` + CDN `width` for source index 1..4 (whitelist).
+ * Art-direction `media` + CDN `width` for source index 1 (tablet) or 2 (desktop).
+ * Mobile stays on the fallback `<img>` all the way up to 768px — there's no
+ * separate large-phone tier.
  * @param {number} imageIndex
  * @returns {{ media: string, width: string }}
  */
 function getArtDirectionSourceMeta(imageIndex) {
-  switch (imageIndex) {
-    case 1:
-      return { media: '(min-width: 576px)', width: '768' };
-    case 2:
-      return { media: '(min-width: 768px)', width: '992' };
-    case 3:
-      return { media: '(min-width: 992px)', width: '1200' };
-    case 4:
-      return { media: '(min-width: 1200px)', width: '2000' };
-    default:
-      return { media: '(min-width: 576px)', width: '750' };
-  }
+  return imageIndex === 1
+    ? { media: '(min-width: 768px)', width: '992' }
+    : { media: '(min-width: 992px)', width: '2000' };
 }
 
 /**
@@ -252,7 +245,7 @@ function isImageOnlyNode(node) {
 }
 
 /**
- * Walks a block image cell in document order; collects up to five `{ src, alt, link }` entries.
+ * Walks a block image cell in document order; collects up to three `{ src, alt, link }` entries.
  * `link` (the wrapping `<a>`, if any) is only captured for the first entry — links wrapping
  * any other picture/img are ignored.
  * @param {HTMLElement} cell
@@ -289,7 +282,7 @@ export function collectBlockCellImageSources(cell) {
  * Each breakpoint is already a distinct DA-authored rendition, so — unlike
  * `createOptimizedPicture` — no webp alternate is generated per breakpoint; only the
  * originally authored format is used, one &lt;source&gt; per breakpoint.
- * @param {{ src: string, alt: string }[]} sources 2–5 entries, authored largest (desktop)
+ * @param {{ src: string, alt: string }[]} sources 2–3 entries, authored largest (desktop)
  * first through smallest (mobile) last — the last entry becomes the fallback &lt;img&gt;.
  * @param {boolean} eager loading on the fallback &lt;img&gt;
  * @returns {HTMLPictureElement}
@@ -345,10 +338,10 @@ export function createArtDirectionPicture(sources, eager) {
 /**
  * Builds a fragment for a block image cell, preserving non-image content in place. Each
  * contiguous run of images (whitespace between them is fine) becomes one picture —
- * `createOptimizedPicture` (one image) or art-direction (2–5); other content passes through.
+ * `createOptimizedPicture` (one image) or art-direction (2–3); other content passes through.
  * Also undoes a `wrapTextNodes` forced wrap (see `unwrapForcedParagraph`) so a leading
  * `<blockquote>` or similar doesn't hide later image runs one level too deep.
- * For a run of 2–5 images, authors order them largest (desktop) first through smallest
+ * For a run of 2–3 images, authors order them largest (desktop) first through smallest
  * (mobile) last — see `createArtDirectionPicture`.
  * @param {HTMLElement} cell
  * @param {BuildPictureCellOptions} [options]
