@@ -1,4 +1,5 @@
 import { moveInstrumentation, getBlockId } from '../../scripts/scripts.js';
+import { buildPictureContentFromImageCell } from '../../scripts/utils.js';
 
 /**
  * @param {Element} block
@@ -30,6 +31,18 @@ function ensureTablistClickDelegation(block, tablist) {
     });
     tabpanel.setAttribute('aria-hidden', false);
     button.setAttribute('aria-selected', true);
+  });
+}
+
+/**
+ * Consolidates any image cell(s) in a tab panel row into a single &lt;picture&gt;
+ * (art-direction if 2-5 images are authored) — see /docs/art-direction-images.md.
+ * @param {Element} row
+ */
+function consolidatePanelImages(row) {
+  [...row.children].forEach((cell) => {
+    if (!cell.querySelector('picture')) return;
+    cell.replaceChildren(buildPictureContentFromImageCell(cell));
   });
 }
 
@@ -129,6 +142,8 @@ export function resyncTabsBlock(block) {
       button.setAttribute('aria-controls', id);
       button.setAttribute('aria-selected', 'false');
     }
+
+    consolidatePanelImages(row);
   });
 
   let activeIdx = 0;
