@@ -1,5 +1,4 @@
 <!-- Please always provide the [GitHub issue(s)](../issues) your PR is for, as well as test URLs where your change can be observed (before and after): -->
-<!-- Feel free to delete options that are not relevant to your PR. -->
 
 ## Issue
 
@@ -18,6 +17,8 @@ Fixes #IssueID
 **Removed**
 
 - 
+
+## Does your PR add something that needs to be authored/updated in the block library or the style-variable sheet? Don't forget!
 
 
 ## Test URLs and instructions -- There can be more than 1 set
