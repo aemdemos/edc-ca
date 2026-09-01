@@ -46,6 +46,23 @@ function metaStringValue(value) {
 }
 
 /**
+ * Every URL in a background-image metadata value. A cell with multiple images produces an
+ * array from `readBlockConfig`, but `decorateSections()` copies it into a `data-*` attribute
+ * via `String(value)` first, which comma-joins that array — so by the time this runs, a
+ * multi-image cell is always a comma-separated string, not an array. Handles both forms
+ * defensively (an array reaching here directly would have its own entries comma-split too).
+ * @param {unknown} value
+ * @returns {string[]}
+ */
+function metaStringList(value) {
+  const raw = Array.isArray(value) ? value : [value];
+  return raw
+    .flatMap((v) => (typeof v === 'string' ? v.split(',') : []))
+    .map((v) => v.trim())
+    .filter(Boolean);
+}
+
+/**
  * Resolves one background-image URL to a safe, request-ready href, or `''` if disallowed.
  * localhost never has a valid TLS cert, so https is downgraded to http there.
  * @param {string} url
@@ -62,7 +79,9 @@ function resolveSafeBackgroundImageUrl(url) {
  * Sets inline background-color and optionally prepends a decorative .bg-image layer.
  * Keys match section model fields and {@link readBlockConfig}: `background-color`,
  * `background-image` … `background-image-3` (art-direction renditions — see
- * /docs/art-direction-images.md).
+ * /docs/art-direction-images.md). Authors can put 2-3 images directly in the `background-image`
+ * cell (same largest-to-smallest convention as an image-cell block) instead of spreading them
+ * across the numbered fields; both forms work.
  * @param {HTMLElement} section
  * @param {Record<string, unknown>} meta
  */
@@ -73,9 +92,9 @@ export function applySectionBackgroundDecorations(section, meta = {}) {
   }
 
   const sources = [
-    metaStringValue(meta['background-image']).trim(),
-    metaStringValue(meta['background-image-2']).trim(),
-    metaStringValue(meta['background-image-3']).trim(),
+    ...metaStringList(meta['background-image']),
+    ...metaStringList(meta['background-image-2']),
+    ...metaStringList(meta['background-image-3']),
   ]
     .slice(0, MAX_SECTION_BACKGROUND_IMAGES)
     .map(resolveSafeBackgroundImageUrl)

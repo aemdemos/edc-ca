@@ -37,7 +37,7 @@ If the **first** image (the largest/desktop one) is wrapped in a link (select th
 
 ### 1.5 Section backgrounds
 
-Section backgrounds don't use a single multi-image cell — instead, add up to 3 fields to the section's metadata table: `Background Image`, `Background Image 2`, `Background Image 3`, each pointing at one image (via a link) in the **same largest → smallest order** as [1.3](#13-order--breakpoint-widescreen--mobile). One image behaves like [1.2](#12-how-many-images)'s single-image case; 2–3 art-direct the same way. `Background Color`/`Background` still work independently and can be combined with an image.
+In the section's metadata table, add a `Background Image` field and place 2–3 images directly in its value cell — same largest → smallest order as [1.3](#13-order--breakpoint-widescreen--mobile). One image behaves like [1.2](#12-how-many-images)'s single-image case; 2–3 art-direct the same way. If you'd rather not stack images in one cell, `Background Image 2` and `Background Image 3` fields work too (and can be mixed with images already in `Background Image`) — both forms are combined and ordered largest → smallest, then capped at 3. `Background Color`/`Background` still work independently and can be combined with an image.
 
 ### 1.6 Where this is available
 
@@ -59,7 +59,7 @@ Exported from `scripts/utils.js`:
 | `createArtDirectionPicture(sources, eager)` | Builds one `<picture>` with a `<source media="...">` per breakpoint |
 | `DEFAULT_BLOCK_SINGLE_PICTURE_BREAKPOINTS` | Breakpoints used for the single-image case |
 
-Section backgrounds (`applySectionBackgroundDecorations` in `scripts/feature-flags/sections.js`) don't have a cell to walk — the section-metadata fields are plain URLs — so that path builds its `sources` array directly from `Background Image` … `Background Image 3` and calls `createOptimizedPicture` (from `scripts/aem.js`) or `createArtDirectionPicture` itself, skipping `collectBlockCellImageSources`/`buildPictureContentFromImageCell` entirely.
+Section backgrounds (`applySectionBackgroundDecorations` in `scripts/feature-flags/sections.js`) don't have a cell to walk — the section-metadata values are already plain URL strings by the time they arrive (each field's `data-*` attribute), so that path builds its `sources` array directly from `Background Image` … `Background Image 3` and calls `createOptimizedPicture` (from `scripts/aem.js`) or `createArtDirectionPicture` itself, skipping `collectBlockCellImageSources`/`buildPictureContentFromImageCell` entirely. A `Background Image` cell with multiple images reaches here as one comma-separated string — `readBlockConfig` (aem.js) returns an array for a multi-image cell, but `decorateSections()` (scripts.js) stringifies every metadata value via `String(value)` before setting the `data-*` attribute, which comma-joins arrays — so `metaStringList` splits on `,` to recover every URL.
 
 ### 2.2 How it works
 
