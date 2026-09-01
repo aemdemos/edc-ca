@@ -1,4 +1,9 @@
-import { collectTextNodes } from '../utils.js';
+import { createOptimizedPicture } from '../aem.js';
+import {
+  collectTextNodes, createArtDirectionPicture, DEFAULT_BLOCK_SINGLE_PICTURE_BREAKPOINTS,
+} from '../utils.js';
+
+const MAX_SECTION_BACKGROUND_IMAGES = 3;
 
 /* === SECTION BACKGROUND DECORATION === */
 
@@ -41,8 +46,42 @@ function metaStringValue(value) {
 }
 
 /**
+ * Every URL in a background-image metadata value. A cell with multiple images produces an
+ * array from `readBlockConfig`, but `decorateSections()` copies it into a `data-*` attribute
+ * via `String(value)` first, which comma-joins that array — so by the time this runs, a
+ * multi-image cell is always a comma-separated string, not an array. Handles both forms
+ * defensively (an array reaching here directly would have its own entries comma-split too).
+ * @param {unknown} value
+ * @returns {string[]}
+ */
+function metaStringList(value) {
+  const raw = Array.isArray(value) ? value : [value];
+  return raw
+    .flatMap((v) => (typeof v === 'string' ? v.split(',') : []))
+    .map((v) => v.trim())
+    .filter(Boolean);
+}
+
+/**
+ * Resolves one background-image URL to a safe, request-ready href, or `''` if disallowed.
+ * localhost never has a valid TLS cert, so https is downgraded to http there.
+ * @param {string} url
+ * @returns {string}
+ */
+function resolveSafeBackgroundImageUrl(url) {
+  if (!url || !isAllowedBackgroundImageUrl(url)) return '';
+  const parsed = new URL(url, window.location.href);
+  if (parsed.hostname === 'localhost') parsed.protocol = 'http:';
+  return parsed.href;
+}
+
+/**
  * Sets inline background-color and optionally prepends a decorative .bg-image layer.
- * Keys match section model fields and {@link readBlockConfig}: `background-color`, `background-image`.
+ * Keys match section model fields and {@link readBlockConfig}: `background-color`,
+ * `background-image` … `background-image-3` (art-direction renditions — see
+ * /docs/art-direction-images.md). Authors can put 2-3 images directly in the `background-image`
+ * cell (same largest-to-smallest convention as an image-cell block) instead of spreading them
+ * across the numbered fields; both forms work.
  * @param {HTMLElement} section
  * @param {Record<string, unknown>} meta
  */
@@ -52,23 +91,24 @@ export function applySectionBackgroundDecorations(section, meta = {}) {
     section.style.setProperty('background', color);
   }
 
-  const imageUrl = metaStringValue(meta['background-image']).trim();
-  if (!imageUrl || !isAllowedBackgroundImageUrl(imageUrl)) return;
+  const sources = [
+    ...metaStringList(meta['background-image']),
+    ...metaStringList(meta['background-image-2']),
+    ...metaStringList(meta['background-image-3']),
+  ]
+    .slice(0, MAX_SECTION_BACKGROUND_IMAGES)
+    .map(resolveSafeBackgroundImageUrl)
+    .filter(Boolean)
+    .map((src) => ({ src, alt: '' }));
 
-  // localhost never has a valid TLS cert; downgrade https → http so the request succeeds
-  const parsedUrl = new URL(imageUrl.trim(), window.location.href);
-  if (parsedUrl.hostname === 'localhost') parsedUrl.protocol = 'http:';
-  const safeImageUrl = parsedUrl.href;
+  if (!sources.length) return;
 
   const bg = document.createElement('div');
   bg.className = 'bg-image';
-  const picture = document.createElement('picture');
-  const img = document.createElement('img');
-  img.src = safeImageUrl;
-  img.alt = 'decorative background';
-  img.loading = 'lazy';
-  img.decoding = 'async'; // prevent blocking the main thread
-  picture.append(img);
+  const picture = sources.length === 1
+    ? createOptimizedPicture(sources[0].src, sources[0].alt, false, DEFAULT_BLOCK_SINGLE_PICTURE_BREAKPOINTS)
+    : createArtDirectionPicture(sources, false);
+  picture.querySelector('img').decoding = 'async'; // prevent blocking the main thread
   bg.append(picture);
   section.classList.add('has-background');
   section.prepend(bg);

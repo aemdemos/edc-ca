@@ -1,3 +1,5 @@
+import { createOptimizedPicture } from './aem.js';
+
 /**
  * Collects text nodes under an element, optionally filtered to those containing a marker string.
  * @param {Element} element
@@ -148,3 +150,251 @@ export function getVimeoEmbedHtml(url, autoplay = false, background = false) {
 </div>`;
 }
 /* === END video autoblock from link === */
+
+
+/* -------------------------------------------------------------------------- */
+/* Responsive picture: up to 3 images per cell (art-direction <picture>) */
+/* -------------------------------------------------------------------------- */
+
+const MAX_BLOCK_CELL_IMAGES = 3;
+
+/** Default breakpoints for single-image cells (same defaults as `createOptimizedPicture` in aem.js). */
+export const DEFAULT_BLOCK_SINGLE_PICTURE_BREAKPOINTS = [
+  { media: '(min-width: 600px)', width: '2000' }, 
+  { width: '750' },
+];
+
+const ART_DIRECTION_DEFAULT_IMG_WIDTH = '750';
+
+/**
+ * Tags that `wrapTextNodes` (aem.js) recognizes as already block-formatted, minus
+ * `PICTURE` — a `<p><picture>...</picture></p>` is normal, parser-built markup, but a
+ * `<p>` can never legitimately contain any of these via HTML parsing (the parser closes
+ * an open `<p>` before them). Finding one here means `wrapTextNodes` forced the *whole*
+ * cell into one `<p>` because its first child (e.g. a leading `<blockquote>`) wasn't on
+ * its own allow-list — not that this is a genuine single authored paragraph.
+ */
+const FORCED_WRAP_TELLTALE_TAGS = new Set(['P', 'PRE', 'UL', 'OL', 'TABLE', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6']);
+
+/**
+ * Undoes a `wrapTextNodes` (aem.js) forced wrap: when a cell's first authored child isn't
+ * one of its recognized block tags (e.g. a leading `<blockquote>`), it moves the cell's
+ * entire content into one new `<p>`, hiding later siblings — including image runs — one
+ * level deeper than callers expect.
+ * @param {HTMLElement} cell
+ * @returns {HTMLElement} `cell`, or the unwrapped `<p>` if a forced wrap was detected
+ */
+function unwrapForcedParagraph(cell) {
+  const { firstElementChild } = cell;
+  const isForcedWrap = cell.children.length === 1
+    && firstElementChild.tagName === 'P'
+    && [...firstElementChild.children].some((el) => FORCED_WRAP_TELLTALE_TAGS.has(el.tagName));
+  return isForcedWrap ? firstElementChild : cell;
+}
+
+/**
+ * Art-direction `media` + CDN `width` for source index 1 (tablet) or 2 (desktop).
+ * Mobile stays on the fallback `<img>` all the way up to 768px — there's no
+ * separate large-phone tier.
+ * @param {number} imageIndex
+ * @returns {{ media: string, width: string }}
+ */
+function getArtDirectionSourceMeta(imageIndex) {
+  return imageIndex === 1
+    ? { media: '(min-width: 768px)', width: '992' }
+    : { media: '(min-width: 992px)', width: '2000' };
+}
+
+/**
+ * Nearest ancestor `<a href>` between `el` and `root` (exclusive), or `null`.
+ * @param {Element} el
+ * @param {Element} root
+ * @returns {HTMLAnchorElement|null}
+ */
+function findWrappingLink(el, root) {
+  let node = el.parentElement;
+  while (node && node !== root) {
+    if (node.matches('a[href]')) return node;
+    node = node.parentElement;
+  }
+  return null;
+}
+
+/**
+ * True if `node` is a whitespace-only text node (insignificant between authored elements).
+ * @param {Node} node
+ * @returns {boolean}
+ */
+function isWhitespaceTextNode(node) {
+  return node.nodeType === Node.TEXT_NODE && node.textContent.trim() === '';
+}
+
+/**
+ * True if `node` renders only an image: a bare `<picture>`/`<img>`, or a wrapper
+ * (e.g. `<p>`, `<a>`) containing nothing else but whitespace.
+ * @param {Node} node
+ * @returns {boolean}
+ */
+function isImageOnlyNode(node) {
+  if (node.nodeType !== Node.ELEMENT_NODE) return false;
+  if (node.matches('picture, img')) return true;
+  if (!node.querySelector('picture, img')) return false;
+  return [...node.childNodes].every(
+    (child) => isWhitespaceTextNode(child) || isImageOnlyNode(child),
+  );
+}
+
+/**
+ * Walks a block image cell in document order; collects up to three `{ src, alt, link }` entries.
+ * `link` (the wrapping `<a>`, if any) is only captured for the first entry — links wrapping
+ * any other picture/img are ignored.
+ * @param {HTMLElement} cell
+ * @returns {{ src: string, alt: string, link: HTMLAnchorElement|null }[]}
+ */
+export function collectBlockCellImageSources(cell) {
+  const out = [];
+  const walk = (root) => {
+    if (out.length >= MAX_BLOCK_CELL_IMAGES) return;
+    [...root.children].forEach((el) => {
+      if (out.length >= MAX_BLOCK_CELL_IMAGES) return;
+      if (el.matches('picture')) {
+        const img = el.querySelector('img[src]');
+        if (img) {
+          const link = out.length === 0 ? findWrappingLink(el, cell) : null;
+          out.push({ src: img.src, alt: img.getAttribute('alt') ?? '', link });
+        }
+      } else if (el.matches('img[src]')) {
+        if (!el.closest('picture')) {
+          const link = out.length === 0 ? findWrappingLink(el, cell) : null;
+          out.push({ src: el.src, alt: el.getAttribute('alt') ?? '', link });
+        }
+      } else {
+        walk(el);
+      }
+    });
+  };
+  walk(cell);
+  return out;
+}
+
+/**
+ * One &lt;picture&gt; with art-direction sources (different authored assets per viewport).
+ * Each breakpoint is already a distinct DA-authored rendition, so — unlike
+ * `createOptimizedPicture` — no webp alternate is generated per breakpoint; only the
+ * originally authored format is used, one &lt;source&gt; per breakpoint.
+ * @param {{ src: string, alt: string }[]} sources 2–3 entries, authored largest (desktop)
+ * first through smallest (mobile) last — the last entry becomes the fallback &lt;img&gt;.
+ * @param {boolean} eager loading on the fallback &lt;img&gt;
+ * @returns {HTMLPictureElement}
+ */
+export function createArtDirectionPicture(sources, eager) {
+  // Authors list images largest-first; breakpoint assignment below expects smallest-first.
+  const capped = sources.slice(0, MAX_BLOCK_CELL_IMAGES).reverse();
+  const picture = document.createElement('picture');
+
+  for (let i = capped.length - 1; i >= 1; i -= 1) {
+    const { src } = capped[i];
+    const url = !src.startsWith('http') ? new URL(src, window.location.href) : new URL(src);
+    const { origin, pathname } = url;
+    const ext = pathname.split('.').pop();
+    const { media, width } = getArtDirectionSourceMeta(i);
+
+    const source = document.createElement('source');
+    source.setAttribute('media', media);
+    source.setAttribute(
+      'srcset',
+      `${origin}${pathname}?width=${width}&format=${ext}&optimize=medium`,
+    );
+    picture.append(source);
+  }
+
+  const defaultSrc = capped[0].src;
+  const defaultAlt = capped[0].alt;
+  const url0 = !defaultSrc.startsWith('http')
+    ? new URL(defaultSrc, window.location.href)
+    : new URL(defaultSrc);
+  const { origin, pathname } = url0;
+  const ext = pathname.split('.').pop();
+
+  const img = document.createElement('img');
+  img.setAttribute('loading', eager ? 'eager' : 'lazy');
+  img.setAttribute('alt', defaultAlt);
+  img.setAttribute(
+    'src',
+    `${origin}${pathname}?width=${ART_DIRECTION_DEFAULT_IMG_WIDTH}&format=${ext}&optimize=medium`,
+  );
+  picture.append(img);
+
+  return picture;
+}
+
+/**
+ * @typedef {Object} BuildPictureCellOptions
+ * @property {boolean} [eagerSingle=true] - `loading` for single-image `createOptimizedPicture` path
+ * @property {boolean} [eagerArtDirection=false] - `loading` on fallback &lt;img&gt; in multi-image art-direction path
+ * @property {Array<{ media?: string, width: string }>} [singlePictureBreakpoints] - overrides for single-image optimization
+ */
+
+/**
+ * Builds a fragment for a block image cell, preserving non-image content in place. Each
+ * contiguous run of images (whitespace between them is fine) becomes one picture —
+ * `createOptimizedPicture` (one image) or art-direction (2–3); other content passes through.
+ * Also undoes a `wrapTextNodes` forced wrap (see `unwrapForcedParagraph`) so a leading
+ * `<blockquote>` or similar doesn't hide later image runs one level too deep.
+ * For a run of 2–3 images, authors order them largest (desktop) first through smallest
+ * (mobile) last — see `createArtDirectionPicture`.
+ * @param {HTMLElement} cell
+ * @param {BuildPictureCellOptions} [options]
+ * @returns {DocumentFragment}
+ */
+export function buildPictureContentFromImageCell(cell, options = {}) {
+  const {
+    eagerSingle = true,
+    eagerArtDirection = false,
+    singlePictureBreakpoints = DEFAULT_BLOCK_SINGLE_PICTURE_BREAKPOINTS,
+  } = options;
+
+  const frag = document.createDocumentFragment();
+  const children = [...unwrapForcedParagraph(cell).childNodes];
+  let i = 0;
+
+  while (i < children.length) {
+    if (!isImageOnlyNode(children[i])) {
+      frag.append(children[i]);
+      i += 1;
+    } else {
+      // gather images adjacent to this one (whitespace allowed between)
+      const run = document.createElement('div');
+      run.append(children[i]);
+      let j = i + 1;
+      while (j < children.length
+        && (isWhitespaceTextNode(children[j]) || isImageOnlyNode(children[j]))) {
+        run.append(children[j]);
+        j += 1;
+      }
+
+      const sources = collectBlockCellImageSources(run);
+      const picture = sources.length === 1
+        ? createOptimizedPicture(
+          sources[0].src,
+          sources[0].alt,
+          eagerSingle,
+          singlePictureBreakpoints,
+        )
+        : createArtDirectionPicture(sources, eagerArtDirection);
+
+      const { link } = sources[0];
+      if (link) {
+        const anchor = link.cloneNode(false);
+        anchor.append(picture);
+        frag.append(anchor);
+      } else {
+        frag.append(picture);
+      }
+
+      i = j;
+    }
+  }
+
+  return frag;
+}

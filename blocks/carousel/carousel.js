@@ -1,4 +1,5 @@
 import { moveInstrumentation, getBlockId } from '../../scripts/scripts.js';
+import { buildPictureContentFromImageCell } from '../../scripts/utils.js';
 import { createSliderControls, initSlider, showSlide } from '../../scripts/slider.js';
 
 export { showSlide };
@@ -11,6 +12,13 @@ function createSlide(row, slideIndex, carouselId) {
 
   row.querySelectorAll(':scope > div').forEach((column, colIdx) => {
     column.classList.add(`carousel-slide-${colIdx === 0 ? 'image' : 'content'}`);
+    if (colIdx === 0 && column.querySelector('picture')) {
+      // merges adjacent-image runs into art-direction pictures; other content stays put
+      const firstImg = column.querySelector('picture > img');
+      column.replaceChildren(buildPictureContentFromImageCell(column));
+      const newImg = column.querySelector('picture > img');
+      if (firstImg && newImg) moveInstrumentation(firstImg, newImg);
+    }
     slide.append(column);
   });
 

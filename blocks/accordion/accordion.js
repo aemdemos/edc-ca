@@ -1,4 +1,5 @@
 import { moveInstrumentation, getBlockId } from '../../scripts/scripts.js';
+import { buildPictureContentFromImageCell } from '../../scripts/utils.js';
 
 export default function decorate(block) {
   // Unique id per block instance (e.g. accordion_0, accordion_1, ...) so multiple
@@ -31,6 +32,10 @@ export default function decorate(block) {
       body.className = 'accordion-item-body';
       body.id = bodyId;
       body.setAttribute('aria-labelledby', labelId);
+      // merges adjacent-image runs into art-direction pictures; other content stays put
+      if (body.querySelector('picture')) {
+        body.replaceChildren(buildPictureContentFromImageCell(body));
+      }
     }
 
     ul.append(li);

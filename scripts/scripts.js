@@ -398,6 +398,8 @@ export function decorateSections(main) {
         background: section.getAttribute('data-background') || '',
         'background-color': section.getAttribute('data-background-color') || '',
         'background-image': section.getAttribute('data-background-image') || '',
+        'background-image-2': section.getAttribute('data-background-image-2') || '',
+        'background-image-3': section.getAttribute('data-background-image-3') || '',
       });
     }
   }
