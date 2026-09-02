@@ -1,0 +1,160 @@
+@import url('./countryposrating-tokens.css');
+
+/* base type mirrors the source: Noto Sans, #1d1d1d, 16px / line-height 1.5 */
+.countryposrating,
+.countryposrating h2,
+.countryposrating h3,
+.countryposrating h4 {
+  color: var(--countryposrating-text-color);
+  font-family: var(--countryposrating-font-family);
+  font-size: var(--countryposrating-body-font-size);
+  line-height: var(--countryposrating-line-height);
+}
+
+/* mobile-first: columns stack vertically (source: content-row column) */
+.countryposrating > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.countryposrating .position,
+.countryposrating .determination {
+  padding-inline: var(--countryposrating-padding-inline);
+}
+
+/* left column is centered; right column is left-aligned (source) */
+.countryposrating .position {
+  margin-bottom: 4rem;
+  text-align: center;
+}
+
+.countryposrating .determination {
+  margin-bottom: 3rem;
+  padding-top: var(--countryposrating-determination-offset);
+  text-align: left;
+}
+
+/* headings / labels */
+.countryposrating .position h3,
+.countryposrating .determination h4 {
+  font-size: var(--countryposrating-label-font-size);
+  font-weight: 600;
+  line-height: 1.6; /* source: 24px at 15px */
+  letter-spacing: var(--countryposrating-heading-tracking);
+}
+
+.countryposrating .position h3 {
+  margin: 15px 0 1rem;
+}
+
+/* source h4 keeps its default vertical rhythm (~20px top/bottom) */
+.countryposrating .determination h4 {
+  margin: 1.33em 0;
+}
+
+/* the "Open" / "Accessible" status label */
+.countryposrating .position h2 {
+  margin: 1rem 0 1.5rem;
+  color: var(--countryposrating-status-color);
+  font-size: var(--countryposrating-status-font-size);
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: var(--countryposrating-heading-tracking);
+}
+
+/* "What this means:" label */
+.countryposrating .position p {
+  margin: 0 0 1rem;
+  font-size: var(--countryposrating-label-font-size);
+  font-weight: 600;
+  line-height: 1.6;
+  letter-spacing: var(--countryposrating-heading-tracking);
+}
+
+/* right-column body copy is 14px / line-height 1.5 (→21px) */
+.countryposrating .determination p {
+  margin: 0 0 1.5rem;
+  font-size: var(--countryposrating-small-font-size);
+  font-weight: 400;
+}
+
+/* lists: no native marker; custom round bullet via ::before (source) */
+.countryposrating ul {
+  margin: 1rem 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+.countryposrating .determination ul {
+  padding-left: 40px;
+}
+
+.countryposrating li {
+  line-height: var(--countryposrating-line-height);
+}
+
+.countryposrating .determination li {
+  font-size: var(--countryposrating-small-font-size);
+}
+
+.countryposrating li::before {
+  content: '';
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  margin-right: 13px;
+  margin-left: 6px;
+  border-radius: 100%;
+  background-color: var(--countryposrating-text-color);
+  vertical-align: middle;
+}
+
+/* status gauge icon (author-managed SVG via the icon system) */
+.countryposrating .position .icon {
+  display: block;
+  width: 100%;
+  max-width: var(--countryposrating-icon-max-width);
+  height: auto;
+  margin-inline: auto;
+}
+
+.countryposrating .position .icon img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* tablet+: two columns side by side on the source's 12-col grid */
+@media (width >= 768px) {
+  .countryposrating > div {
+    flex-direction: row;
+  }
+
+  .countryposrating .position {
+    width: var(--countryposrating-col-width);
+    margin-left: var(--countryposrating-col-offset);
+  }
+
+  .countryposrating .determination {
+    width: var(--countryposrating-col-width);
+    padding-top: 48px;
+    padding-left: var(--countryposrating-divider-gap);
+    border-left: 1px solid var(--countryposrating-divider-color);
+  }
+
+  .countryposrating .position h2 {
+    font-size: 1.5rem;
+  }
+}
+
+/* desktop+: larger status label and vertical rhythm (source) */
+@media (width >= 992px) {
+  .countryposrating .position,
+  .countryposrating .determination {
+    margin-bottom: 5rem;
+  }
+
+  .countryposrating .position h2 {
+    font-size: 1.875rem;
+  }
+}

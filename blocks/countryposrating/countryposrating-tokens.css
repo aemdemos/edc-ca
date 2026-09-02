@@ -1,0 +1,40 @@
+/* country position rating design tokens (values + units mirror the source) */
+
+/* Noto Sans — self-hosted variable font (weights 400–600), scoped to this block.
+   Single latin subset file also covers French accented characters. */
+@font-face {
+  font-family: 'Noto Sans';
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url('/fonts/noto-sans-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root {
+  /* source font stack */
+  --countryposrating-font-family: 'Noto Sans', -apple-system, blinkmacsystemfont, 'San Francisco', 'Segoe UI', 'Helvetica Neue', sans-serif;
+
+  /* colors */
+  --countryposrating-text-color: #1d1d1d;
+  --countryposrating-status-color: #088391;
+  --countryposrating-divider-color: #d1d1d1;
+
+  /* type (source uses px sizes, unitless 1.5 line-height, -0.2px tracking on headings) */
+  --countryposrating-body-font-size: 16px;
+  --countryposrating-small-font-size: 14px;
+  --countryposrating-label-font-size: 15px;
+  --countryposrating-line-height: 1.5;
+  --countryposrating-heading-tracking: -0.2px;
+
+  /* status label size scales up per breakpoint (source: 20px → 1.5rem → 1.875rem) */
+  --countryposrating-status-font-size: 20px;
+
+  /* layout (source: px padding/divider, % grid widths, rem vertical rhythm) */
+  --countryposrating-padding-inline: 15px;
+  --countryposrating-icon-max-width: 160px;
+  --countryposrating-col-width: 41.6667%;
+  --countryposrating-col-offset: 8.3333%;
+  --countryposrating-divider-gap: 64px;
+  --countryposrating-determination-offset: 32px; /* source: right column inner padding-top */
+}
