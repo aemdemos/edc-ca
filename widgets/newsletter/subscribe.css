@@ -20,7 +20,6 @@
 .subscribe-heading {
   display: block;
   margin: 0 0 12px;
-  font-family: var(--body-font-family);
   font-size: var(--body-font-size-s, 16px);
   font-weight: 500;
   line-height: 20px;
@@ -38,7 +37,6 @@
   border: none;
   border-radius: var(--subscribe-radius) 0 0 var(--subscribe-radius);
   padding: 0 8px 0 12px;
-  font-family: var(--body-font-family);
   font-size: var(--body-font-size-s, 16px);
   color: var(--subscribe-input-text);
 }
@@ -50,6 +48,7 @@
 
 .subscribe-submit {
   margin: 0;
+  font-family: var(--footer-font-family);
   border-radius: 0 var(--subscribe-radius) var(--subscribe-radius) 0;
   min-width: 120px;
   max-width: 232px;
@@ -97,7 +96,7 @@
 
 .subscribe-success-title {
   margin: 0;
-  font-family: var(--heading-font-family);
+  font-family: var(--footer-font-family);
   font-size: var(--body-font-size-l, 20px);
   font-weight: 600;
   color: var(--subscribe-accent-hover);

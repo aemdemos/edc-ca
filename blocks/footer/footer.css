@@ -2,10 +2,23 @@
 
 footer {
   background-color: var(--light-color);
+  font-family: var(--footer-font-family);
 }
 
 footer .footer p {
   margin: 0;
+}
+
+/*
+ * Matches the sitewide `main > .section > div { max-width: var(--max-width-site) }`
+ * centering rule (styles.css) — footer content lives outside <main>, so it never picked
+ * that up, and was flowing edge-to-edge at wide viewports. Source has the same shape: a
+ * full-width section background with a fixed-width `.container` centering its content.
+ */
+footer .footer .footer-categorylinks > div,
+footer .footer .footer-footnotes > div {
+  max-width: var(--max-width-site);
+  margin: 0 auto;
 }
 
 /*
@@ -22,46 +35,56 @@ footer .footer .subscribe-section {
   background-color: var(--footer-subscribe-bg);
 }
 
-/* footer nav: columns block (logo + 3 link columns) */
-footer .footer .footer-nav {
+/*
+ * category links: columns block, authored as 2 cells — [logo image] [3 heading+list
+ * groups, as plain content]. Mirrors source's own 2-level structure (an outer logo/links
+ * grid, and an inner 3-column grid over the heading/list children) rather than source's
+ * exact class names, since our content model doesn't have a nested "links wrapper" block.
+ */
+footer .footer .footer-categorylinks {
   padding: 16px;
-  background-color: var(--footer-nav-bg);
+  background-color: var(--footer-categorylinks-bg);
   border-top: 1px solid var(--footer-divider-color);
 }
 
-footer .footer .footer-nav h3 {
-  margin: 0 0 12px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid var(--footer-divider-color);
-  font-size: 16px;
-  font-weight: 600;
-}
-
-footer .footer .footer-nav ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-footer .footer .footer-nav a {
-  display: block;
-  padding: 8px 0 16px;
-  color: var(--text-color);
-  text-decoration: none;
-}
-
-footer .footer .footer-nav a:hover {
-  text-decoration: underline;
-}
-
-footer .footer .footer-nav .columns-img-col {
+footer .footer .footer-categorylinks .columns-img-col {
   display: none;
 }
 
-footer .footer .footer-nav .columns-img-col img {
+footer .footer .footer-categorylinks .columns-img-col img {
   width: auto;
   max-width: 140px;
-  padding: 24px 0 32px;
+}
+
+footer .footer .footer-categorylinks h3 {
+  margin: 0;
+  padding: 8px 0 16px;
+  border-bottom: 1px solid var(--footer-divider-color);
+  font-family: var(--footer-font-family);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: #1d1d1d;
+}
+
+footer .footer .footer-categorylinks ul {
+  margin: 0;
+  padding: 16px 0;
+  list-style: none;
+}
+
+footer .footer .footer-categorylinks a {
+  display: block;
+  width: fit-content;
+  padding: 8px 0;
+  font-size: 16px;
+  line-height: 1.375;
+  color: #1d1d1d;
+  text-decoration: none;
+}
+
+footer .footer .footer-categorylinks a:hover {
+  text-decoration: underline;
 }
 
 /*
@@ -70,9 +93,9 @@ footer .footer .footer-nav .columns-img-col img {
  * Expected order: two logo pictures, a company-name paragraph, a legal-links list, a
  * social-links list (matches the content model — adjust selectors if authors reorder).
  */
-footer .footer .footer-legal {
+footer .footer .footer-footnotes {
   padding: 32px 16px 24px;
-  background-color: var(--footer-legal-bg);
+  background-color: var(--footer-footnotes-bg);
   font-size: 12px;
   font-weight: 500;
 }
@@ -82,17 +105,17 @@ footer .footer .footer-legal {
  * puts each image on its own line) — target the first two paragraphs positionally so
  * the logos sit side by side instead of stacking as block-level paragraphs.
  */
-footer .footer .footer-legal p:nth-of-type(-n+2) {
+footer .footer .footer-footnotes p:nth-of-type(-n+2) {
   display: inline-block;
   margin: 0 16px 12px 0;
 }
 
-footer .footer .footer-legal picture img {
+footer .footer .footer-footnotes picture img {
   width: 68px;
   height: auto;
 }
 
-footer .footer .footer-legal ul {
+footer .footer .footer-footnotes ul {
   display: flex;
   flex-wrap: wrap;
   gap: 8px 16px;
@@ -101,18 +124,18 @@ footer .footer .footer-legal ul {
   list-style: none;
 }
 
-footer .footer .footer-legal a {
+footer .footer .footer-footnotes a {
   color: var(--text-color);
   text-decoration: none;
 }
 
-footer .footer .footer-legal a:hover {
+footer .footer .footer-footnotes a:hover {
   text-decoration: underline;
 }
 
 /* social links: authors write plain links to each network's URL — icons are matched by
    href and applied as a background image, since default content can't carry icon spans */
-footer .footer .footer-legal ul:last-of-type a {
+footer .footer .footer-footnotes ul:last-of-type a {
   display: inline-block;
   width: 24px;
   height: 24px;
@@ -122,42 +145,71 @@ footer .footer .footer-legal ul:last-of-type a {
   background-size: contain;
 }
 
-footer .footer .footer-legal ul:last-of-type a[href*="linkedin.com"] {
+footer .footer .footer-footnotes ul:last-of-type a[href*="linkedin.com"] {
   background-image: url('/icons/linkedin.svg');
 }
 
-footer .footer .footer-legal ul:last-of-type a[href*="instagram.com"] {
+footer .footer .footer-footnotes ul:last-of-type a[href*="instagram.com"] {
   background-image: url('/icons/instagram.svg');
 }
 
-footer .footer .footer-legal ul:last-of-type a[href*="facebook.com"] {
+footer .footer .footer-footnotes ul:last-of-type a[href*="facebook.com"] {
   background-image: url('/icons/facebook.svg');
 }
 
-footer .footer .footer-legal ul:last-of-type a[href*="twitter.com"],
-footer .footer .footer-legal ul:last-of-type a[href*="x.com"] {
+footer .footer .footer-footnotes ul:last-of-type a[href*="twitter.com"],
+footer .footer .footer-footnotes ul:last-of-type a[href*="x.com"] {
   background-image: url('/icons/x.svg');
 }
 
-footer .footer .footer-legal ul:last-of-type a[href*="youtube.com"] {
+footer .footer .footer-footnotes ul:last-of-type a[href*="youtube.com"] {
   background-image: url('/icons/youtube.svg');
 }
 
-/* small-tablet+ */
+/* small-tablet+: logo column appears beside the links column (still stacked internally) */
 @media (width >= 576px) {
-  footer .footer .footer-nav {
+  footer .footer .footer-categorylinks {
     padding: 40px 32px;
+  }
+
+  footer .footer .footer-categorylinks .columns-img-col {
+    display: block;
+  }
+
+  footer .footer .footer-categorylinks .columns > div {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 48px;
   }
 }
 
-/* desktop+ */
+/* desktop+: logo:links ratio widens, and the links column splits into 3 internal columns */
 @media (width >= 992px) {
-  footer .footer .footer-nav {
+  footer .footer .footer-categorylinks {
     padding: 56px 16px 32px;
   }
 
-  footer .footer .footer-nav .columns-img-col {
-    display: block;
-    flex: 0 0 auto;
+  footer .footer .footer-categorylinks .columns > div {
+    grid-template-columns: 1fr 3fr;
+    column-gap: 32px;
+  }
+
+  footer .footer .footer-categorylinks .columns > div > div:last-child {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    grid-template-rows: auto auto;
+    column-gap: 32px;
+  }
+
+  footer .footer .footer-categorylinks h3 {
+    grid-row: 1;
+  }
+
+  footer .footer .footer-categorylinks ul {
+    grid-row: 2;
+  }
+
+  footer .footer .footer-categorylinks a {
+    padding: 8px 0 16px;
   }
 }
