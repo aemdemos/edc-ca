@@ -2,7 +2,6 @@
 
 footer {
   background-color: var(--light-color);
-  font-family: var(--footer-font-family);
 }
 
 footer .footer p {
@@ -60,11 +59,10 @@ footer .footer .footer-categorylinks h3 {
   margin: 0;
   padding: 8px 0 16px;
   border-bottom: 1px solid var(--footer-divider-color);
-  font-family: var(--footer-font-family);
   font-size: 16px;
   font-weight: 600;
   line-height: 1.5;
-  color: #1d1d1d;
+  color: var(--text-color);
 }
 
 footer .footer .footer-categorylinks ul {
@@ -79,7 +77,7 @@ footer .footer .footer-categorylinks a {
   padding: 8px 0;
   font-size: 16px;
   line-height: 1.375;
-  color: #1d1d1d;
+  color: var(--text-color);
   text-decoration: none;
 }
 
@@ -88,10 +86,11 @@ footer .footer .footer-categorylinks a:hover {
 }
 
 /*
- * footnotes / legal bar — plain default content, so styling is structural (tag/nth-of-type),
- * not class-based: authors can't attach custom classes to paragraphs/lists/images in a doc.
- * Expected order: two logo pictures, a company-name paragraph, a legal-links list, a
- * social-links list (matches the content model — adjust selectors if authors reorder).
+ * footnotes bar — two `columns` block instances (matching the category-links pattern):
+ * the first is the brand-logo row (Canada | EDC, space-between), the second is a 3-cell
+ * row (company name | legal links | social icons). Using `columns` instead of plain
+ * default content gives each piece its own cell to target, instead of relying on
+ * nth-of-type across a flat list of paragraphs/images.
  */
 footer .footer .footer-footnotes {
   padding: 32px 16px 24px;
@@ -101,68 +100,110 @@ footer .footer .footer-footnotes {
 }
 
 /*
- * Two adjacent authored images become two separate <p> elements (markdown round-trip
- * puts each image on its own line) — target the first two paragraphs positionally so
- * the logos sit side by side instead of stacking as block-level paragraphs.
+ * row 1: brand logos, space-between. Cells need `flex: none` for the same reason as the
+ * info row below — columns.css gives every cell `flex: 1` at desktop (equal halves),
+ * which stretches the EDC-logo cell to 50% width and leaves the logo sitting left-aligned
+ * inside it instead of pinned to the row's true right edge.
  */
-footer .footer .footer-footnotes p:nth-of-type(-n+2) {
-  display: inline-block;
-  margin: 0 16px 12px 0;
+footer .footer .footer-footnotes .footer-brands > div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--footer-divider-color);
 }
 
-footer .footer .footer-footnotes picture img {
+footer .footer .footer-footnotes .footer-brands > div > div {
+  flex: none;
+}
+
+footer .footer .footer-footnotes .footer-brands img {
   width: 68px;
   height: auto;
+}
+
+/*
+ * row 2: company name, legal links, social icons. footer.js tags these three cells
+ * footer-info-name/-legal/-social (position-independent) — and each needs `flex: none`
+ * to opt out of the generic columns.css rule that gives every cell `flex: 1` at desktop
+ * (equal thirds), which is wrong here: these three cells should size to their own content.
+ */
+footer .footer .footer-footnotes .footer-info > div {
+  margin-top: 16px;
+  gap: 8px 16px;
+}
+
+footer .footer .footer-footnotes .footer-info-name,
+footer .footer .footer-footnotes .footer-info-legal,
+footer .footer .footer-footnotes .footer-info-social {
+  flex: none;
+}
+
+footer .footer .footer-footnotes .footer-info-name {
+  color: var(--text-color);
 }
 
 footer .footer .footer-footnotes ul {
   display: flex;
   flex-wrap: wrap;
   gap: 8px 16px;
-  margin: 12px 0 0;
+  margin: 0;
   padding: 0;
   list-style: none;
 }
 
-footer .footer .footer-footnotes a {
-  color: var(--text-color);
-  text-decoration: none;
+/* legal links: underlined, with a small "opens in a new tab" icon after external links */
+footer .footer .footer-footnotes .footer-info-legal a {
+  color: var(--brand-secondary);
+  text-decoration: underline;
 }
 
-footer .footer .footer-footnotes a:hover {
-  text-decoration: underline;
+footer .footer .footer-footnotes .footer-info-legal a[target="_blank"]::after {
+  content: '';
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-left: 4px;
+  background-image: url('/icons/new-window.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 /* social links: authors write plain links to each network's URL — icons are matched by
    href and applied as a background image, since default content can't carry icon spans */
-footer .footer .footer-footnotes ul:last-of-type a {
+footer .footer .footer-footnotes .footer-info-social ul {
+  gap: 12px;
+}
+
+footer .footer .footer-footnotes .footer-info-social a {
   display: inline-block;
-  width: 24px;
-  height: 24px;
+  width: 19px;
+  height: 19px;
   overflow: hidden;
   text-indent: -999px;
   background-repeat: no-repeat;
   background-size: contain;
 }
 
-footer .footer .footer-footnotes ul:last-of-type a[href*="linkedin.com"] {
+footer .footer .footer-footnotes .footer-info-social a[href*="linkedin.com"] {
   background-image: url('/icons/linkedin.svg');
 }
 
-footer .footer .footer-footnotes ul:last-of-type a[href*="instagram.com"] {
+footer .footer .footer-footnotes .footer-info-social a[href*="instagram.com"] {
   background-image: url('/icons/instagram.svg');
 }
 
-footer .footer .footer-footnotes ul:last-of-type a[href*="facebook.com"] {
+footer .footer .footer-footnotes .footer-info-social a[href*="facebook.com"] {
   background-image: url('/icons/facebook.svg');
 }
 
-footer .footer .footer-footnotes ul:last-of-type a[href*="twitter.com"],
-footer .footer .footer-footnotes ul:last-of-type a[href*="x.com"] {
+footer .footer .footer-footnotes .footer-info-social a[href*="twitter.com"],
+footer .footer .footer-footnotes .footer-info-social a[href*="x.com"] {
   background-image: url('/icons/x.svg');
 }
 
-footer .footer .footer-footnotes ul:last-of-type a[href*="youtube.com"] {
+footer .footer .footer-footnotes .footer-info-social a[href*="youtube.com"] {
   background-image: url('/icons/youtube.svg');
 }
 
@@ -181,6 +222,16 @@ footer .footer .footer-footnotes ul:last-of-type a[href*="youtube.com"] {
     grid-template-columns: 1fr 1fr;
     column-gap: 48px;
   }
+
+  /* footnotes row 2 merges onto one line: name, legal links, then social icons pushed right */
+  footer .footer .footer-footnotes .footer-info > div {
+    flex-direction: row;
+    align-items: baseline;
+  }
+
+  footer .footer .footer-footnotes .footer-info-social {
+    margin-left: auto;
+  }
 }
 
 /* desktop+: logo:links ratio widens, and the links column splits into 3 internal columns */
@@ -194,7 +245,7 @@ footer .footer .footer-footnotes ul:last-of-type a[href*="youtube.com"] {
     column-gap: 32px;
   }
 
-  footer .footer .footer-categorylinks .columns > div > div:last-child {
+  footer .footer .footer-categorylinks .columns > div > div:not(.columns-img-col) {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     grid-template-rows: auto auto;
@@ -211,5 +262,13 @@ footer .footer .footer-footnotes ul:last-of-type a[href*="youtube.com"] {
 
   footer .footer .footer-categorylinks a {
     padding: 8px 0 16px;
+  }
+
+  footer .footer .footer-footnotes {
+    font-size: 13px;
+  }
+
+  footer .footer .footer-footnotes .footer-brands img {
+    width: 72px;
   }
 }

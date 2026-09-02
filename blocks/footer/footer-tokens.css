@@ -1,7 +1,5 @@
 /* footer design tokens */
 :root {
-  /* source's footer uses its own typeface (Noto Sans), not the site's body font */
-  --footer-font-family: noto-sans, -apple-system, blinkmacsystemfont, 'Segoe UI', 'Helvetica Neue', sans-serif;
   --footer-subscribe-bg: #e5edf7;
   --footer-categorylinks-bg: #e5edf7;
   --footer-footnotes-bg: #caddf2;

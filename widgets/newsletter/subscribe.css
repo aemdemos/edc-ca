@@ -1,17 +1,18 @@
 .subscribe {
   /*
-   * EDC-brand values, hardcoded rather than layered as var(--generic-token, #edc-value)
-   * fallbacks: the generic tokens (--text-color, --error-color, --color-action, etc.) are
-   * already defined with real (if generic) boilerplate values, so a var() fallback never
-   * actually triggers — it only applies when the custom property is truly undefined.
+   * --text-color/--link-color/--link-hover-color are now the real EDC brand values
+   * (design tokens extracted on main), so the widget just references them directly.
+   * --subscribe-text-color and --subscribe-success-title-color are bespoke shades from
+   * the source subscribe form with no sitewide equivalent, so those stay hardcoded.
    */
   --subscribe-radius: var(--border-radius-m, 8px);
   --subscribe-input-height: 48px;
-  --subscribe-input-text: #1d1d1d;
+  --subscribe-input-text: var(--text-color);
   --subscribe-text-color: #3d3d3d;
   --subscribe-error-color: #bf081a;
-  --subscribe-accent: #1a65b2;
-  --subscribe-accent-hover: #11377c;
+  --subscribe-accent: var(--link-color);
+  --subscribe-accent-hover: var(--link-hover-color);
+  --subscribe-success-title-color: #11377c;
 
   display: block;
   margin: 0 auto;
@@ -48,7 +49,6 @@
 
 .subscribe-submit {
   margin: 0;
-  font-family: var(--footer-font-family);
   border-radius: 0 var(--subscribe-radius) var(--subscribe-radius) 0;
   min-width: 120px;
   max-width: 232px;
@@ -96,10 +96,9 @@
 
 .subscribe-success-title {
   margin: 0;
-  font-family: var(--footer-font-family);
   font-size: var(--body-font-size-l, 20px);
   font-weight: 600;
-  color: var(--subscribe-accent-hover);
+  color: var(--subscribe-success-title-color);
 }
 
 .subscribe-success-description {
