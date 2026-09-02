@@ -260,6 +260,28 @@
           }
         },
         {
+          "title": "Overview Text",
+          "id": "overviewtext",
+          "model": "overviewtext",
+          "plugins": {
+            "da": {
+              "unsafeHTML": "<div class=\"overviewtext\"><div><div></div></div><div><div></div></div></div>",
+              "rows": 2,
+              "columns": 1,
+              "fields": [
+                {
+                  "name": "title",
+                  "selector": "div:nth-child(1)>div"
+                },
+                {
+                  "name": "text",
+                  "selector": "div:nth-child(2)>div"
+                }
+              ]
+            }
+          }
+        },
+        {
           "title": "Quote",
           "id": "quote",
           "model": "quote",
