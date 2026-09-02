@@ -1,0 +1,24 @@
+{
+  "en": {
+    "heading": "Join the 95,000 Canadians receiving our trade intelligence",
+    "emailLabel": "Business email address",
+    "submitLabel": "Subscribe",
+    "consent": "I consent to receive regular trade insights, as well as information about EDC solutions and events. I can withdraw my consent at any time by unsubscribing to any such message.",
+    "requiredError": "This is a required field.",
+    "invalidEmailError": "Please enter a valid email address. Example: email@example.com",
+    "failMessage": "Sorry, our system is temporarily unavailable. Please try again later.",
+    "successTitle": "Thanks for subscribing",
+    "successDescription": "You'll get our latest trade intelligence right to your inbox."
+  },
+  "fr": {
+    "heading": "Rejoignez les 95 000 dirigeants canadiens qui reçoivent nos perspectives d'experts en commerce international.",
+    "emailLabel": "Adresse courriel professionnelle",
+    "submitLabel": "S'inscrire",
+    "consent": "Je consens à recevoir des communications régulières sur les perspectives d'experts, les événements et les solutions d'EDC. Je peux me désabonner à tout moment.",
+    "requiredError": "Il s'agit d'un champ obligatoire.",
+    "invalidEmailError": "Veuillez saisir une adresse de courriel valide. Exemple : courriel@exemple.com",
+    "failMessage": "Nous sommes désolés, mais notre système est temporairement inaccessible. Veuillez tenter d'y accéder de nouveau plus tard.",
+    "successTitle": "Merci!",
+    "successDescription": "Vous recevrez bientôt nos connaissances les plus récentes sur le commerce international."
+  }
+}

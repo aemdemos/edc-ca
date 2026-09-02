@@ -1,22 +1,149 @@
 @import url('./footer-tokens.css');
 
-footer { /* @boilerplate */
-  background-color: var(--light-color); /* @boilerplate */
-  font-size: var(--body-font-size-xs); /* @boilerplate */
+footer {
+  background-color: var(--light-color);
+  font-size: var(--body-font-size-xs);
 }
 
-footer .footer > div { /* @boilerplate */
-  margin: auto; /* @boilerplate */
-  max-width: var(--footer-max-width); /* @boilerplate */
-  padding: var(--footer-padding); /* @boilerplate */
+footer .footer > div > .section {
+  padding: var(--footer-padding);
 }
 
-footer .footer p { /* @boilerplate */
-  margin: 0; /* @boilerplate */
+@media (width >= 992px) {
+  footer .footer > div > .section {
+    padding: var(--footer-padding-desktop);
+  }
 }
 
-@media (width >= 992px) { /* @boilerplate */
-  footer .footer > div { /* @boilerplate */
-    padding: var(--footer-padding-desktop); /* @boilerplate */
+footer .footer p {
+  margin: 0;
+}
+
+/* subscribe section */
+footer .footer .subscribe-section {
+  background-color: var(--footer-subscribe-bg);
+}
+
+/* footer nav: columns block (logo + 3 link columns) */
+footer .footer .footer-nav {
+  background-color: var(--footer-nav-bg);
+  border-top: 1px solid var(--footer-divider-color);
+}
+
+footer .footer .footer-nav h3 {
+  margin: 0 0 var(--spacing-s);
+  padding-bottom: var(--spacing-s);
+  border-bottom: 1px solid var(--footer-divider-color);
+  font-size: var(--body-font-size-s);
+  font-weight: 600;
+}
+
+footer .footer .footer-nav ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+footer .footer .footer-nav a {
+  display: block;
+  padding: var(--spacing-xs) 0;
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+footer .footer .footer-nav a:hover {
+  text-decoration: underline;
+}
+
+footer .footer .footer-nav .columns-img-col {
+  display: none;
+}
+
+footer .footer .footer-nav .columns-img-col img {
+  width: auto;
+  max-width: 140px;
+}
+
+/*
+ * footnotes / legal bar — plain default content, so styling is structural (tag/nth-of-type),
+ * not class-based: authors can't attach custom classes to paragraphs/lists/images in a doc.
+ * Expected order: two logo pictures, a company-name paragraph, a legal-links list, a
+ * social-links list (matches the content model — adjust selectors if authors reorder).
+ */
+footer .footer .footer-legal {
+  background-color: var(--footer-legal-bg);
+  font-size: var(--body-font-size-xs);
+}
+
+/*
+ * Two adjacent authored images become two separate <p> elements (markdown round-trip
+ * puts each image on its own line) — target the first two paragraphs positionally so
+ * the logos sit side by side instead of stacking as block-level paragraphs.
+ */
+footer .footer .footer-legal p:nth-of-type(-n+2) {
+  display: inline-block;
+  margin: 0 var(--spacing-m) var(--spacing-s) 0;
+}
+
+footer .footer .footer-legal picture img {
+  width: 68px;
+  height: auto;
+}
+
+footer .footer .footer-legal ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs) var(--spacing-m);
+  margin: var(--spacing-s) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+footer .footer .footer-legal a {
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+footer .footer .footer-legal a:hover {
+  text-decoration: underline;
+}
+
+/* social links: authors write plain links to each network's URL — icons are matched by
+   href and applied as a background image, since default content can't carry icon spans */
+footer .footer .footer-legal ul:last-of-type a {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  overflow: hidden;
+  text-indent: -999px;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+footer .footer .footer-legal ul:last-of-type a[href*="linkedin.com"] {
+  background-image: url('/icons/linkedin.svg');
+}
+
+footer .footer .footer-legal ul:last-of-type a[href*="instagram.com"] {
+  background-image: url('/icons/instagram.svg');
+}
+
+footer .footer .footer-legal ul:last-of-type a[href*="facebook.com"] {
+  background-image: url('/icons/facebook.svg');
+}
+
+footer .footer .footer-legal ul:last-of-type a[href*="twitter.com"],
+footer .footer .footer-legal ul:last-of-type a[href*="x.com"] {
+  background-image: url('/icons/x.svg');
+}
+
+footer .footer .footer-legal ul:last-of-type a[href*="youtube.com"] {
+  background-image: url('/icons/youtube.svg');
+}
+
+@media (width >= 992px) {
+  footer .footer .footer-nav .columns-img-col {
+    display: block;
+    flex: 0 0 auto;
   }
 }
