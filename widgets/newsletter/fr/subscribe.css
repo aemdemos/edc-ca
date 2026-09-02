@@ -1,0 +1,4 @@
+/* French subscribe widget: same filename ("subscribe") as the English widget, so it
+   shares the same `.subscribe` CSS scope — reuse the English styles directly rather
+   than duplicating them. */
+@import url('../subscribe.css');

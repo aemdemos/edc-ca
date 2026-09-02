@@ -1,0 +1,26 @@
+<form class="subscribe-form" novalidate>
+  <label class="subscribe-heading" for="subscribe-email" data-key="heading"></label>
+  <div class="subscribe-row">
+    <input
+      class="subscribe-email"
+      id="subscribe-email"
+      name="emailAddress"
+      type="email"
+      required
+      autocomplete="off"
+      data-key-placeholder="emailLabel"
+      data-key-aria-label="emailLabel"
+    />
+    <button class="button subscribe-submit" type="submit" data-key="submitLabel"></button>
+  </div>
+  <p class="subscribe-error" role="alert" hidden></p>
+  <p class="subscribe-consent" data-key="consent"></p>
+  <p class="subscribe-fail" role="alert" data-key="failMessage" hidden></p>
+</form>
+<div class="subscribe-success" aria-live="polite" hidden>
+  <div class="subscribe-success-heading">
+    <span class="icon icon-check-circle" aria-hidden="true"></span>
+    <h3 class="subscribe-success-title" data-key="successTitle"></h3>
+  </div>
+  <p class="subscribe-success-description" data-key="successDescription"></p>
+</div>
