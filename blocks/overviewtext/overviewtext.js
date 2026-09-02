@@ -7,7 +7,6 @@ export default function decorate(block) {
   block.setAttribute('role', 'region');
   block.setAttribute('aria-roledescription', 'Overview Text');
 
-  const [titleRow, textRow] = [...block.children];
-  titleRow?.firstElementChild?.classList.add('overviewtext-title');
-  textRow?.firstElementChild?.classList.add('overviewtext-text');
+  block.querySelector('h1, h2, h3, h4, h5, h6')?.classList.add('overviewtext-title');
+  block.querySelectorAll('p').forEach((p) => p.classList.add('overviewtext-text'));
 }

@@ -1,10 +1,15 @@
 /* overviewtext design tokens */
 :root {
-  --overviewtext-max-width: 800px;
-  --overviewtext-padding: var(--spacing-xl) var(--spacing-l);
-  --overviewtext-padding-desktop: var(--spacing-xxl) var(--spacing-xl);
-  --overviewtext-border-radius: var(--border-radius-m);
-  --overviewtext-title-margin: 0 0 var(--spacing-m);
-  --overviewtext-travel-brief-background: #e8eef7;
-  --overviewtext-travel-brief-padding-desktop: 64px var(--spacing-xl);
+  --overviewtext-padding-top: 64px;
+  --overviewtext-padding-bottom: 88px;
+  --overviewtext-title-font-size: 20px;
+  --overviewtext-title-font-size-desktop: 30px;
+  --overviewtext-title-font-weight: 600;
+  --overviewtext-text-font-size: 21px;
+  --overviewtext-text-font-size-desktop: 26px;
+  --overviewtext-travel-brief-background: #e5edf7;
+  --overviewtext-travel-brief-title-color: #1a65b2;
+  --overviewtext-travel-brief-text-font-size: 20px;
+  --overviewtext-travel-brief-padding: 48px;
+  --overviewtext-travel-brief-padding-desktop: 112px;
 }

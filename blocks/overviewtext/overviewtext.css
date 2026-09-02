@@ -1,42 +1,59 @@
 @import url('./overviewtext-tokens.css');
 
 .overviewtext {
-  box-sizing: border-box;
-  max-width: var(--overviewtext-max-width);
-  margin: 0 auto;
-  padding: var(--overviewtext-padding);
-  border: var(--border-width-s) solid var(--border-color);
-  border-radius: var(--overviewtext-border-radius);
+  padding: var(--overviewtext-padding-top) 0 var(--overviewtext-padding-bottom);
   text-align: center;
 }
 
 .overviewtext .overviewtext-title {
-  margin: var(--overviewtext-title-margin);
-  font-size: var(--heading-font-size-xs);
+  margin: 0 0 var(--spacing-m);
+  font-size: var(--overviewtext-title-font-size);
+  font-weight: var(--overviewtext-title-font-weight);
 }
 
 .overviewtext .overviewtext-text {
   margin: 0;
+  font-size: var(--overviewtext-text-font-size);
 }
 
 @media (width >= 992px) {
-  .overviewtext {
-    padding: var(--overviewtext-padding-desktop);
+  .overviewtext .overviewtext-title {
+    font-size: var(--overviewtext-title-font-size-desktop);
+  }
+
+  .overviewtext .overviewtext-text {
+    font-size: var(--overviewtext-text-font-size-desktop);
   }
 }
 
-/* travel-brief variant */
+/* travel-brief: full-bleed colored band, breaking out of the section's default content width */
 .overviewtext.travel-brief {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  padding-top: var(--overviewtext-travel-brief-padding);
+  padding-bottom: var(--overviewtext-travel-brief-padding);
   background-color: var(--overviewtext-travel-brief-background);
-  border: none;
+}
+
+.overviewtext.travel-brief > div {
+  max-width: var(--max-width-site);
+  margin: 0 auto;
+  padding: 0 var(--spacing-m);
 }
 
 .overviewtext.travel-brief .overviewtext-title {
-  color: var(--link-color);
+  color: var(--overviewtext-travel-brief-title-color);
+}
+
+.overviewtext.travel-brief .overviewtext-text {
+  color: var(--text-color);
+  font-size: var(--overviewtext-travel-brief-text-font-size);
 }
 
 @media (width >= 992px) {
   .overviewtext.travel-brief {
-    padding: var(--overviewtext-travel-brief-padding-desktop);
+    padding-top: var(--overviewtext-travel-brief-padding-desktop);
+    padding-bottom: var(--overviewtext-travel-brief-padding-desktop);
   }
 }
