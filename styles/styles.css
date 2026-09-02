@@ -107,7 +107,7 @@
   --button-margin: 12px 0; /* @boilerplate */
   --button-padding: 0.5em 1.2em; /* @boilerplate */
   --button-border-width: 2px; /* @boilerplate */
-  --button-border-radius: 2.4em; /* @boilerplate */
+  --button-border-radius: 8px; /* @boilerplate */
   --button-font-weight: 500; /* @boilerplate */
   --button-line-height: 1.25; /* @boilerplate */
   --button-background: var(--color-action); /* @boilerplate */
@@ -311,8 +311,8 @@ a:hover { /* @boilerplate */
 
 
 /* buttons */
-a.button,
-button { /* @boilerplate */
+a.button.primary,
+button.primary { /* @boilerplate */
   box-sizing: border-box; /* @boilerplate */
   display: inline-block; /* @boilerplate */
   max-width: 100%; /* @boilerplate */
@@ -334,10 +334,10 @@ button { /* @boilerplate */
   white-space: nowrap; /* @boilerplate */
 }
 
-a.button:hover,
-a.button:focus,
-button:hover,
-button:focus { /* @boilerplate */
+a.button.primary:hover,
+a.button.primary:focus,
+button.primary:hover,
+button.primary:focus { /* @boilerplate */
   background-color: var(--button-hover-background); /* @boilerplate */
   cursor: pointer; /* @boilerplate */
 }
