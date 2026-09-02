@@ -110,7 +110,7 @@
   --button-border-radius: 0.5rem; /* @boilerplate */
   --button-font-weight: 500; /* @boilerplate */
   --button-line-height: 1.25; /* @boilerplate */
-  --button-background: var(--color-action); /* @boilerplate */
+  --button-background: var(--brand-primary); /* @boilerplate */
   --button-hover-background: var(--color-action-hover); /* @boilerplate */
   --button-text-color: var(--background-color); /* @boilerplate */
   --button-disabled-background: var(--light-color); /* @boilerplate */
