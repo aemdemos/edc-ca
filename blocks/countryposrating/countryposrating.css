@@ -87,6 +87,8 @@
   list-style: none;
 }
 
+/* right-column list uses a hanging indent so wrapped lines align under
+   the text, not the bullet (source: ul padding-left + li negative indent) */
 .countryposrating .determination ul {
   padding-left: 40px;
 }
@@ -97,6 +99,7 @@
 
 .countryposrating .determination li {
   font-size: var(--countryposrating-small-font-size);
+  text-indent: -32px;
 }
 
 .countryposrating li::before {
@@ -104,11 +107,16 @@
   display: inline-block;
   width: 4px;
   height: 4px;
-  margin-right: 13px;
+  margin-right: 6px;
   margin-left: 6px;
   border-radius: 100%;
   background-color: var(--countryposrating-text-color);
   vertical-align: middle;
+}
+
+/* wider bullet-to-text gap in the right column (source: ~20.8px) */
+.countryposrating .determination li::before {
+  margin-right: 20.8px;
 }
 
 /* status gauge icon (author-managed SVG via the icon system) */
