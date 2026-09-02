@@ -260,6 +260,17 @@
           }
         },
         {
+          "title": "Page Level Feedback",
+          "id": "pagelevelfeedback",
+          "model": "pagelevelfeedback",
+          "plugins": {
+            "da": {
+              "rows": 1,
+              "columns": 1
+            }
+          }
+        },
+        {
           "title": "Quote",
           "id": "quote",
           "model": "quote",
