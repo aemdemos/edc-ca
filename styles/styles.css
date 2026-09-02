@@ -107,11 +107,12 @@
   --button-margin: 12px 0; /* @boilerplate */
   --button-padding: 0.5em 1.2em; /* @boilerplate */
   --button-border-width: 2px; /* @boilerplate */
-  --button-border-radius: 2.4em; /* @boilerplate */
+  --button-border-radius: 0.5rem; /* @boilerplate */
   --button-font-weight: 500; /* @boilerplate */
   --button-line-height: 1.25; /* @boilerplate */
-  --button-background: var(--color-action); /* @boilerplate */
+  --button-background: var(--brand-primary); /* @boilerplate */
   --button-hover-background: var(--color-action-hover); /* @boilerplate */
+  --button-hover-secondary-background: #caddf2;
   --button-text-color: var(--background-color); /* @boilerplate */
   --button-disabled-background: var(--light-color); /* @boilerplate */
 
@@ -310,8 +311,8 @@ a:hover { /* @boilerplate */
 
 
 /* buttons */
-a.button,
-button { /* @boilerplate */
+a.button.primary,
+button.primary { /* @boilerplate */
   box-sizing: border-box; /* @boilerplate */
   display: inline-block; /* @boilerplate */
   max-width: 100%; /* @boilerplate */
@@ -333,10 +334,10 @@ button { /* @boilerplate */
   white-space: nowrap; /* @boilerplate */
 }
 
-a.button:hover,
-a.button:focus,
-button:hover,
-button:focus { /* @boilerplate */
+a.button.primary:hover,
+a.button.primary:focus,
+button.primary:hover,
+button.primary:focus { /* @boilerplate */
   background-color: var(--button-hover-background); /* @boilerplate */
   cursor: pointer; /* @boilerplate */
 }
@@ -349,6 +350,37 @@ button:disabled:hover { /* @boilerplate */
 
 a.button.secondary,
 button.secondary { /* @boilerplate */
+  box-sizing: border-box; /* @boilerplate */
+  display: inline-block; /* @boilerplate */
+  max-width: 100%; /* @boilerplate */
+  margin: var(--button-margin); /* @boilerplate */
+  border: var(--button-border-width) solid var(--brand-primary); /* @boilerplate */
+  border-radius: var(--button-border-radius); /* @boilerplate */
+  padding: var(--button-padding); /* @boilerplate */
+  font-family: var(--body-font-family); /* @boilerplate */
+  font-style: normal; /* @boilerplate */
+  font-weight: var(--button-font-weight); /* @boilerplate */
+  line-height: var(--button-line-height); /* @boilerplate */
+  text-align: center; /* @boilerplate */
+  text-decoration: none; /* @boilerplate */
+  background-color: unset;
+  color: var(--brand-primary); /* @boilerplate */
+  cursor: pointer; /* @boilerplate */
+  overflow: hidden; /* @boilerplate */
+  text-overflow: ellipsis; /* @boilerplate */
+  white-space: nowrap; /* @boilerplate */
+}
+
+a.button.secondary:hover,
+a.button.secondary:focus,
+button.secondary:hover,
+button.secondary:focus { /* @boilerplate */
+  background-color: var(--button-hover-secondary-background); /* @boilerplate */
+  cursor: pointer; /* @boilerplate */
+}
+
+a.button.accent,
+button.accent { /* @boilerplate */
   background-color: unset; /* @boilerplate */
   border: var(--button-border-width) solid currentcolor; /* @boilerplate */
   color: var(--text-color); /* @boilerplate */
