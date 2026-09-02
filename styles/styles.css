@@ -107,7 +107,7 @@
   --button-margin: 12px 0; /* @boilerplate */
   --button-padding: 0.5em 1.2em; /* @boilerplate */
   --button-border-width: 2px; /* @boilerplate */
-  --button-border-radius: 8px; /* @boilerplate */
+  --button-border-radius: 0.5rem; /* @boilerplate */
   --button-font-weight: 500; /* @boilerplate */
   --button-line-height: 1.25; /* @boilerplate */
   --button-background: var(--color-action); /* @boilerplate */
