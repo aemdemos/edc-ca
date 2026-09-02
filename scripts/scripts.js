@@ -429,7 +429,10 @@ export function decorateMain(main) {
  * @param {Element} doc The container element
  */
 async function loadEager(doc) {
-  document.documentElement.lang = 'en';
+  // Match the source site: French pages (/fr/...) are served as lang="fr",
+  // everything else as lang="en". Correct for accessibility and lets language-aware
+  // third parties (e.g. the Qualtrics page-feedback intercept) localize (Oui/Non).
+  document.documentElement.lang = window.location.pathname.startsWith('/fr/') ? 'fr' : 'en';
   decorateTemplateAndTheme();
   if (FEATURES.themeSheet) loadThemeSpreadSheetConfig();
   if (getMetadata('breadcrumbs').toLowerCase() === 'true') {
