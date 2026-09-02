@@ -5,7 +5,6 @@ import {
   decorateBlock,
   decorateBlocks,
   decorateTemplateAndTheme,
-  getMetadata,
   waitForFirstImage,
   loadBlock,
   loadSection,
@@ -432,9 +431,6 @@ async function loadEager(doc) {
   document.documentElement.lang = 'en';
   decorateTemplateAndTheme();
   if (FEATURES.themeSheet) loadThemeSpreadSheetConfig();
-  if (getMetadata('breadcrumbs').toLowerCase() === 'true') {
-    doc.body.dataset.breadcrumbs = true;
-  }
   const main = doc.querySelector('main');
   if (main) {
     decorateMain(main);
