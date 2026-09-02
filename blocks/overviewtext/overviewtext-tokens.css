@@ -9,6 +9,13 @@
   --overviewtext-travel-brief-title-color: #1a65b2;
   --overviewtext-travel-brief-text-font-size: 1.25rem;
   --overviewtext-travel-brief-padding: 3rem;
+  --overviewtext-travel-brief-content-width: 100%;
+}
+
+@media (width >= 768px) {
+  :root {
+    --overviewtext-travel-brief-content-width: 83.3333%;
+  }
 }
 
 @media (width >= 992px) {
@@ -16,5 +23,6 @@
     --overviewtext-title-font-size: 1.875rem;
     --overviewtext-text-font-size: 1.625rem;
     --overviewtext-travel-brief-padding: 7rem;
+    --overviewtext-travel-brief-content-width: 66.6667%;
   }
 }
