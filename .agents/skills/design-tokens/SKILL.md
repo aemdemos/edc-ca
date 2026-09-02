@@ -105,5 +105,35 @@ main .cards-teaser h2 {
 }
 ```
 
+### 3.5 Responsive tokens: same token, new value — never `-desktop`/`-mobile`
+
+A token that changes across breakpoints stays **one token**. Set its mobile/default value in `:root`,
+then reassign that same custom property to a new value inside a breakpoint's `@media` block. Never
+create a second token suffixed `-desktop`, `-mobile`, `-tablet`, etc. — that duplicates the token and
+leaves the structural CSS to pick between two names instead of one:
+
+```css
+/* cards-teaser-tokens.css */
+:root {
+  --cards-teaser-heading-font-size: 20px; /* mobile/default */
+}
+
+@media (width >= 992px) {
+  :root {
+    --cards-teaser-heading-font-size: 26px; /* same token, desktop value */
+  }
+}
+```
+
+```css
+/* WRONG — do not do this */
+:root {
+  --cards-teaser-heading-font-size-mobile: 20px;
+  --cards-teaser-heading-font-size-desktop: 26px;
+}
+```
+
+This also means each CSS file gets **at most one `@media` block per breakpoint** — see
+`references/design-tokens.md` for the consolidation rule.
 
 **For the complete token architecture, naming conventions, and examples, read `references/design-tokens.md`.**

@@ -145,6 +145,67 @@ Examples:
 --cards-teaser-card-border-radius     /* Sub-element + property */
 ```
 
+## Responsive tokens: reassign, don't duplicate
+
+A token's value can change per breakpoint, but the token itself never forks into variants. Give it
+its mobile/default value in the file's `:root` (or the block's token file `:root`), then reassign the
+**same** custom property inside a breakpoint's `@media` block:
+
+```css
+:root {
+  --cards-teaser-heading-font-size: 20px;
+}
+
+@media (width >= 992px) {
+  :root {
+    --cards-teaser-heading-font-size: 26px;
+  }
+}
+```
+
+Never introduce `--cards-teaser-heading-font-size-mobile` / `-desktop` (or `-tablet`, `-wide`) pairs —
+that forces every consumer of the token to know which breakpoint it's in and pick the right name,
+instead of just reading `var(--cards-teaser-heading-font-size)` everywhere. If a value doesn't change
+across breakpoints, it doesn't need a `@media` override at all — just the one declaration in `:root`.
+
+### One `@media` block per breakpoint, per file
+
+Because breakpoint overrides reassign existing tokens (or other properties) rather than declaring new
+ones, a single breakpoint only ever needs **one** `@media` block in a given CSS file. Do not scatter
+`@media (width >= 992px) { ... }` in three different places in the same file — gather everything that
+needs to change at that breakpoint into one block. Order blocks mobile-first, ascending, using only
+the breakpoints actually needed: `576px`, `768px`, `992px`, `1200px`, each with `>=` (never `<=` /
+`max-width`). This applies equally to `styles/styles.css`, `{blockname}.css`, and
+`{blockname}-tokens.css`.
+
+```css
+/* Good — one block per breakpoint, gathers everything that changes together */
+@media (width >= 992px) {
+  :root {
+    --cards-teaser-heading-font-size: 26px;
+  }
+
+  .cards-teaser {
+    flex-direction: row;
+  }
+}
+```
+
+```css
+/* Wrong — same breakpoint, split across two blocks in the same file */
+@media (width >= 992px) {
+  :root {
+    --cards-teaser-heading-font-size: 26px;
+  }
+}
+/* ...100 lines later... */
+@media (width >= 992px) {
+  .cards-teaser {
+    flex-direction: row;
+  }
+}
+```
+
 ## Global semantic tokens (Tier 1)
 
 Defined in `styles/styles.css` `:root`. Component tokens reference these:
@@ -475,7 +536,7 @@ With a standard vertical rhythm:
 3. **Create `{block}-tokens.css`** translating measurements to CSS custom properties
 4. **Import tokens** at the top of `{block}.css`
 5. **Use `var(--token)` everywhere** in the structural CSS — never hardcode values
-6. **Test responsive** — tokens should work across breakpoints, add media queries in the structural CSS (not the token file) for responsive overrides
+6. **Test responsive** — a token whose value changes per breakpoint gets a `@media` block reassigning that same token in the token file's `:root` (see "Responsive tokens: reassign, don't duplicate" above); layout changes that aren't token values (e.g. `flex-direction`) go in a `@media` block in the structural CSS instead. Either way, one `@media` block per breakpoint per file
 
 ## Tips
 
@@ -484,8 +545,14 @@ With a standard vertical rhythm:
   the block
 - **Every rule line carries `/* @boilerplate */`** until reviewed; on resolution (edit or conscious
   keep), delete the marker — never flip it — so `grep '@boilerplate'` reports what is still untouched
-- **Token files contain only `:root` declarations** — no selectors, no structural CSS
+- **Token files contain only `:root` declarations** (optionally reassigned inside `@media` blocks) —
+  no non-token selectors, no structural CSS
 - **One token file per block** — keeps customization isolated
+- **Responsive values reassign the same token, never fork it** — one `--{block}-{element}-{property}`
+  token per concept, given a new value inside a breakpoint's `@media` block; no `-mobile`/`-desktop`
+  suffixed pairs
+- **One `@media` block per breakpoint, per file** — gather every override needed at a given breakpoint
+  into a single block rather than repeating `@media (width >= 992px)` multiple times in the same file
 - **All visual values come from tokens** — if you're hardcoding a color or size in the structural CSS, it should be a token
 - **Measurement files are optional but valuable** — they document the designer's intent and make it easy to verify accuracy
 - **Keep the naming hierarchy flat** — `--block-element-property`, not deeply nested

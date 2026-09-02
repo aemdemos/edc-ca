@@ -2412,32 +2412,22 @@ Below is the **complete template**. Every `{PLACEHOLDER}` must be replaced with 
   src: local('{system fallback}');
 }
 
-/* Responsive adjustments — source: breakpoints.json, typography.json → responsive */
 /*
- * CONDITIONAL: Only include this @media block if typography.responsive.hasResponsiveTypography is true.
- * If the site does NOT have responsive typography (same sizes at all breakpoints), DELETE this entire @media block.
+ * Responsive adjustments — source: breakpoints.json, typography.json → responsive
+ * AGENTS.md allows only ONE @media block per breakpoint per CSS file, so every
+ * desktop-breakpoint override in this file (typography, breadcrumbs header height,
+ * section padding) is gathered into the SINGLE consolidated block near the end of
+ * this file — see "Consolidated desktop overrides" right before :focus-visible.
+ * Do NOT add another `@media (width >= {breakpoints.edsMapping.desktopBreakpoint})`
+ * block anywhere else in this file.
  *
- * When included:
- * - The :root block above uses MOBILE values (from typography.responsive.mobileSizes)
- * - This @media block overrides with DESKTOP values (from typography.responsive.desktopSizes)
- * - The breakpoint value comes from breakpoints.edsMapping.desktopBreakpoint (never hardcoded)
+ * CONDITIONAL: The typography entry in that consolidated block is only needed if
+ * typography.responsive.hasResponsiveTypography is true. The :root block above
+ * already holds MOBILE values (from typography.responsive.mobileSizes); the
+ * consolidated block overrides them with DESKTOP values (from
+ * typography.responsive.desktopSizes). If the site has no responsive typography,
+ * skip that entry — there is nothing to add for typography.
  */
-@media (width >= {breakpoints.edsMapping.desktopBreakpoint}) {
-  :root {
-    /* body sizes — desktop values from typography.responsive.desktopSizes */
-    --body-font-size-m: {typography.responsive.desktopSizes.body.fontSize — only if different from mobile};
-    --body-font-size-s: {desktop smaller text size};
-    --body-font-size-xs: {desktop fine print size};
-
-    /* heading sizes — desktop values from typography.responsive.desktopSizes */
-    --heading-font-size-xxl: {typography.responsive.desktopSizes.h1.fontSize};
-    --heading-font-size-xl: {typography.responsive.desktopSizes.h2.fontSize};
-    --heading-font-size-l: {typography.responsive.desktopSizes.h3.fontSize};
-    --heading-font-size-m: {typography.responsive.desktopSizes.h4.fontSize};
-    --heading-font-size-s: {typography.responsive.desktopSizes.h5.fontSize};
-    --heading-font-size-xs: {typography.responsive.desktopSizes.h6.fontSize};
-  }
-}
 
 body {
   display: none;
@@ -2468,11 +2458,8 @@ footer .footer[data-block-status="loaded"] {
   visibility: visible;
 }
 
-@media (width >= {breakpoints.edsMapping.desktopBreakpoint}) {
-  body[data-breadcrumbs] {
-    --header-height: calc(var(--nav-height) + var(--breadcrumbs-height));
-  }
-}
+/* Breadcrumbs header-height override — consolidated into the single @media block
+   near the end of this file (see "Consolidated desktop overrides"), not repeated here. */
 
 h1,
 h2,
@@ -2755,16 +2742,13 @@ main > .section:first-of-type {
 }
 
 /*
- * Desktop padding override: Only include this @media block if layout.desktopContainerPadding
- * is NOT null (i.e., there is CSS evidence for a different padding at desktop).
- * If layout.desktopContainerPadding is null, DELETE this entire @media block.
- * Do NOT fabricate a 32px desktop override — use only values backed by source CSS evidence.
+ * Desktop padding override (full-bleed layout): Only needed if layout.desktopContainerPadding
+ * is NOT null (i.e., there is CSS evidence for a different padding at desktop). Add
+ * `main > .section > div { padding: 0 {layout.desktopContainerPadding.left}; }` to the single
+ * consolidated @media block near the end of this file (see "Consolidated desktop overrides") —
+ * do not open a separate @media block here. If layout.desktopContainerPadding is null, skip it
+ * entirely; do NOT fabricate a 32px desktop override.
  */
-@media (width >= {breakpoints.edsMapping.desktopBreakpoint}) {
-  main > .section > div {
-    padding: 0 {layout.desktopContainerPadding.left — ONLY if not null};
-  }
-}
 
 /*
  * Narrow section variant: Only include if layout.nestedContainers is true.
@@ -2802,12 +2786,12 @@ main > .section:first-of-type {
   margin-top: 0;
 }
 
-/* Desktop padding override — same rule as full-bleed: only if desktopContainerPadding is not null */
-@media (width >= {breakpoints.edsMapping.desktopBreakpoint}) {
-  main > .section {
-    padding: 0 {layout.desktopContainerPadding.left — ONLY if not null};
-  }
-}
+/*
+ * Desktop padding override (constrained layout) — same rule as full-bleed: only if
+ * desktopContainerPadding is not null. Add `main > .section { padding: 0 {layout.desktopContainerPadding.left}; }`
+ * to the single consolidated @media block near the end of this file instead of opening a
+ * separate block here.
+ */
 
 /*
  * Narrow section variant (constrained mode): Only include if layout.nestedContainers is true.
@@ -2828,6 +2812,46 @@ main .section.highlight {
 
 /* === END conditional === */
 
+/*
+ * Consolidated desktop overrides — the ONLY @media (width >= desktopBreakpoint) block in this
+ * file. AGENTS.md allows just one @media per breakpoint per CSS file, so every desktop-only
+ * change collected above (typography, breadcrumbs header height, section padding) lands here
+ * instead of being scattered near the rules they relate to. Include only the entries that apply
+ * — delete any entry whose condition isn't met, and delete the whole block if none apply.
+ */
+@media (width >= {breakpoints.edsMapping.desktopBreakpoint}) {
+  /* CONDITIONAL: only if typography.responsive.hasResponsiveTypography is true — source: typography.json → responsive */
+  :root {
+    --body-font-size-m: {typography.responsive.desktopSizes.body.fontSize — only if different from mobile};
+    --body-font-size-s: {desktop smaller text size};
+    --body-font-size-xs: {desktop fine print size};
+    --heading-font-size-xxl: {typography.responsive.desktopSizes.h1.fontSize};
+    --heading-font-size-xl: {typography.responsive.desktopSizes.h2.fontSize};
+    --heading-font-size-l: {typography.responsive.desktopSizes.h3.fontSize};
+    --heading-font-size-m: {typography.responsive.desktopSizes.h4.fontSize};
+    --heading-font-size-s: {typography.responsive.desktopSizes.h5.fontSize};
+    --heading-font-size-xs: {typography.responsive.desktopSizes.h6.fontSize};
+  }
+
+  /* Breadcrumbs header height — always included, not conditional */
+  body[data-breadcrumbs] {
+    --header-height: calc(var(--nav-height) + var(--breadcrumbs-height));
+  }
+
+  /*
+   * CONDITIONAL: only if layout.desktopContainerPadding is not null. Selector depends on
+   * layout.sectionLayout — use `main > .section > div` for "full-bleed", or `main > .section`
+   * for "constrained". Include only the one matching selector, not both.
+   */
+  main > .section > div {
+    padding: 0 {layout.desktopContainerPadding.left — ONLY if not null; delete this rule for "constrained" layout, use the one below instead};
+  }
+
+  main > .section {
+    padding: 0 {layout.desktopContainerPadding.left — ONLY if not null; delete this rule for "full-bleed" layout, use the one above instead};
+  }
+}
+
 /* focus styles — source: interactions.json */
 /* Only include if the source site has custom focus styles. Delete if using browser defaults. */
 :focus-visible {
@@ -2846,9 +2870,10 @@ main .section.highlight {
 
    **Build a running list of defaulted values** as you work. Every defaulted value MUST be recorded in `migration-work/design-system-extracted.json` → `summary.defaultedValues` (see Phase 12.3). This is how future sessions know which values are real and which are placeholders.
 3. If a comment says "omit this line if...", delete the entire CSS property line when the condition is met
-4. If the source site has NO responsive typography (same sizes at all breakpoints), delete the `@media` block that adjusts `:root` heading sizes
+4. If the source site has NO responsive typography (same sizes at all breakpoints), delete the typography entry from the consolidated `@media` block near the end of the file
 5. Delete any site-specific `--brand-*` or `--border-*` or `--transition-*` variables that were not actually found during extraction — do not leave placeholders in the final output
 6. **NEVER silently substitute a boilerplate default for a value that should have been extracted.** If a core value (colors, fonts, breakpoints, body typography) cannot be extracted, this is an extraction failure — investigate why before falling back.
+7. **Only one `@media (width >= {desktopBreakpoint})` block in the whole file.** Every desktop-only change (typography, breadcrumbs, section padding) is an entry inside the single consolidated block near the end of the file, never a separate `@media` block of its own — AGENTS.md permits just one `@media` per breakpoint per CSS file. If none of the conditional entries apply, delete the entire block.
 
 **Common pitfall:** Do not leave any `{placeholder}` strings in the final file. Every value must be a real CSS value. If you cannot determine a value, first try to extract it from a different page on the source site. Only use a default as a last resort, and ALWAYS record it in the `defaultedValues` list.
 
@@ -2932,17 +2957,18 @@ Then add the font service tags. Examples:
 - [ ] If `layout.contentMaxWidthType` is `"percentage"` → the CSS uses the percentage value (e.g., `85%`), not a pixel approximation
 - [ ] Section margin reflects `spacing.tokens.sectionPaddingVertical` — if `0px`, sections are tightly stacked (not `40px` by default)
 - [ ] Container padding matches the innermost constraining container (Phase 7), not a generic fallback
-- [ ] Desktop padding `@media` block is ABSENT if `layout.desktopContainerPadding` is null (no fabricated `32px`)
-- [ ] Correct section layout conditional used (`full-bleed` vs `constrained`) based on `layout.sectionLayout`
-- [ ] Responsive `@media` block uses the source site's breakpoint (or is deleted if not responsive)
+- [ ] Desktop padding entry in the consolidated `@media` block is ABSENT if `layout.desktopContainerPadding` is null (no fabricated `32px`)
+- [ ] Correct section layout conditional used (`full-bleed` vs `constrained`) based on `layout.sectionLayout` — only the matching selector's padding rule is present in the consolidated block, not both
+- [ ] Consolidated `@media` block uses the source site's breakpoint (`breakpoints.edsMapping.desktopBreakpoint`) and is the ONLY `@media (width >= ...)` block in the file — no separate `@media` blocks scattered elsewhere for typography, breadcrumbs, or padding
+- [ ] Consolidated `@media` block always keeps the breadcrumbs entry (unconditional); the typography entry is present only if `typography.responsive.hasResponsiveTypography` is true, and the padding entry only if `layout.desktopContainerPadding` is not null — each absent condition means deleting that entry, not the whole block
 - [ ] Fallback `@font-face` entries use the correct system font for the font category
 - [ ] `styles/fonts.css` created with @font-face or @import (or documented as CDN-loaded in head.html)
 - [ ] `head.html` updated with font service tags if applicable
 - [ ] No EDS boilerplate default values remain for properties where an extracted value was available
 - [ ] **Provenance tracking:** Every CSS property that used a fallback/default has been added to the running `defaultedValues` list (for Phase 12.3)
 - [ ] **Provenance tracking:** Verify the `defaultedValues` list is accurate — an empty list means every value was extracted, which should be confirmed, not assumed
-- [ ] **Responsive typography:** If `typography.responsive.hasResponsiveTypography` is true, `:root` uses mobile sizes and `@media` block uses desktop sizes
-- [ ] **Responsive typography:** If false, `@media` block for heading sizes is DELETED (not left with duplicate values)
+- [ ] **Responsive typography:** If `typography.responsive.hasResponsiveTypography` is true, `:root` uses mobile sizes and the typography entry in the consolidated `@media` block uses desktop sizes
+- [ ] **Responsive typography:** If false, the typography entry is DELETED from the consolidated `@media` block (not left with duplicate values)
 - [ ] **Base elements:** Per-heading font-weight overrides included if h1 differs from h2-h6
 - [ ] **Base elements:** Blockquote styled (border-left, padding-left, color) if blockquote was found on the source site
 - [ ] **Base elements:** Inline `code` background/padding/radius set if the source site styles it
