@@ -1,15 +1,20 @@
 /* overviewtext design tokens */
 :root {
-  --overviewtext-padding-top: 64px;
-  --overviewtext-padding-bottom: 88px;
-  --overviewtext-title-font-size: 20px;
-  --overviewtext-title-font-size-desktop: 30px;
+  --overviewtext-padding-top: 4rem;
+  --overviewtext-padding-bottom: 5.5rem;
+  --overviewtext-title-font-size: 1.25rem;
   --overviewtext-title-font-weight: 600;
-  --overviewtext-text-font-size: 21px;
-  --overviewtext-text-font-size-desktop: 26px;
+  --overviewtext-text-font-size: 1.3125rem;
   --overviewtext-travel-brief-background: #e5edf7;
   --overviewtext-travel-brief-title-color: #1a65b2;
-  --overviewtext-travel-brief-text-font-size: 20px;
-  --overviewtext-travel-brief-padding: 48px;
-  --overviewtext-travel-brief-padding-desktop: 112px;
+  --overviewtext-travel-brief-text-font-size: 1.25rem;
+  --overviewtext-travel-brief-padding: 3rem;
+}
+
+@media (width >= 992px) {
+  :root {
+    --overviewtext-title-font-size: 1.875rem;
+    --overviewtext-text-font-size: 1.625rem;
+    --overviewtext-travel-brief-padding: 7rem;
+  }
 }

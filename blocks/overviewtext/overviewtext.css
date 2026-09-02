@@ -16,16 +16,6 @@
   font-size: var(--overviewtext-text-font-size);
 }
 
-@media (width >= 992px) {
-  .overviewtext .overviewtext-title {
-    font-size: var(--overviewtext-title-font-size-desktop);
-  }
-
-  .overviewtext .overviewtext-text {
-    font-size: var(--overviewtext-text-font-size-desktop);
-  }
-}
-
 /* travel-brief: full-bleed colored band, breaking out of the section's default content width */
 .overviewtext.travel-brief {
   width: 100vw;
@@ -49,11 +39,4 @@
 .overviewtext.travel-brief .overviewtext-text {
   color: var(--text-color);
   font-size: var(--overviewtext-travel-brief-text-font-size);
-}
-
-@media (width >= 992px) {
-  .overviewtext.travel-brief {
-    padding-top: var(--overviewtext-travel-brief-padding-desktop);
-    padding-bottom: var(--overviewtext-travel-brief-padding-desktop);
-  }
 }
