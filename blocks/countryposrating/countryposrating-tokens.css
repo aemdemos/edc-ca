@@ -31,6 +31,7 @@
   --countryposrating-status-font-size: 20px;
 
   /* layout (source: px padding/divider, % grid widths, rem vertical rhythm) */
+  --countryposrating-column-padding: 15px; /* source: inner column inset (desktop) */
   --countryposrating-icon-max-width: 160px;
   --countryposrating-col-width: 41.6667%;
   --countryposrating-col-offset: 8.3333%;

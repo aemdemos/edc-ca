@@ -132,14 +132,18 @@
     flex-direction: row;
   }
 
+  /* restore the source's 15px inner column inset (keeps left-column text
+     off the divider); the section wrapper handles the outer page gutter */
   .countryposrating .position {
     width: var(--countryposrating-col-width);
     margin-left: var(--countryposrating-col-offset);
+    padding-inline: var(--countryposrating-column-padding);
   }
 
   .countryposrating .determination {
     width: var(--countryposrating-col-width);
     padding-top: 48px;
+    padding-right: var(--countryposrating-column-padding);
     padding-left: var(--countryposrating-divider-gap);
 
     /* divider rotates to vertical between the side-by-side columns */
