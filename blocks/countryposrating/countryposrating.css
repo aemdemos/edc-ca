@@ -22,12 +22,12 @@
    so columns add no extra inline padding of their own */
 
 /* left column is centered; right column is left-aligned (source) */
-.countryposrating .position {
+.countryposrating .edc-position {
   margin-bottom: 4rem;
   text-align: center;
 }
 
-.countryposrating .determination {
+.countryposrating .ccc-rating {
   margin-bottom: 3rem;
   padding-top: var(--countryposrating-determination-offset);
 
@@ -37,25 +37,25 @@
 }
 
 /* headings / labels */
-.countryposrating .position h3,
-.countryposrating .determination h4 {
+.countryposrating .edc-position h3,
+.countryposrating .ccc-rating h4 {
   font-size: var(--countryposrating-label-font-size);
   font-weight: 600;
   line-height: 1.6; /* source: 24px at 15px */
   letter-spacing: var(--countryposrating-heading-tracking);
 }
 
-.countryposrating .position h3 {
+.countryposrating .edc-position h3 {
   margin: 15px 0 1rem;
 }
 
 /* source h4 keeps its default vertical rhythm (~20px top/bottom) */
-.countryposrating .determination h4 {
+.countryposrating .ccc-rating h4 {
   margin: 1.33em 0;
 }
 
 /* the "Open" / "Accessible" status label */
-.countryposrating .position h2 {
+.countryposrating .edc-position h2 {
   margin: 1rem 0 1.5rem;
   color: var(--countryposrating-status-color);
   font-size: var(--countryposrating-status-font-size);
@@ -65,7 +65,7 @@
 }
 
 /* "What this means:" label */
-.countryposrating .position p {
+.countryposrating .edc-position p {
   margin: 0 0 1rem;
   font-size: var(--countryposrating-label-font-size);
   font-weight: 600;
@@ -74,7 +74,7 @@
 }
 
 /* right-column body copy is 14px / line-height 1.5 (→21px) */
-.countryposrating .determination p {
+.countryposrating .ccc-rating p {
   margin: 0 0 1.5rem;
   font-size: var(--countryposrating-small-font-size);
   font-weight: 400;
@@ -89,7 +89,7 @@
 
 /* right-column list uses a hanging indent so wrapped lines align under
    the text, not the bullet (source: ul padding-left + li negative indent) */
-.countryposrating .determination ul {
+.countryposrating .ccc-rating ul {
   padding-left: 40px;
 }
 
@@ -97,7 +97,7 @@
   line-height: var(--countryposrating-line-height);
 }
 
-.countryposrating .determination li {
+.countryposrating .ccc-rating li {
   font-size: var(--countryposrating-small-font-size);
   text-indent: -32px;
 }
@@ -115,12 +115,12 @@
 }
 
 /* wider bullet-to-text gap in the right column (source: ~20.8px) */
-.countryposrating .determination li::before {
+.countryposrating .ccc-rating li::before {
   margin-right: 20.8px;
 }
 
 /* status gauge icon (author-managed SVG via the icon system) */
-.countryposrating .position .icon {
+.countryposrating .edc-position .icon {
   display: block;
   width: 100%;
   max-width: var(--countryposrating-icon-max-width);
@@ -128,7 +128,7 @@
   margin-inline: auto;
 }
 
-.countryposrating .position .icon img {
+.countryposrating .edc-position .icon img {
   display: block;
   width: 100%;
   height: auto;
@@ -142,13 +142,13 @@
 
   /* restore the source's 15px inner column inset (keeps left-column text
      off the divider); the section wrapper handles the outer page gutter */
-  .countryposrating .position {
+  .countryposrating .edc-position {
     width: var(--countryposrating-col-width);
     margin-left: var(--countryposrating-col-offset);
     padding-inline: var(--countryposrating-column-padding);
   }
 
-  .countryposrating .determination {
+  .countryposrating .ccc-rating {
     width: var(--countryposrating-col-width);
     padding-top: 48px;
     padding-right: var(--countryposrating-column-padding);
@@ -159,19 +159,19 @@
     border-left: 1px solid var(--countryposrating-divider-color);
   }
 
-  .countryposrating .position h2 {
+  .countryposrating .edc-position h2 {
     font-size: 1.5rem;
   }
 }
 
 /* desktop+: larger status label and vertical rhythm (source) */
 @media (width >= 992px) {
-  .countryposrating .position,
-  .countryposrating .determination {
+  .countryposrating .edc-position,
+  .countryposrating .ccc-rating {
     margin-bottom: 5rem;
   }
 
-  .countryposrating .position h2 {
+  .countryposrating .edc-position h2 {
     font-size: 1.875rem;
   }
 }

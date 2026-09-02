@@ -12,16 +12,16 @@ export default function decorate(block) {
   const [row] = block.children;
   if (!row) return;
 
-  const [positionCell, determinationCell] = [...row.children];
+  const [positionCell, ratingCell] = [...row.children];
 
   // left column: EDC position + status gauge icon
   // (the gauge is authored as an EDS icon token and rendered by decorateIcons in scripts.js)
   if (positionCell) {
-    positionCell.classList.add('position');
+    positionCell.classList.add('edc-position');
   }
 
   // right column: how the position is determined
-  if (determinationCell) {
-    determinationCell.classList.add('determination');
+  if (ratingCell) {
+    ratingCell.classList.add('ccc-rating');
   }
 }
