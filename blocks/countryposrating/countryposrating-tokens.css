@@ -1,0 +1,29 @@
+/* country position rating design tokens (values + units mirror the source) */
+
+:root {
+  /* source font stack */
+  --countryposrating-font-family: 'Noto Sans', -apple-system, blinkmacsystemfont, 'San Francisco', 'Segoe UI', 'Helvetica Neue', sans-serif;
+
+  /* colors */
+  --countryposrating-text-color: #1d1d1d;
+  --countryposrating-status-color: #088391;
+  --countryposrating-divider-color: #d1d1d1;
+
+  /* type (source uses px sizes, unitless 1.5 line-height, -0.2px tracking on headings) */
+  --countryposrating-body-font-size: 16px;
+  --countryposrating-small-font-size: 14px;
+  --countryposrating-label-font-size: 15px;
+  --countryposrating-line-height: 1.5;
+  --countryposrating-heading-tracking: -0.2px;
+
+  /* status label size scales up per breakpoint (source: 20px → 1.5rem → 1.875rem) */
+  --countryposrating-status-font-size: 20px;
+
+  /* layout (source: px padding/divider, % grid widths, rem vertical rhythm) */
+  --countryposrating-column-padding: 15px; /* source: inner column inset (desktop) */
+  --countryposrating-icon-max-width: 160px;
+  --countryposrating-col-width: 41.6667%;
+  --countryposrating-col-offset: 8.3333%;
+  --countryposrating-divider-gap: 64px;
+  --countryposrating-determination-offset: 32px; /* source: right column inner padding-top */
+}
