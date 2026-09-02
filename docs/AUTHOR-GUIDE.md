@@ -84,6 +84,7 @@ When creating or editing a page, use the Library sidebar to add blocks instead o
 | Block | Purpose | Variants | Usage |
 |-------|---------|----------|-------|
 | accordion | Collapsible question/answer or expandable content panels | — | FAQs, expandable details where space is limited |
+| breadcrumbs | Auto-generated trail from Home to the current page | — | Place anywhere on a template where wayfinding context is useful; no authored fields — content comes from the `nav` document and current URL |
 | card | A single card (image, title, text, link); used inside cards and card-carousel | — | Building block for card layouts |
 | cards | A grid of cards | — | Feature lists, product/article tiles, link collections |
 | card-carousel | A horizontally scrolling set of cards | — | Showcasing multiple cards in limited space |

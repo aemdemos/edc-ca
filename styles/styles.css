@@ -117,7 +117,6 @@
 
   /* nav heights */
   --nav-height: 64px; /* @boilerplate */
-  --breadcrumbs-height: 34px; /* @boilerplate */
   --header-height: var(--nav-height); /* @boilerplate */
 }
 
@@ -487,10 +486,6 @@ main > .section:first-of-type { /* @boilerplate */
     --spacing-m: 20px; /* @boilerplate */
     --spacing-s: 16px; /* @boilerplate */
     --spacing-xs: 12px; /* @boilerplate */
-  }
-
-  body[data-breadcrumbs] { /* @boilerplate */
-    --header-height: calc(var(--nav-height) + var(--breadcrumbs-height)); /* @boilerplate */
   }
 
   /* ==== START alignment + display for desktop ==== */

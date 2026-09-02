@@ -214,7 +214,7 @@ Spacing, layout, borders, motion:
 --spacing-xs: 8px;  --spacing-s: 16px;  --spacing-m: 24px;
 --spacing-l: 32px;  --spacing-xl: 40px;
 --max-width-site: 1200px;   --icon-size: 24px;
---nav-height: 64px;  --breadcrumbs-height: 34px;  --header-height: var(--nav-height);
+--nav-height: 64px;  --header-height: var(--nav-height);
 --border-width-s: 1px;  --border-color: #dadada;
 --border-radius-s: 4px;  --border-radius-m: 8px;
 --transition-duration: 0.2s;
@@ -257,11 +257,12 @@ Section styling is driven by section metadata (`style` field) and decorated in `
 
 ## Blocks Reference
 
-Twenty-one blocks ship with the project. Many call `getBlockId()` to assign unique ids (for ARIA `aria-controls`/`aria-labelledby` and martech tracking) and `moveInstrumentation()` to preserve UE editing attributes. Blocks needing HTML sanitization call `ensureDOMPurify()`.
+Twenty-two blocks ship with the project. Many call `getBlockId()` to assign unique ids (for ARIA `aria-controls`/`aria-labelledby` and martech tracking) and `moveInstrumentation()` to preserve UE editing attributes. Blocks needing HTML sanitization call `ensureDOMPurify()`.
 
 | Block | Purpose | Variants / Options | Key Details |
 |-------|---------|--------------------|-------------|
 | `accordion` | Expand/collapse list of label + body rows | — | Rebuilds rows into `<ul>` of `.accordion-item`; toggles `.active` on label click; preserves UE instrumentation |
+| `breadcrumbs` | Auto-built breadcrumb trail (Home → ... → current page) | — | Independently fetches its own copy of the `nav` fragment (same pattern as `header`/`footer`) via `loadFragment`; walks the nav tree to find the current URL, falls back to `og:title` if not found; no authored fields |
 | `card` | Shared single-card builder (not authored directly) | — | Exports `createCard(row)` producing a card `<li>` with `.cards-card-image` / `.cards-card-body`; reused by `cards` and `card-carousel` |
 | `cards` | Grid of cards | — | Builds `<ul>` of cards; optimizes images via `createOptimizedPicture` (750px); ARIA region |
 | `card-carousel` | Horizontally sliding cards | single-slide auto-detected | Uses shared `slider.js` (`createSliderControls`, `initSlider`, `showSlide`); reuses `createCard` |
@@ -295,7 +296,7 @@ The three root JSON files consumed by Universal Editor are **generated**, not ha
 Edit the fragments under `ue/models/` and regenerate. The directory contains:
 
 - Top-level fragments: `component-definition.json`, `component-models.json`, `component-filters.json`, plus base models `page.json`, `section.json`, `text.json`, `image.json`.
-- `ue/models/blocks/` — one JSON per editable block (accordion, card, card-carousel, cards, carousel, columns, fragment, hero, overviewtext, quote, search, section-title, table, tabs, video). Each may declare `definitions`, `models`, and `filters` (filters used for container blocks such as `tabs`).
+- `ue/models/blocks/` — one JSON per editable block (accordion, breadcrumbs, card, card-carousel, cards, carousel, columns, fragment, hero, overviewtext, quote, search, section-title, table, tabs, video). Each may declare `definitions`, `models`, and `filters` (filters used for container blocks such as `tabs`).
 
 ### Build Process
 
