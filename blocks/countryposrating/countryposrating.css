@@ -17,10 +17,9 @@
   flex-direction: column;
 }
 
-.countryposrating .position,
-.countryposrating .determination {
-  padding-inline: var(--countryposrating-padding-inline);
-}
+/* the EDS section wrapper already provides the horizontal gutter
+   (~16px mobile / 24px desktop), matching the source's ~15px inset —
+   so columns add no extra inline padding of their own */
 
 /* left column is centered; right column is left-aligned (source) */
 .countryposrating .position {
