@@ -355,6 +355,13 @@ button.secondary { /* @boilerplate */
   color: var(--text-color); /* @boilerplate */
 }
 
+a.button.accent,
+button.accent { /* @boilerplate */
+  background-color: unset; /* @boilerplate */
+  border: var(--button-border-width) solid currentcolor; /* @boilerplate */
+  color: var(--text-color); /* @boilerplate */
+}
+
 /* tooltip — authorable via [[tooltip]<a href="#" title="...">text</a>] bracket syntax */
 .tooltip {
   cursor: help;
