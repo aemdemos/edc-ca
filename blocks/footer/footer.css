@@ -2,39 +2,38 @@
 
 footer {
   background-color: var(--light-color);
-  font-size: var(--body-font-size-xs);
-}
-
-footer .footer > div > .section {
-  padding: var(--footer-padding);
-}
-
-@media (width >= 992px) {
-  footer .footer > div > .section {
-    padding: var(--footer-padding-desktop);
-  }
 }
 
 footer .footer p {
   margin: 0;
 }
 
+/*
+ * Fixed, EDC-matched px values below (not the shared --spacing- and --body-font-size-
+ * tokens) — those tokens still carry generic boilerplate values and additionally scale
+ * up at (width >= 992px) as part of the site's own base type/spacing system, which does
+ * not line up with the source footer's own fixed measurements. Once a real design-token
+ * pass happens for this project, these can be re-pointed at the customer's own tokens.
+ */
+
 /* subscribe section */
 footer .footer .subscribe-section {
+  padding: 64px 16px 32px;
   background-color: var(--footer-subscribe-bg);
 }
 
 /* footer nav: columns block (logo + 3 link columns) */
 footer .footer .footer-nav {
+  padding: 16px;
   background-color: var(--footer-nav-bg);
   border-top: 1px solid var(--footer-divider-color);
 }
 
 footer .footer .footer-nav h3 {
-  margin: 0 0 var(--spacing-s);
-  padding-bottom: var(--spacing-s);
+  margin: 0 0 12px;
+  padding-bottom: 12px;
   border-bottom: 1px solid var(--footer-divider-color);
-  font-size: var(--body-font-size-s);
+  font-size: 16px;
   font-weight: 600;
 }
 
@@ -46,7 +45,7 @@ footer .footer .footer-nav ul {
 
 footer .footer .footer-nav a {
   display: block;
-  padding: var(--spacing-xs) 0;
+  padding: 8px 0 16px;
   color: var(--text-color);
   text-decoration: none;
 }
@@ -62,6 +61,7 @@ footer .footer .footer-nav .columns-img-col {
 footer .footer .footer-nav .columns-img-col img {
   width: auto;
   max-width: 140px;
+  padding: 24px 0 32px;
 }
 
 /*
@@ -71,8 +71,10 @@ footer .footer .footer-nav .columns-img-col img {
  * social-links list (matches the content model — adjust selectors if authors reorder).
  */
 footer .footer .footer-legal {
+  padding: 32px 16px 24px;
   background-color: var(--footer-legal-bg);
-  font-size: var(--body-font-size-xs);
+  font-size: 12px;
+  font-weight: 500;
 }
 
 /*
@@ -82,7 +84,7 @@ footer .footer .footer-legal {
  */
 footer .footer .footer-legal p:nth-of-type(-n+2) {
   display: inline-block;
-  margin: 0 var(--spacing-m) var(--spacing-s) 0;
+  margin: 0 16px 12px 0;
 }
 
 footer .footer .footer-legal picture img {
@@ -93,8 +95,8 @@ footer .footer .footer-legal picture img {
 footer .footer .footer-legal ul {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--spacing-xs) var(--spacing-m);
-  margin: var(--spacing-s) 0 0;
+  gap: 8px 16px;
+  margin: 12px 0 0;
   padding: 0;
   list-style: none;
 }
@@ -141,7 +143,19 @@ footer .footer .footer-legal ul:last-of-type a[href*="youtube.com"] {
   background-image: url('/icons/youtube.svg');
 }
 
+/* small-tablet+ */
+@media (width >= 576px) {
+  footer .footer .footer-nav {
+    padding: 40px 32px;
+  }
+}
+
+/* desktop+ */
 @media (width >= 992px) {
+  footer .footer .footer-nav {
+    padding: 56px 16px 32px;
+  }
+
   footer .footer .footer-nav .columns-img-col {
     display: block;
     flex: 0 0 auto;

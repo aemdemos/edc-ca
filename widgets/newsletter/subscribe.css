@@ -1,12 +1,19 @@
 .subscribe {
+  /*
+   * EDC-brand values, hardcoded rather than layered as var(--generic-token, #edc-value)
+   * fallbacks: the generic tokens (--text-color, --error-color, --color-action, etc.) are
+   * already defined with real (if generic) boilerplate values, so a var() fallback never
+   * actually triggers — it only applies when the custom property is truly undefined.
+   */
   --subscribe-radius: var(--border-radius-m, 8px);
   --subscribe-input-height: 48px;
-  --subscribe-error-color: var(--error-color, #bf081a);
-  --subscribe-success-border: var(--color-action, #1a65b2);
-  --subscribe-success-title-color: var(--text-color, #11377c);
+  --subscribe-input-text: #1d1d1d;
+  --subscribe-text-color: #3d3d3d;
+  --subscribe-error-color: #bf081a;
+  --subscribe-accent: #1a65b2;
+  --subscribe-accent-hover: #11377c;
 
   display: block;
-  max-width: 575px;
   margin: 0 auto;
 }
 
@@ -16,6 +23,8 @@
   font-family: var(--body-font-family);
   font-size: var(--body-font-size-s, 16px);
   font-weight: 500;
+  line-height: 20px;
+  color: var(--subscribe-text-color);
 }
 
 .subscribe-row {
@@ -31,7 +40,7 @@
   padding: 0 8px 0 12px;
   font-family: var(--body-font-family);
   font-size: var(--body-font-size-s, 16px);
-  color: var(--text-color);
+  color: var(--subscribe-input-text);
 }
 
 .subscribe-email.error {
@@ -45,6 +54,12 @@
   min-width: 120px;
   max-width: 232px;
   white-space: nowrap;
+  background-color: var(--subscribe-accent);
+}
+
+.subscribe-submit:hover,
+.subscribe-submit:focus {
+  background-color: var(--subscribe-accent-hover);
 }
 
 .subscribe-error,
@@ -56,7 +71,7 @@
 
 .subscribe-consent {
   margin: 12px 0 0;
-  color: var(--text-color);
+  color: var(--subscribe-text-color);
   font-size: 0.85rem;
 }
 
@@ -64,7 +79,7 @@
   display: none;
   flex-direction: column;
   gap: 8px;
-  border: 1px solid var(--subscribe-success-border);
+  border: 1px solid var(--subscribe-accent);
   border-radius: var(--subscribe-radius);
   padding: 12px;
 }
@@ -85,12 +100,12 @@
   font-family: var(--heading-font-family);
   font-size: var(--body-font-size-l, 20px);
   font-weight: 600;
-  color: var(--subscribe-success-title-color);
+  color: var(--subscribe-accent-hover);
 }
 
 .subscribe-success-description {
   margin: 0;
-  color: var(--text-color);
+  color: var(--subscribe-text-color);
 }
 
 .subscribe[data-stage='success'] .subscribe-form {
@@ -101,7 +116,19 @@
   display: flex;
 }
 
+/* small-tablet+: source centers the form to a fixed max-width */
+@media (width >= 576px) {
+  .subscribe {
+    max-width: 575px;
+  }
+}
+
+/* desktop+: wider max-width, and a step up in type size */
 @media (width >= 992px) {
+  .subscribe {
+    max-width: 768px;
+  }
+
   .subscribe-heading,
   .subscribe-email,
   .subscribe-submit {
