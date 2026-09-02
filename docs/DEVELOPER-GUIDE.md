@@ -257,7 +257,7 @@ Section styling is driven by section metadata (`style` field) and decorated in `
 
 ## Blocks Reference
 
-Twenty blocks ship with the project. Many call `getBlockId()` to assign unique ids (for ARIA `aria-controls`/`aria-labelledby` and martech tracking) and `moveInstrumentation()` to preserve UE editing attributes. Blocks needing HTML sanitization call `ensureDOMPurify()`.
+Twenty-one blocks ship with the project. Many call `getBlockId()` to assign unique ids (for ARIA `aria-controls`/`aria-labelledby` and martech tracking) and `moveInstrumentation()` to preserve UE editing attributes. Blocks needing HTML sanitization call `ensureDOMPurify()`.
 
 | Block | Purpose | Variants / Options | Key Details |
 |-------|---------|--------------------|-------------|
@@ -274,6 +274,7 @@ Twenty blocks ship with the project. Many call `getBlockId()` to assign unique i
 | `header` | Site navigation / header | `nav-drop` (dropdown sections), `nav-hamburger` (mobile) | Loads nav fragment from `nav` metadata; desktop/mobile behavior via `matchMedia(992px)`; ESC + focus-out close handling |
 | `hero` | Full-bleed hero with background image | CSS-only block | No JS (`hero.js` is empty); styled via `hero.css` + `hero-tokens.css`; picture positioned behind heading |
 | `modal` | Modal dialog | — | No `decorate`; links to `/modals/` auto-open via `autolinkModals` in `scripts.js`; exports `createModal`/`openModal`; uses native `<dialog>` |
+| `overviewtext` | Title + body text panel | `travel-brief` (bg/text color, taller padding) | Adds `.overviewtext-title`/`.overviewtext-text` classes to existing content in place; ARIA region |
 | `quote` | Blockquote with attribution | — | `.quote-quotation` + `.quote-attribution`; wraps `<em>` attribution in `<cite>` (DOMPurify-sanitized); ARIA region |
 | `search` | Client-side site search | `no-results` state | Reads search index, highlights matching terms, optimizes result images, computes heading level dynamically |
 | `section-title` | Heading + optional subtitle | size `size-xs..xxl`, alignment `left`/`center`/`right`, color `section-title-color-{background,light,dark,text,link,link-hover}`, subtitle `subtitle-size-*` | Supports legacy 4-row table and UE/DA key-value rows; color keys map to `:root` tokens |
@@ -294,7 +295,7 @@ The three root JSON files consumed by Universal Editor are **generated**, not ha
 Edit the fragments under `ue/models/` and regenerate. The directory contains:
 
 - Top-level fragments: `component-definition.json`, `component-models.json`, `component-filters.json`, plus base models `page.json`, `section.json`, `text.json`, `image.json`.
-- `ue/models/blocks/` — one JSON per editable block (accordion, card, card-carousel, cards, carousel, columns, fragment, hero, quote, search, section-title, table, tabs, video). Each may declare `definitions`, `models`, and `filters` (filters used for container blocks such as `tabs`).
+- `ue/models/blocks/` — one JSON per editable block (accordion, card, card-carousel, cards, carousel, columns, fragment, hero, overviewtext, quote, search, section-title, table, tabs, video). Each may declare `definitions`, `models`, and `filters` (filters used for container blocks such as `tabs`).
 
 ### Build Process
 

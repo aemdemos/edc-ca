@@ -1,0 +1,10 @@
+/* overviewtext design tokens */
+:root {
+  --overviewtext-max-width: 800px;
+  --overviewtext-padding: var(--spacing-xl) var(--spacing-l);
+  --overviewtext-padding-desktop: var(--spacing-xxl) var(--spacing-xl);
+  --overviewtext-border-radius: var(--border-radius-m);
+  --overviewtext-title-margin: 0 0 var(--spacing-m);
+  --overviewtext-travel-brief-background: #e8eef7;
+  --overviewtext-travel-brief-padding-desktop: 64px var(--spacing-xl);
+}

@@ -1,0 +1,42 @@
+@import url('./overviewtext-tokens.css');
+
+.overviewtext {
+  box-sizing: border-box;
+  max-width: var(--overviewtext-max-width);
+  margin: 0 auto;
+  padding: var(--overviewtext-padding);
+  border: var(--border-width-s) solid var(--border-color);
+  border-radius: var(--overviewtext-border-radius);
+  text-align: center;
+}
+
+.overviewtext .overviewtext-title {
+  margin: var(--overviewtext-title-margin);
+  font-size: var(--heading-font-size-xs);
+}
+
+.overviewtext .overviewtext-text {
+  margin: 0;
+}
+
+@media (width >= 992px) {
+  .overviewtext {
+    padding: var(--overviewtext-padding-desktop);
+  }
+}
+
+/* travel-brief variant */
+.overviewtext.travel-brief {
+  background-color: var(--overviewtext-travel-brief-background);
+  border: none;
+}
+
+.overviewtext.travel-brief .overviewtext-title {
+  color: var(--link-color);
+}
+
+@media (width >= 992px) {
+  .overviewtext.travel-brief {
+    padding: var(--overviewtext-travel-brief-padding-desktop);
+  }
+}
