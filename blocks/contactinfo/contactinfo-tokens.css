@@ -1,25 +1,17 @@
-/* contact information design tokens (only what globals don't already cover) */
+/* design tokens for values not covered by the global palette */
 :root {
-  /* brand teal used for the heading (source screenshot); matches the same
-     hand-picked value in countryposrating-tokens.css since global
-     --brand-primary is still boilerplate blue, not this teal */
   --contactinfo-heading-color: #088391;
-
-  /* phone number reads bolder/larger than body copy in the source */
   --contactinfo-phone-font-weight: 700;
   --contactinfo-phone-font-size: var(--body-font-size-l);
 
-  /* column split matches the source's clientlib CSS exactly: 50/50 at
-     tablet, 33/58 at desktop (text narrows as the viewport grows) */
+  /* column split: 50/50 at tablet, 33/58 at desktop */
   --contactinfo-text-col-width-tablet: 50%;
   --contactinfo-person-col-width-tablet: 50%;
   --contactinfo-text-col-width-desktop: 33.3333%;
   --contactinfo-person-col-width-desktop: 58.3333%;
   --contactinfo-column-gap: var(--spacing-xl);
 
-  /* headshot height caps match the source's img max-height exactly per
-     breakpoint; width is intentionally unconstrained (no crop/fit) so the
-     full photo always shows */
+  /* image height caps per breakpoint; width stays auto so nothing crops */
   --contactinfo-image-max-height: 295px;
   --contactinfo-image-max-height-tablet: 327px;
   --contactinfo-image-max-height-desktop: 380px;

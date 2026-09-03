@@ -3,11 +3,9 @@ import { buildPictureContentFromImageCell } from '../../scripts/utils.js';
 
 /*
  * Fixed rows: 0 title, 1 subtitle, 2 phone, 3 CTA text, 4 employee image,
- * 5 employee name (optional), 6 employee title (optional).
- * Rows 5-6 can only be omitted from the end; to skip name but keep title,
- * leave row 5's cell blank rather than deleting the row.
- * Adds schema.org microdata (Organization/Person/telephone) from the plain
- * authored fields.
+ * 5 employee name (optional), 6 employee title (optional). Rows 5-6 can only
+ * be omitted from the end — to skip name but keep title, leave row 5 blank.
+ * Adds schema.org microdata (Organization/Person/telephone) from plain fields.
  */
 
 function cellText(row) {
@@ -30,7 +28,6 @@ function buildTitle(block, blockId, titleRow) {
   return h2;
 }
 
-// subtitle: authored paragraph, left as-is
 function buildSubtitle(subtitleRow) {
   if (!subtitleRow?.firstElementChild) return null;
   const cell = subtitleRow.firstElementChild;
@@ -49,7 +46,6 @@ function buildPhone(phoneRow) {
   cell.textContent = '';
   const span = document.createElement('span');
   span.setAttribute('itemprop', 'telephone');
-  // content attribute matches the live EDC site's markup verbatim (issue #24)
   span.setAttribute('content', text);
   const a = document.createElement('a');
   a.href = `tel:${text.replace(/[^\d+]/g, '')}`;
@@ -59,7 +55,6 @@ function buildPhone(phoneRow) {
   return cell;
 }
 
-// CTA paragraph: plain inline link authored as-is, no button styling
 function buildCta(ctaRow) {
   if (!ctaRow?.firstElementChild) return null;
   const cell = ctaRow.firstElementChild;
@@ -79,7 +74,7 @@ function buildPersonImage(imageRow, name) {
   imageCell.replaceChildren(buildPictureContentFromImageCell(imageCell));
   const img = imageCell.querySelector('img');
   if (img) {
-    // meaningful alt when we have a name, else decorative (matches source's alt="")
+    // meaningful alt when a name exists, else decorative
     img.alt = name ? name.text : '';
     img.setAttribute('itemprop', 'image');
   }
