@@ -107,7 +107,18 @@ When creating or editing a page, use the Library sidebar to add blocks instead o
 
 ## Page Templates
 
-This project does not define named page templates in code. Pages are composed freely from sections and blocks. Page-level styling and behavior are controlled through **Section Metadata** (section styles) and the **Metadata** block (page properties) rather than a `template` value.
+Pages are composed freely from sections and blocks. Most page-level styling and behavior are controlled through **Section Metadata** (section styles) and the **Metadata** block (page properties) rather than a `template` value.
+
+For pages that need dedicated layout, styles, or scripting beyond what sections/blocks provide, set a **Template** value in the page's Metadata block. Supported values (each backed by a `templates/{name}/{name}.css` and `{name}.js` in code):
+
+| Template | Use case |
+|----------|----------|
+| success-story-page | Success story pages |
+| video-page | Video pages |
+| country-detail-page | Country detail pages |
+| home | Home page |
+
+An unrecognized or missing Template value is ignored — the page renders normally without template-specific styling or scripting.
 
 ## Configuration Sheets
 
