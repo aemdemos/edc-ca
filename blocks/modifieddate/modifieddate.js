@@ -1,16 +1,5 @@
 /**
  * Modified date: renders a localized "Date modified" line (e.g. "Date modified: 2025-06-24").
- *
- * The date is auto-populated from the page's own last-modified timestamp
- * (`document.lastModified`, backed by the Last-Modified response header, which EDS sets to
- * the content's publish/modification time). It falls back to today's date if that value is
- * unavailable. Authors simply place the block — they never enter or edit the date, so it
- * always reflects when the page content was actually last modified.
- *
- * The date is always displayed in ISO `YYYY-MM-DD` format, matching the source site.
- * The label is chosen from the page language (`<html lang>`): `fr` uses the French
- * label, everything else falls back to English. No user-facing text is hard-coded in
- * a way that can't be localized.
  */
 
 /** Localized labels keyed by language prefix; extend as more locales are added. */
