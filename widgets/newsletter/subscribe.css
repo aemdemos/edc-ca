@@ -1,0 +1,136 @@
+.subscribe {
+  /* --subscribe-text-color/--subscribe-success-title-color are bespoke shades with no sitewide token */
+  --subscribe-radius: var(--border-radius-m, 8px);
+  --subscribe-input-height: 48px;
+  --subscribe-input-text: var(--text-color);
+  --subscribe-text-color: #3d3d3d;
+  --subscribe-error-color: #bf081a;
+  --subscribe-accent: var(--link-color);
+  --subscribe-accent-hover: var(--link-hover-color);
+  --subscribe-success-title-color: #11377c;
+
+  display: block;
+  margin: 0 auto;
+}
+
+.subscribe-heading {
+  display: block;
+  margin: 0 0 12px;
+  font-size: var(--body-font-size-s, 16px);
+  font-weight: 500;
+  line-height: 20px;
+  color: var(--subscribe-text-color);
+}
+
+.subscribe-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+}
+
+.subscribe-email {
+  height: var(--subscribe-input-height);
+  margin: 0;
+  border: none;
+  border-radius: var(--subscribe-radius) 0 0 var(--subscribe-radius);
+  padding: 0 8px 0 12px;
+  font-size: var(--body-font-size-s, 16px);
+  color: var(--subscribe-input-text);
+}
+
+.subscribe-email.error {
+  outline: 2px solid var(--subscribe-error-color);
+  outline-offset: -2px;
+}
+
+.subscribe-submit {
+  margin: 0;
+  border-radius: 0 var(--subscribe-radius) var(--subscribe-radius) 0;
+  min-width: 120px;
+  max-width: 232px;
+  white-space: nowrap;
+  background-color: var(--subscribe-accent);
+}
+
+.subscribe-submit:hover,
+.subscribe-submit:focus {
+  background-color: var(--subscribe-accent-hover);
+}
+
+.subscribe-error,
+.subscribe-fail {
+  margin: 8px 0 0;
+  color: var(--subscribe-error-color);
+  font-size: 0.85rem;
+}
+
+.subscribe-consent {
+  margin: 12px 0 0;
+  color: var(--subscribe-text-color);
+  font-size: 0.85rem;
+}
+
+.subscribe-success {
+  display: none;
+  flex-direction: column;
+  gap: 8px;
+  border: 1px solid var(--subscribe-accent);
+  border-radius: var(--subscribe-radius);
+  padding: 12px;
+}
+
+.subscribe-success-heading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.subscribe-success-heading .icon {
+  width: 24px;
+  height: 24px;
+}
+
+.subscribe-success-title {
+  margin: 0;
+  font-size: var(--body-font-size-l, 20px);
+  font-weight: 600;
+  color: var(--subscribe-success-title-color);
+}
+
+.subscribe-success-description {
+  margin: 0;
+  color: var(--subscribe-text-color);
+}
+
+.subscribe[data-stage='success'] .subscribe-form {
+  display: none;
+}
+
+.subscribe[data-stage='success'] .subscribe-success {
+  display: flex;
+}
+
+/* tablet styles */
+@media (width >= 576px) {
+  .subscribe {
+    max-width: 575px;
+  }
+}
+
+/* desktop styles */
+@media (width >= 992px) {
+  .subscribe {
+    max-width: 768px;
+  }
+
+  .subscribe-heading,
+  .subscribe-email,
+  .subscribe-submit {
+    font-size: 1.13rem;
+  }
+
+  .subscribe-error,
+  .subscribe-fail,
+  .subscribe-consent {
+    font-size: 0.88rem;
+  }
+}

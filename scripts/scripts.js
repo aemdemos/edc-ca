@@ -208,7 +208,9 @@ function buildAutoBlocks(main) {
     // auto-embed bare YouTube/Vimeo links, wherever they appear
     if (FEATURES.videoLinks) {
       const videoLinks = [...main.querySelectorAll('a[href]')]
-        .filter((a) => !a.closest('.embed, .video') && isVideoLink(a.href));
+        .filter((a) => !a.closest('.embed, .video')
+          && a.textContent.trim() === a.getAttribute('href').trim()
+          && isVideoLink(a.href));
       videoLinks.forEach((a) => {
         const { parentElement } = a;
         const embedBlock = buildBlock('embed', { elems: [a] });
