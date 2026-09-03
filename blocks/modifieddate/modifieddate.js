@@ -1,5 +1,6 @@
 /**
- * Modified date: renders a localized "Date modified" line (e.g. "Date modified: 2025-06-24").
+ * Modified date: renders a localized "Date modified" line (e.g. "Date modified: 2025-06-24")
+ * from an author-entered date. Renders nothing when the block is blank or unparseable.
  */
 
 /** Localized labels keyed by language prefix; extend as more locales are added. */
@@ -29,28 +30,17 @@ function toIsoDate(value) {
   return parsed.toISOString().slice(0, 10);
 }
 
-function todayIsoDate() {
-  return new Date().toISOString().slice(0, 10);
-}
-
-/**
- * Resolve the date to display from the page's last-modified timestamp, then today.
- * `document.lastModified` reflects the Last-Modified response header (content publish
- * time on preview/live). Block content is ignored so authors cannot override the value.
- */
-function resolveDate() {
-  const fromLastModified = toIsoDate(document.lastModified);
-  if (fromLastModified) return fromLastModified;
-
-  return todayIsoDate();
-}
-
 /**
  * loads and decorates the modified date block
  * @param {Element} block The block element
  */
 export default function decorate(block) {
-  const date = resolveDate();
+  // Author types the date into the block; render nothing when blank/unparseable.
+  const date = toIsoDate(block.textContent);
+  if (!date) {
+    block.replaceChildren();
+    return;
+  }
 
   const section = document.createElement('section');
   section.className = 'c-date-modified';
