@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="402px" height="262px" viewBox="0 0 402 262" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Decorative chevrons</title>
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linejoin="round">
+        <g fill="#EAF2FA" stroke="#EAF2FA" transform="translate(-100.000000, 2.000000)">
+            <polygon stroke-width="4" fill-rule="nonzero" transform="translate(250.000000, 129.000000) rotate(-315.000000) translate(-250.000000, -129.000000) " points="159 75.3520184 159 38 341 38 341 220 303.647982 220 303.647982 75.3520184"></polygon>
+            <polygon stroke-width="4" fill-rule="nonzero" transform="translate(371.000000, 129.000000) rotate(-315.000000) translate(-371.000000, -129.000000) " points="280 75.3520184 280 38 462 38 462 220 424.647982 220 424.647982 75.3520184"></polygon>
+            <polygon stroke-width="4" fill-rule="nonzero" transform="translate(129.000000, 129.000000) rotate(-315.000000) translate(-129.000000, -129.000000) " points="182.647982 75.3520184 38 75.3520184 38 38 220 38 220 220 182.647982 220"></polygon>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,26 @@
+/* herobanner design tokens */
+:root {
+  --herobanner-gradient-start: #e5edf7;
+  --herobanner-gradient-end: var(--background-color);
+  --herobanner-title-color: var(--brand-primary);
+  --herobanner-title-font-size: 1.5rem;
+  --herobanner-title-font-size-tablet: 1.875rem;
+  --herobanner-title-font-size-desktop: 3rem;
+  --herobanner-text-font-size: 1.1875rem;
+  --herobanner-text-font-size-desktop: 1.25rem;
+  --herobanner-content-padding: var(--spacing-l) var(--spacing-m);
+  --herobanner-content-padding-desktop: 0 var(--spacing-xl);
+  --herobanner-image-aspect-ratio: 16 / 9;
+  --herobanner-clip-mobile: polygon(0% 0%, 100% 0%, 100% 90%, 0% 100%);
+  --herobanner-clip-desktop: polygon(6% 0%, 100% 0%, 100% 100%, 0% 100%);
+  --herobanner-media-bleed-desktop: 5%;
+  --herobanner-min-height-desktop: 480px;
+  --herobanner-icon-color: rgb(26 101 178 / 15%);
+  --herobanner-icon-size: 90px;
+  --herobanner-icon-size-tablet: 160px;
+  --herobanner-icon-size-desktop: 230px;
+  --herobanner-icon-offset: -24px;
+  --herobanner-icon-offset-tablet: -50px;
+  --herobanner-icon-offset-desktop: -70px;
+  --herobanner-icon-offset-wide: -100px;
+}

@@ -1,0 +1,141 @@
+@import url('./herobanner-tokens.css');
+
+main > .section.herobanner-container > div.herobanner-wrapper {
+  max-width: unset;
+  padding: 0;
+}
+
+.herobanner {
+  position: relative;
+  overflow: hidden;
+}
+
+.herobanner > div:first-child {
+  clip-path: var(--herobanner-clip-mobile);
+}
+
+.herobanner picture,
+.herobanner img {
+  display: block;
+  width: 100%;
+}
+
+.herobanner img {
+  aspect-ratio: var(--herobanner-image-aspect-ratio);
+  object-fit: cover;
+}
+
+.herobanner > div:last-child {
+  position: relative;
+  background: linear-gradient(to top, var(--herobanner-gradient-start) 0%, var(--herobanner-gradient-end) 100%);
+}
+
+.herobanner > div:last-child > div {
+  position: relative;
+  z-index: 1;
+  padding: var(--herobanner-content-padding);
+  text-align: center;
+}
+
+.herobanner h1 {
+  color: var(--herobanner-title-color);
+  font-size: var(--herobanner-title-font-size);
+  margin: 0 0 var(--spacing-m);
+}
+
+.herobanner p {
+  margin: 0 0 var(--spacing-m);
+  font-size: var(--herobanner-text-font-size);
+}
+
+.herobanner .button-wrapper {
+  margin: var(--spacing-s) 0 0;
+}
+
+.herobanner.chevrons > div:last-child::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: var(--herobanner-icon-offset);
+  width: var(--herobanner-icon-size);
+  height: var(--herobanner-icon-size);
+  background-color: var(--herobanner-icon-color);
+  mask: url('/icons/chevrons.svg') no-repeat;
+  mask-size: contain;
+  z-index: 0;
+}
+
+@media (width >= 768px) {
+  .herobanner {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: stretch;
+    min-height: var(--herobanner-min-height-desktop);
+  }
+
+  .herobanner > div:first-child,
+  .herobanner > div:last-child {
+    width: 50%;
+  }
+
+  .herobanner > div:first-child {
+    position: relative;
+    z-index: 2;
+    clip-path: var(--herobanner-clip-desktop);
+    width: calc(50% + var(--herobanner-media-bleed-desktop));
+    margin-inline-start: calc(-1 * var(--herobanner-media-bleed-desktop));
+  }
+
+  .herobanner > div:first-child > div,
+  .herobanner picture {
+    height: 100%;
+  }
+
+  .herobanner img {
+    aspect-ratio: unset;
+    height: 100%;
+  }
+
+  .herobanner > div:last-child {
+    display: flex;
+    align-items: center;
+    background: linear-gradient(to right, var(--herobanner-gradient-start) 0%, var(--herobanner-gradient-end) 100%);
+  }
+
+  .herobanner > div:last-child > div {
+    text-align: left;
+    padding: var(--herobanner-content-padding-desktop);
+  }
+
+  .herobanner h1 {
+    font-size: var(--herobanner-title-font-size-tablet);
+  }
+
+  .herobanner.chevrons > div:last-child::before {
+    width: var(--herobanner-icon-size-tablet);
+    height: var(--herobanner-icon-size-tablet);
+    left: var(--herobanner-icon-offset-tablet);
+  }
+}
+
+@media (width >= 992px) {
+  .herobanner h1 {
+    font-size: var(--herobanner-title-font-size-desktop);
+  }
+
+  .herobanner p {
+    font-size: var(--herobanner-text-font-size-desktop);
+  }
+
+  .herobanner.chevrons > div:last-child::before {
+    width: var(--herobanner-icon-size-desktop);
+    height: var(--herobanner-icon-size-desktop);
+    left: var(--herobanner-icon-offset-desktop);
+  }
+}
+
+@media (width >= 1200px) {
+  .herobanner.chevrons > div:last-child::before {
+    left: var(--herobanner-icon-offset-wide);
+  }
+}

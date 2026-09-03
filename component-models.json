@@ -205,6 +205,74 @@
     ]
   },
   {
+    "id": "herobanner",
+    "fields": [
+      {
+        "component": "select",
+        "name": "classes",
+        "label": "Icon",
+        "valueType": "string",
+        "value": "",
+        "options": [
+          {
+            "name": "None",
+            "value": ""
+          },
+          {
+            "name": "Chevrons",
+            "value": "chevrons"
+          }
+        ]
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "label": "Alt",
+        "value": ""
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "text",
+        "value": "",
+        "label": "Text"
+      }
+    ]
+  },
+  {
+    "id": "overviewtext",
+    "fields": [
+      {
+        "component": "boolean",
+        "name": "classes_travel-brief",
+        "label": "Travel Brief Variant",
+        "valueType": "boolean"
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "title",
+        "value": "",
+        "label": "Title"
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "text",
+        "value": "",
+        "label": "Text"
+      }
+    ]
+  },
+  {
     "id": "pagelevelfeedback",
     "fields": []
   },

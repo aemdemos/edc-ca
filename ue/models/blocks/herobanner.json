@@ -1,0 +1,76 @@
+{
+  "definitions": [
+    {
+      "title": "Hero Banner",
+      "id": "herobanner",
+      "model": "herobanner",
+      "plugins": {
+        "da": {
+          "unsafeHTML": "<div class=\"herobanner\"><div><div><picture><source type=\"image/webp\" srcset=\"\"><source type=\"image/jpeg\" srcset=\"\"><img loading=\"lazy\"></picture></div></div><div><div><h1></h1><p></p></div></div></div>",
+          "rows": 2,
+          "columns": 1,
+          "fields": [
+            {
+              "name": "image",
+              "selector": "div:nth-child(1)>div>picture>img[src]"
+            },
+            {
+              "name": "imageAlt",
+              "selector": "div:nth-child(1)>div>picture>img[alt]"
+            },
+            {
+              "name": "text",
+              "selector": "div:nth-child(2)>div"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "herobanner",
+      "fields": [
+        {
+          "component": "select",
+          "name": "classes",
+          "label": "Icon",
+          "valueType": "string",
+          "value": "",
+          "options": [
+            {
+              "name": "None",
+              "value": ""
+            },
+            {
+              "name": "Chevrons",
+              "value": "chevrons"
+            }
+          ]
+        },
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "image",
+          "label": "Image",
+          "multi": false
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "imageAlt",
+          "label": "Alt",
+          "value": ""
+        },
+        {
+          "component": "richtext",
+          "valueType": "string",
+          "name": "text",
+          "value": "",
+          "label": "Text"
+        }
+      ]
+    }
+  ],
+  "filters": []
+}

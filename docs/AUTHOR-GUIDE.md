@@ -94,6 +94,7 @@ When creating or editing a page, use the Library sidebar to add blocks instead o
 | form | Renders a form from a form definition | — | Contact, signup, and data-capture forms |
 | fragment | Reuses content from another document | — | Shared content (banners, promos) across pages |
 | hero | Large banner with background image, heading, and call to action | — | Page headers, landing-page banners |
+| herobanner | Two-column banner with art-directed image, title, description, and optional CTA link | Chevrons | Country/topic landing hero banners |
 | modal | Pop-up dialog content | — | Overlays, alerts, gated content prompts |
 | overviewtext | Title + body text panel | travel-brief | Short intro/overview copy blocks, country or topic briefs |
 | quote | Styled blockquote / testimonial | — | Testimonials, pull quotes, citations |
