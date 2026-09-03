@@ -1,0 +1,18 @@
+/* design tokens for values not covered by the global palette */
+:root {
+  --contactinfo-heading-color: #088391;
+  --contactinfo-phone-font-weight: 700;
+  --contactinfo-phone-font-size: var(--body-font-size-l);
+
+  /* column split: 50/50 at tablet, 33/58 at desktop */
+  --contactinfo-text-col-width-tablet: 50%;
+  --contactinfo-person-col-width-tablet: 50%;
+  --contactinfo-text-col-width-desktop: 33.3333%;
+  --contactinfo-person-col-width-desktop: 58.3333%;
+  --contactinfo-column-gap: var(--spacing-xl);
+
+  /* image height caps per breakpoint; width stays auto so nothing crops */
+  --contactinfo-image-max-height: 295px;
+  --contactinfo-image-max-height-tablet: 327px;
+  --contactinfo-image-max-height-desktop: 380px;
+}
