@@ -19,27 +19,19 @@ const REQUIRED_CONSENT_GROUP = 'C0002';
  */
 const ONETRUST_SRC = 'https://cdn.cookielaw.org/scripttemplates/otSDKStub.js';
 
-// OneTrust serves production config for the live domain and a "-test" variant
-// everywhere else (stage, previews, localhost). Only www.edc.ca is production;
-// fail toward the test config for any other host.
-const ONETRUST_DOMAIN_SCRIPT_PROD = '7b260088-30b2-4fe3-b3d6-d3c1abf7ab50';
-const ONETRUST_DOMAIN_SCRIPT_TEST = `${ONETRUST_DOMAIN_SCRIPT_PROD}-test`;
-
-/**
- * @returns {string} the OneTrust domain-script id for the current host
- */
-function oneTrustDomainScript() {
-  return window.location.hostname === 'www.edc.ca'
-    ? ONETRUST_DOMAIN_SCRIPT_PROD
-    : ONETRUST_DOMAIN_SCRIPT_TEST;
-}
+// Use the OneTrust "-test" domain-script (the stage/non-prod variant) so this
+// migration never activates the production OneTrust config or its downstream
+// prod analytics/martech. To go fully live, drop the "-test" suffix (the prod
+// id is 7b260088-30b2-4fe3-b3d6-d3c1abf7ab50) — ideally gated on the production
+// hostname so previews/stage keep using -test.
+const ONETRUST_DOMAIN_SCRIPT = '7b260088-30b2-4fe3-b3d6-d3c1abf7ab50-test';
 
 function loadOneTrust() {
   if (document.querySelector(`script[src="${ONETRUST_SRC}"]`)) return;
   const script = document.createElement('script');
   script.src = ONETRUST_SRC;
   script.type = 'text/javascript';
-  script.setAttribute('data-domain-script', oneTrustDomainScript());
+  script.setAttribute('data-domain-script', ONETRUST_DOMAIN_SCRIPT);
   script.setAttribute('data-document-language', 'true');
   // fail securely: if the CMP can't load, consent stays declined and no
   // consented third parties are loaded.
