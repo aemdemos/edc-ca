@@ -19,5 +19,5 @@ Trace*.json
 playwright-report/
 test-results/
 
-# Local test fixtures for CDD-style iteration (see AGENTS.md) — never ship these
+# Local test fixtures (see AGENTS.md)
 drafts/

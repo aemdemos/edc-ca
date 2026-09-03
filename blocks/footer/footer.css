@@ -8,38 +8,21 @@ footer .footer p {
   margin: 0;
 }
 
-/*
- * Matches the sitewide `main > .section > div { max-width: var(--max-width-site) }`
- * centering rule (styles.css) — footer content lives outside <main>, so it never picked
- * that up, and was flowing edge-to-edge at wide viewports. Source has the same shape: a
- * full-width section background with a fixed-width `.container` centering its content.
- */
+/* footer content lives outside <main>, so it needs its own copy of the sitewide max-width centering rule */
 footer .footer .footer-categorylinks > div,
 footer .footer .footer-footnotes > div {
   max-width: var(--max-width-site);
   margin: 0 auto;
 }
 
-/*
- * Fixed, EDC-matched px values below (not the shared --spacing- and --body-font-size-
- * tokens) — those tokens still carry generic boilerplate values and additionally scale
- * up at (width >= 992px) as part of the site's own base type/spacing system, which does
- * not line up with the source footer's own fixed measurements. Once a real design-token
- * pass happens for this project, these can be re-pointed at the customer's own tokens.
- */
+/* fixed px values below intentionally don't use the shared --spacing-/--body-font-size- tokens, which don't line up with source's own footer measurements */
 
-/* subscribe section */
 footer .footer .subscribe-section {
   padding: 64px 16px 32px;
   background-color: var(--footer-subscribe-bg);
 }
 
-/*
- * category links: columns block, authored as 2 cells — [logo image] [3 heading+list
- * groups, as plain content]. Mirrors source's own 2-level structure (an outer logo/links
- * grid, and an inner 3-column grid over the heading/list children) rather than source's
- * exact class names, since our content model doesn't have a nested "links wrapper" block.
- */
+/* category links: columns block authored as 2 cells — logo image, then all 3 heading+list groups */
 footer .footer .footer-categorylinks {
   padding: 16px;
   background-color: var(--footer-categorylinks-bg);
@@ -85,13 +68,7 @@ footer .footer .footer-categorylinks a:hover {
   text-decoration: underline;
 }
 
-/*
- * footnotes bar — two `columns` block instances (matching the category-links pattern):
- * the first is the brand-logo row (Canada | EDC, space-between), the second is a 3-cell
- * row (company name | legal links | social icons). Using `columns` instead of plain
- * default content gives each piece its own cell to target, instead of relying on
- * nth-of-type across a flat list of paragraphs/images.
- */
+/* footnotes bar: two columns blocks — brand-logo row (Canada | EDC), then name/legal/social row */
 footer .footer .footer-footnotes {
   padding: 32px 16px 24px;
   background-color: var(--footer-footnotes-bg);
@@ -99,12 +76,7 @@ footer .footer .footer-footnotes {
   font-weight: 500;
 }
 
-/*
- * row 1: brand logos, space-between. Cells need `flex: none` for the same reason as the
- * info row below — columns.css gives every cell `flex: 1` at desktop (equal halves),
- * which stretches the EDC-logo cell to 50% width and leaves the logo sitting left-aligned
- * inside it instead of pinned to the row's true right edge.
- */
+/* brand logos row; flex: none opts cells out of columns.css's default equal-width flex:1 at desktop */
 footer .footer .footer-footnotes .footer-brands > div {
   display: flex;
   flex-direction: row;
@@ -123,12 +95,7 @@ footer .footer .footer-footnotes .footer-brands img {
   height: auto;
 }
 
-/*
- * row 2: company name, legal links, social icons. footer.js tags these three cells
- * footer-info-name/-legal/-social (position-independent) — and each needs `flex: none`
- * to opt out of the generic columns.css rule that gives every cell `flex: 1` at desktop
- * (equal thirds), which is wrong here: these three cells should size to their own content.
- */
+/* name/legal/social row; footer.js tags these cells footer-info-name/-legal/-social */
 footer .footer .footer-footnotes .footer-info > div {
   margin-top: 16px;
   gap: 8px 16px;
@@ -153,7 +120,6 @@ footer .footer .footer-footnotes ul {
   list-style: none;
 }
 
-/* legal links: underlined, with a small "opens in a new tab" icon after external links */
 footer .footer .footer-footnotes .footer-info-legal a {
   color: var(--brand-secondary);
   text-decoration: underline;
@@ -170,8 +136,7 @@ footer .footer .footer-footnotes .footer-info-legal a[target="_blank"]::after {
   background-size: contain;
 }
 
-/* social links: authors write plain links to each network's URL — icons are matched by
-   href and applied as a background image, since default content can't carry icon spans */
+/* icons are matched by href and applied as a background image, since default content can't carry icon spans */
 footer .footer .footer-footnotes .footer-info-social ul {
   gap: 12px;
 }
@@ -207,7 +172,7 @@ footer .footer .footer-footnotes .footer-info-social a[href*="youtube.com"] {
   background-image: url('/icons/youtube.svg');
 }
 
-/* small-tablet+: logo column appears beside the links column (still stacked internally) */
+/* tablet styles */
 @media (width >= 576px) {
   footer .footer .footer-categorylinks {
     padding: 40px 32px;
@@ -223,7 +188,6 @@ footer .footer .footer-footnotes .footer-info-social a[href*="youtube.com"] {
     column-gap: 48px;
   }
 
-  /* footnotes row 2 merges onto one line: name, legal links, then social icons pushed right */
   footer .footer .footer-footnotes .footer-info > div {
     flex-direction: row;
     align-items: baseline;
@@ -234,7 +198,7 @@ footer .footer .footer-footnotes .footer-info-social a[href*="youtube.com"] {
   }
 }
 
-/* desktop+: logo:links ratio widens, and the links column splits into 3 internal columns */
+/* desktop styles */
 @media (width >= 992px) {
   footer .footer .footer-categorylinks {
     padding: 56px 16px 32px;

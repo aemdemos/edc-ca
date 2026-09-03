@@ -1,10 +1,5 @@
 .subscribe {
-  /*
-   * --text-color/--link-color/--link-hover-color are now the real EDC brand values
-   * (design tokens extracted on main), so the widget just references them directly.
-   * --subscribe-text-color and --subscribe-success-title-color are bespoke shades from
-   * the source subscribe form with no sitewide equivalent, so those stay hardcoded.
-   */
+  /* --subscribe-text-color/--subscribe-success-title-color are bespoke shades with no sitewide token */
   --subscribe-radius: var(--border-radius-m, 8px);
   --subscribe-input-height: 48px;
   --subscribe-input-text: var(--text-color);
@@ -114,14 +109,14 @@
   display: flex;
 }
 
-/* small-tablet+: source centers the form to a fixed max-width */
+/* tablet styles */
 @media (width >= 576px) {
   .subscribe {
     max-width: 575px;
   }
 }
 
-/* desktop+: wider max-width, and a step up in type size */
+/* desktop styles */
 @media (width >= 992px) {
   .subscribe {
     max-width: 768px;

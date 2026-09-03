@@ -4,20 +4,13 @@ const STRINGS_URL = `${window.hlx.codeBasePath}/widgets/newsletter/subscribe.jso
 
 let stringsPromise;
 
-/**
- * Fetches (once) and caches the widget's bilingual strings.
- * @returns {Promise<{en: object, fr: object}>}
- */
+/** Fetches (once) and caches the widget's bilingual strings. */
 function loadStrings() {
   stringsPromise ??= fetch(STRINGS_URL).then((resp) => resp.json());
   return stringsPromise;
 }
 
-/**
- * Fills in every data-key/data-key-placeholder/data-key-aria-label node from the strings object.
- * @param {Element} widget The widget root
- * @param {object} strings Resolved strings for the current language
- */
+/** Fills in every data-key/data-key-placeholder/data-key-aria-label node from the strings object. */
 function applyStrings(widget, strings) {
   widget.querySelectorAll('[data-key]').forEach((el) => {
     el.textContent = strings[el.dataset.key] ?? '';
@@ -30,12 +23,7 @@ function applyStrings(widget, strings) {
   });
 }
 
-/**
- * Shows/clears the inline field error, driven by native ValidityState (no hand-rolled regex).
- * @param {HTMLInputElement} input The email input
- * @param {Element} errorEl The inline error message element
- * @param {string} [message] Error message to show; omit to clear
- */
+/** Shows/clears the inline field error, driven by native ValidityState (no hand-rolled regex). */
 function setFieldError(input, errorEl, message) {
   if (message) {
     input.classList.add('error');
@@ -48,13 +36,7 @@ function setFieldError(input, errorEl, message) {
   }
 }
 
-/**
- * Submits the email address. Uses `widget.dataset.action` if set (real endpoint, wired later);
- * otherwise resolves a mock success, since no backend exists yet for this EDS site.
- * @param {Element} widget The widget root
- * @param {string} emailAddress The submitted email address
- * @returns {Promise<boolean>} Whether the submission succeeded
- */
+/** Uses widget.dataset.action if set (real endpoint, wired later); otherwise mocks a success. */
 async function submitEmail(widget, emailAddress) {
   const { action } = widget.dataset;
   if (!action) {
@@ -73,9 +55,6 @@ async function submitEmail(widget, emailAddress) {
   }
 }
 
-/**
- * @param {Element} widget The widget root
- */
 export default async function decorate(widget) {
   const lang = widget.dataset.lang === 'fr' ? 'fr' : 'en';
   const allStrings = await loadStrings();
