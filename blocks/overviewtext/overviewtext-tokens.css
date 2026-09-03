@@ -1,0 +1,28 @@
+/* overviewtext design tokens */
+:root {
+  --overviewtext-padding-top: 4rem;
+  --overviewtext-padding-bottom: 5.5rem;
+  --overviewtext-title-font-size: 1.25rem;
+  --overviewtext-title-font-weight: 600;
+  --overviewtext-text-font-size: 1.3125rem;
+  --overviewtext-travel-brief-background: #e5edf7;
+  --overviewtext-travel-brief-title-color: #1a65b2;
+  --overviewtext-travel-brief-text-font-size: 1.25rem;
+  --overviewtext-travel-brief-padding: 3rem;
+  --overviewtext-travel-brief-content-width: 100%;
+}
+
+@media (width >= 768px) {
+  :root {
+    --overviewtext-travel-brief-content-width: 83.3333%;
+  }
+}
+
+@media (width >= 992px) {
+  :root {
+    --overviewtext-title-font-size: 1.875rem;
+    --overviewtext-text-font-size: 1.625rem;
+    --overviewtext-travel-brief-padding: 7rem;
+    --overviewtext-travel-brief-content-width: 66.6667%;
+  }
+}

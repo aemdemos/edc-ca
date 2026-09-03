@@ -1,0 +1,54 @@
+{
+  "definitions": [
+    {
+      "title": "Overview Text",
+      "id": "overviewtext",
+      "model": "overviewtext",
+      "plugins": {
+        "da": {
+          "unsafeHTML": "<div class=\"overviewtext\"><div><div></div></div><div><div></div></div></div>",
+          "rows": 2,
+          "columns": 1,
+          "fields": [
+            {
+              "name": "title",
+              "selector": "div:nth-child(1)>div"
+            },
+            {
+              "name": "text",
+              "selector": "div:nth-child(2)>div"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "overviewtext",
+      "fields": [
+        {
+          "component": "boolean",
+          "name": "classes_travel-brief",
+          "label": "Travel Brief Variant",
+          "valueType": "boolean"
+        },
+        {
+          "component": "richtext",
+          "valueType": "string",
+          "name": "title",
+          "value": "",
+          "label": "Title"
+        },
+        {
+          "component": "richtext",
+          "valueType": "string",
+          "name": "text",
+          "value": "",
+          "label": "Text"
+        }
+      ]
+    }
+  ],
+  "filters": []
+}

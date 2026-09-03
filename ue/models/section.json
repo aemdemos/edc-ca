@@ -51,6 +51,7 @@
       "id": "section",
       "components": [
         "accordion",
+        "breadcrumbs",
         "cards",
         "carousel",
         "columns",
@@ -60,6 +61,7 @@
         "hero",
         "image",
         "pagelevelfeedback",
+        "overviewtext",
         "quote",
         "search",
         "section-title",

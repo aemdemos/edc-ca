@@ -84,6 +84,7 @@ When creating or editing a page, use the Library sidebar to add blocks instead o
 | Block | Purpose | Variants | Usage |
 |-------|---------|----------|-------|
 | accordion | Collapsible question/answer or expandable content panels | — | FAQs, expandable details where space is limited |
+| breadcrumbs | Auto-generated trail from Home to the current page | — | Place anywhere on a template where wayfinding context is useful; no authored fields — content comes from the `nav` document and current URL |
 | card | A single card (image, title, text, link); used inside cards and card-carousel | — | Building block for card layouts |
 | cards | A grid of cards | — | Feature lists, product/article tiles, link collections |
 | card-carousel | A horizontally scrolling set of cards | — | Showcasing multiple cards in limited space |
@@ -94,6 +95,7 @@ When creating or editing a page, use the Library sidebar to add blocks instead o
 | fragment | Reuses content from another document | — | Shared content (banners, promos) across pages |
 | hero | Large banner with background image, heading, and call to action | — | Page headers, landing-page banners |
 | modal | Pop-up dialog content | — | Overlays, alerts, gated content prompts |
+| overviewtext | Title + body text panel | travel-brief | Short intro/overview copy blocks, country or topic briefs |
 | quote | Styled blockquote / testimonial | — | Testimonials, pull quotes, citations |
 | search | On-page search experience | minimal | Search results pages, in-page search |
 | section-title | Styled section heading with alignment, size, and color options | center, left, right; size-xs/s/m/l/xl/xxl; subtitle-size-xs/s/m/l/xl/xxl; color-text/dark/light/link/background | Section headers and titles with fine-grained styling |

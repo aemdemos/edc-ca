@@ -1,0 +1,48 @@
+@import url('./overviewtext-tokens.css');
+
+.overviewtext {
+  padding: var(--overviewtext-padding-top) 0 var(--overviewtext-padding-bottom);
+  text-align: center;
+}
+
+.overviewtext .overviewtext-title {
+  margin: 0 0 var(--spacing-m);
+  font-size: var(--overviewtext-title-font-size);
+  font-weight: var(--overviewtext-title-font-weight);
+}
+
+.overviewtext .overviewtext-text {
+  margin: 0;
+  font-size: var(--overviewtext-text-font-size);
+}
+
+/* travel-brief: full-bleed colored band, breaking out of the section's default content width */
+.overviewtext.travel-brief {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  padding-top: var(--overviewtext-travel-brief-padding);
+  padding-bottom: var(--overviewtext-travel-brief-padding);
+  background-color: var(--overviewtext-travel-brief-background);
+}
+
+.overviewtext.travel-brief > div {
+  max-width: var(--max-width-site);
+  margin: 0 auto;
+  padding: 0 var(--spacing-m);
+}
+
+.overviewtext.travel-brief .overviewtext-title {
+  width: var(--overviewtext-travel-brief-content-width);
+  margin-left: auto;
+  margin-right: auto;
+  color: var(--overviewtext-travel-brief-title-color);
+}
+
+.overviewtext.travel-brief .overviewtext-text {
+  width: var(--overviewtext-travel-brief-content-width);
+  margin-left: auto;
+  margin-right: auto;
+  color: var(--text-color);
+  font-size: var(--overviewtext-travel-brief-text-font-size);
+}

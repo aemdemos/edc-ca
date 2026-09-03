@@ -93,6 +93,18 @@
           }
         },
         {
+          "title": "Breadcrumbs",
+          "id": "breadcrumbs",
+          "plugins": {
+            "da": {
+              "rows": 0,
+              "columns": 0
+            }
+          },
+          "model": "breadcrumbs",
+          "filter": "breadcrumbs"
+        },
+        {
           "title": "Card Carousel",
           "id": "card-carousel",
           "plugins": {

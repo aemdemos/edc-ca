@@ -1,0 +1,2 @@
+/* same filename as the English widget, so it shares the .subscribe CSS scope */
+@import url('../subscribe.css');

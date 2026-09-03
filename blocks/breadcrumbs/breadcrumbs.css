@@ -1,0 +1,34 @@
+.breadcrumbs {
+  display: none;
+  font-size: var(--body-font-size-xs);
+  overflow: hidden;
+}
+
+.breadcrumbs ol {
+  display: flex;
+  flex-flow: wrap;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  gap: 1ch;
+}
+
+.breadcrumbs ol li {
+  padding: 0;
+  color: var(--dark-color);
+}
+
+.breadcrumbs ol li:not(:last-child)::after {
+  content: '/';
+  padding-left: 1ch;
+}
+
+.breadcrumbs ol li[aria-current] {
+  color: var(--text-color);
+}
+
+@media (width >= 992px) {
+  .breadcrumbs {
+    display: block;
+  }
+}
