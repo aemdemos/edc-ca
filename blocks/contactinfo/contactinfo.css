@@ -1,0 +1,112 @@
+@import url('./contactinfo-tokens.css');
+
+/* override the default section bottom padding for this block only */
+main .section.contactinfo-container {
+  padding-bottom: 0;
+}
+
+/* mobile-first: text stacks above the photo */
+.contactinfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.contactinfo-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.contactinfo h2 {
+  color: var(--contactinfo-heading-color);
+  margin-bottom: 0;
+}
+
+.contactinfo-phone {
+  font-weight: var(--contactinfo-phone-font-weight);
+  font-size: var(--contactinfo-phone-font-size);
+}
+
+.contactinfo-phone a {
+  color: inherit;
+}
+
+.contactinfo-cta a {
+  text-decoration: underline;
+}
+
+/* sitewide "opens in a new tab" icon (matches blocks/footer/footer.css) */
+.contactinfo-cta a[target="_blank"]::after {
+  content: '';
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-left: 4px;
+  background-image: url('/icons/new-window.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+/* source caps the image by height only (no crop/fit) so the full photo always shows */
+.contactinfo-person-image {
+  text-align: center;
+}
+
+.contactinfo-person-image img {
+  display: inline-block;
+  width: auto;
+  max-height: var(--contactinfo-image-max-height);
+  vertical-align: bottom;
+}
+
+.contactinfo-person-name {
+  margin: var(--spacing-s) 0 0;
+  font-weight: 600;
+}
+
+.contactinfo-person-title {
+  margin: 0;
+  color: var(--dark-color);
+}
+
+/* tablet: two columns side by side, widths and image height match the source */
+@media (width >= 768px) {
+  .contactinfo {
+    flex-direction: row;
+    align-items: flex-end;
+    gap: var(--contactinfo-column-gap);
+  }
+
+  .contactinfo-text {
+    width: var(--contactinfo-text-col-width-tablet);
+    align-self: center;
+  }
+
+  .contactinfo-person {
+    width: var(--contactinfo-person-col-width-tablet);
+    align-self: flex-end;
+  }
+
+  /* two-column layout: photo floats right instead of centered (mobile) */
+  .contactinfo-person-image {
+    text-align: right;
+  }
+
+  .contactinfo-person-image img {
+    max-height: var(--contactinfo-image-max-height-tablet);
+  }
+}
+
+/* desktop: text column narrows further, photo column widens (source) */
+@media (width >= 992px) {
+  .contactinfo-text {
+    width: var(--contactinfo-text-col-width-desktop);
+  }
+
+  .contactinfo-person {
+    width: var(--contactinfo-person-col-width-desktop);
+  }
+
+  .contactinfo-person-image img {
+    max-height: var(--contactinfo-image-max-height-desktop);
+  }
+}
