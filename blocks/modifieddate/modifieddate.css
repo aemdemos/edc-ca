@@ -1,0 +1,15 @@
+/* Modified date: small, muted "Date modified" line, mirroring the source site's c-date-modified. */
+
+main .modifieddate {
+  margin: 1rem 0;
+}
+
+main .modifieddate .c-date-modified {
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-xs);
+  color: var(--dark-color);
+}
+
+main .modifieddate .c-date-modified-date {
+  display: inline-block;
+}
