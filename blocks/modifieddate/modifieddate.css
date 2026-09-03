@@ -11,6 +11,15 @@ main .section.modifieddate-container {
   padding-bottom: 0;
 }
 
+/*
+ * Author left the date blank → decorate() empties the block, matching :empty.
+ * When modifieddate has its own section (added via a section divider), hide that whole
+ * section so the sections above and below sit flush — no leftover gap from the empty block.
+ */
+main .section.modifieddate-container:has(> .modifieddate-wrapper > .modifieddate:empty) {
+  display: none;
+}
+
 main .modifieddate .c-date-modified {
   font-family: var(--body-font-family);
 }
