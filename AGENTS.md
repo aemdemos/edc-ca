@@ -66,6 +66,7 @@ When facing trade-offs, follow this order: *Intuitive* (author-friendly) > *Simp
 - **JavaScript**: ES6+ native modules; no transpiling or build
 - **CSS**: Native CSS (features with equal or better browser support than ES6 modules); no preprocessors or frameworks
 - **HTML**: Semantic HTML5 elements with ARIA attributes
+- **Comments**: CSS — none, unless a rule is genuinely non-obvious. JS — 1 line max; don't restate what the code already says.
 
 ## Project structure
 

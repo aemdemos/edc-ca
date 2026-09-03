@@ -205,6 +205,31 @@
     ]
   },
   {
+    "id": "overviewtext",
+    "fields": [
+      {
+        "component": "boolean",
+        "name": "classes_travel-brief",
+        "label": "Travel Brief Variant",
+        "valueType": "boolean"
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "title",
+        "value": "",
+        "label": "Title"
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "text",
+        "value": "",
+        "label": "Text"
+      }
+    ]
+  },
+  {
     "id": "pagelevelfeedback",
     "fields": []
   },
@@ -475,6 +500,22 @@
                 "value": "size-xs"
               }
             ]
+          }
+        ]
+      },
+      {
+        "component": "container",
+        "name": "anchor-container",
+        "label": "Anchor (optional)",
+        "collapsible": true,
+        "collapsed": true,
+        "fields": [
+          {
+            "component": "text",
+            "name": "anchor-id",
+            "label": "Anchor ID",
+            "valueType": "string",
+            "description": "Sets an id on this block so other content can link to it with #anchor-id. Leave Title empty to use this block purely as an anchor target."
           }
         ]
       }

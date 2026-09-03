@@ -36,6 +36,9 @@ const LEGACY_TONE_TO_COLOR_CLASS = new Map([
   ['section-title-tone-accent', 'section-title-color-link'],
 ]);
 
+// Row count of the full template (title..subtitle-size + anchor-id); anchor-id is read by position, not pattern-matched.
+const ANCHOR_ROW_COUNT = 9;
+
 const SIZE_MAP = new Map([
   ['xxl', 'size-xxl'],
   ['xl', 'size-xl'],
@@ -62,6 +65,23 @@ function normalizeSize(val) {
   const order = ['xxl', 'xs', 'xl', 'l', 'm', 's'];
   const key = order.find((k) => n.includes(k));
   return key ? SIZE_MAP.get(key) ?? '' : '';
+}
+
+// True legacy content is single-column; a labeled 2-column row is a modern named table, even with ≤4 rows.
+function isSingleColumnRow(row) {
+  return !!row?.children && row.children.length === 1;
+}
+
+// Row explicitly labeled as the anchor field in a two-column named table (readBlockConfig style).
+function isAnchorLabeledRow(row) {
+  if (!row?.children || row.children.length !== 2) return false;
+  const label = (row.children[0].textContent ?? '')
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-/, '')
+    .replace(/-$/, '');
+  return ['anchor-id', 'anchorid', 'anchor', 'link-target', 'linktarget'].includes(label);
 }
 
 function cellText(row) {
@@ -200,6 +220,7 @@ function isHeadingLevelOrParagraphTypeToken(raw) {
 
 function isMetadataRow(row) {
   if (!row?.children?.length) return true;
+  if (isAnchorLabeledRow(row)) return true;
   const raw = cellText(row);
   if (!hasValue(raw)) return true;
   if (normalizeTextColorClass(raw)) return true;
@@ -218,12 +239,17 @@ function readTitleFromRows(rows, block) {
     alignVal: '',
     titleHeadingEl: null,
   };
-  const legacyFour = rows.length > 0 && rows.length <= 4;
+  const legacyFour = rows.length > 0 && rows.length <= 4 && rows.every(isSingleColumnRow);
   const titleSource = rows.length >= 1 ? rows[0] : block;
   const titleSearchRoot = valueColumnScope(titleSource);
-  const titleHeadingEl = titleSearchRoot?.querySelector?.(HEADING_SELECTOR) ?? null;
+  const rawTitleHeadingEl = titleSearchRoot?.querySelector?.(HEADING_SELECTOR) ?? null;
+  // Anchor-labeled rows are never title content, even once wrapTextNodes() wraps their text in a <p>.
+  const rowIsAnchorField = isAnchorLabeledRow(titleSource);
+  const titleHeadingEl = rowIsAnchorField ? null : rawTitleHeadingEl;
   state.titleHeadingEl = titleHeadingEl;
-  const titleInfo = getHeadingFromCell(titleSource, titleHeadingEl);
+  const titleInfo = rowIsAnchorField
+    ? { text: '', tag: 'h2', id: '' }
+    : getHeadingFromCell(titleSource, titleHeadingEl);
   if (!hasValue(titleInfo.text) && !titleHeadingEl) return state;
   state.titleText = titleInfo.text;
   state.titleTag = titleInfo.tag;
@@ -249,7 +275,7 @@ function readSubtitleFromRows(rows, block) {
     subtitleSizeClass: '',
     subHeadingEl: null,
   };
-  const legacyFour = rows.length > 0 && rows.length <= 4;
+  const legacyFour = rows.length > 0 && rows.length <= 4 && rows.every(isSingleColumnRow);
   /** Old 4-row *doc* table: row1 title size, row2 subtitle, row3 subtitle size — not DA rows (type | title size | alignment). */
   let legacyConsumedSubtitleRow = false;
   if (legacyFour && rows.length >= 3 && !isMetadataRow(rows[2])) {
@@ -290,6 +316,8 @@ function applyConfig(state, config) {
     const classesAsAlign = normalizeAlignment(classesField);
     if (classesAsAlign) state.alignVal = classesAsAlign;
   }
+  const anchorCfg = cfg('anchor-id', 'anchorId', 'anchor');
+  if (hasValue(anchorCfg)) state.anchorId = anchorCfg;
   if (hasValue(cfg('subtitle'))) state.subtitleText = cfg('subtitle');
   const sType = validTag(cfg('subtitle-type', 'subtitleType'));
   if (sType) state.subtitleTag = sType;
@@ -319,7 +347,8 @@ function applyTitleMetaScan(rows, fromIdx, untilIdx, cfg) {
   let haveTextColor = hasValue(normalizeTextColorClass(getTextColorRawFromConfig(cfg)));
   let ri = fromIdx;
   while (ri < untilIdx) {
-    const raw = cellText(rows.at(ri));
+    const row = rows.at(ri);
+    const raw = isAnchorLabeledRow(row) ? '' : cellText(row);
     if (hasValue(raw)) {
       const color = normalizeTextColorClass(raw);
       const align = normalizeAlignment(raw);
@@ -354,12 +383,19 @@ function applySubtitleScan(rows, subIdx, cfg) {
   }
   let ri = subIdx + 1;
   while (ri < rows.length && !hasValue(get(cfg, 'subtitle-size', 'subtitleSize'))) {
-    const raw = cellText(rows.at(ri));
+    const row = rows.at(ri);
+    const raw = isAnchorLabeledRow(row) ? '' : cellText(row);
     if (hasValue(raw) && normalizeSize(raw)) {
       cfg['subtitle-size'] = raw;
     }
     ri += 1;
   }
+}
+
+/** Explicit-position read of the trailing anchor-id row (see ANCHOR_ROW_COUNT). */
+function readAnchorFromRows(allRows) {
+  if (allRows.length < ANCHOR_ROW_COUNT) return '';
+  return cellText(allRows[ANCHOR_ROW_COUNT - 1]);
 }
 
 function configFromSingleColumnRows(rows, tableConfig) {
@@ -405,6 +441,11 @@ function renderSectionTitle(block, state) {
     : '';
 
   block.replaceChildren();
+  if (hasValue(state.anchorId)) {
+    block.id = state.anchorId;
+  } else {
+    block.removeAttribute('id');
+  }
   block.classList.remove(
     'left',
     'center',
@@ -428,14 +469,17 @@ function renderSectionTitle(block, state) {
     'section-title-tone-accent',
   );
 
-  const titleEl = createTitleElement(
-    state.titleTag,
-    'title',
-    state.titleText,
-    state.titleId,
-    state.titleHeadingEl,
-  );
-  block.appendChild(titleEl);
+  const hasTitle = hasValue(state.titleText) || !!state.titleHeadingEl;
+  if (hasTitle) {
+    const titleEl = createTitleElement(
+      state.titleTag,
+      'title',
+      state.titleText,
+      state.titleId,
+      state.titleHeadingEl,
+    );
+    block.appendChild(titleEl);
+  }
   if (keepSize) block.classList.add(keepSize);
   if (keepAlign) block.classList.add(keepAlign);
   if (keepTextColor) block.classList.add(keepTextColor);
@@ -455,7 +499,9 @@ function renderSectionTitle(block, state) {
 export default function decorate(block) {
   const initialTextColor = initialTextColorFromBlock(block);
   const tableConfig = readBlockConfig(block) ?? {};
-  const rows = Array.from(block.querySelectorAll(':scope > div'));
+  const allRows = Array.from(block.querySelectorAll(':scope > div'));
+  const anchorRowValue = readAnchorFromRows(allRows);
+  const rows = allRows.length >= ANCHOR_ROW_COUNT ? allRows.slice(0, ANCHOR_ROW_COUNT - 1) : allRows;
   const mergedConfig = configFromSingleColumnRows(rows, tableConfig);
   const titleState = readTitleFromRows(rows, block);
   const subtitleState = readSubtitleFromRows(rows, block);
@@ -463,8 +509,10 @@ export default function decorate(block) {
     ...titleState,
     ...subtitleState,
     textColorClass: '',
+    anchorId: '',
   };
   applyConfig(state, mergedConfig);
+  if (hasValue(anchorRowValue) && !hasValue(state.anchorId)) state.anchorId = anchorRowValue;
   if (!state.subHeadingEl) {
     const si = findSubtitleRowIndex(rows);
     if (si >= 0) {
@@ -473,6 +521,6 @@ export default function decorate(block) {
     }
   }
   if (initialTextColor && !state.textColorClass) state.textColorClass = initialTextColor;
-  if (!hasValue(state.titleText) && !state.titleHeadingEl) return;
+  if (!hasValue(state.titleText) && !state.titleHeadingEl && !hasValue(state.anchorId)) return;
   renderSectionTitle(block, state);
 }

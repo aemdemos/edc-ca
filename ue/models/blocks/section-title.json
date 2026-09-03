@@ -6,8 +6,8 @@
       "model": "section-title",
       "plugins": {
         "da": {
-          "unsafeHTML": "<div class=\"section-title\"><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div></div>",
-          "rows": 8,
+          "unsafeHTML": "<div class=\"section-title\"><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div></div>",
+          "rows": 9,
           "columns": 1,
           "fields": [
             {
@@ -41,6 +41,10 @@
             {
               "name": "subtitle-size",
               "selector": "div:nth-child(8)>div"
+            },
+            {
+              "name": "anchor-id",
+              "selector": "div:nth-child(9)>div"
             }
           ]
         }
@@ -278,6 +282,22 @@
                   "value": "size-xs"
                 }
               ]
+            }
+          ]
+        },
+        {
+          "component": "container",
+          "name": "anchor-container",
+          "label": "Anchor (optional)",
+          "collapsible": true,
+          "collapsed": true,
+          "fields": [
+            {
+              "component": "text",
+              "name": "anchor-id",
+              "label": "Anchor ID",
+              "valueType": "string",
+              "description": "Sets an id on this block so other content can link to it with #anchor-id. Leave Title empty to use this block purely as an anchor target."
             }
           ]
         }
