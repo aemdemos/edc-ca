@@ -42,22 +42,14 @@ export default function decorate(block) {
     return;
   }
 
+  // Match the source markup: <section><span>Date modified: YYYY-MM-DD</span></section>
   const section = document.createElement('section');
   section.className = 'c-date-modified';
 
   const span = document.createElement('span');
   span.className = 'c-date-modified-date';
+  span.textContent = `${getLabel()} ${date}`;
 
-  const label = document.createElement('span');
-  label.className = 'c-date-modified-label';
-  label.textContent = `${getLabel()} `;
-
-  const time = document.createElement('time');
-  time.setAttribute('datetime', date);
-  time.textContent = date;
-
-  span.append(label, time);
   section.append(span);
-
   block.replaceChildren(section);
 }
