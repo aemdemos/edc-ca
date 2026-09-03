@@ -6,8 +6,8 @@
       "model": "section-title",
       "plugins": {
         "da": {
-          "unsafeHTML": "<div class=\"section-title\"><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div></div>",
-          "rows": 9,
+          "unsafeHTML": "<div class=\"section-title\"><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div></div>",
+          "rows": 6,
           "columns": 1,
           "fields": [
             {
@@ -31,20 +31,8 @@
               "selector": "div:nth-child(5)>div"
             },
             {
-              "name": "subtitle",
-              "selector": "div:nth-child(6)>div"
-            },
-            {
-              "name": "subtitleType",
-              "selector": "div:nth-child(7)>div"
-            },
-            {
-              "name": "subtitle-size",
-              "selector": "div:nth-child(8)>div"
-            },
-            {
               "name": "anchor-id",
-              "selector": "div:nth-child(9)>div"
+              "selector": "div:nth-child(6)>div"
             }
           ]
         }
@@ -194,94 +182,6 @@
             {
               "name": "Link hover (--link-hover-color)",
               "value": "link-hover"
-            }
-          ]
-        },
-        {
-          "component": "container",
-          "name": "optional-subtitle",
-          "label": "Subtitle (optional)",
-          "collapsible": true,
-          "collapsed": true,
-          "fields": [
-            {
-              "component": "text",
-              "name": "subtitle",
-              "label": "Subtitle text",
-              "valueType": "string"
-            },
-            {
-              "component": "select",
-              "name": "subtitleType",
-              "label": "Subtitle type",
-              "valueType": "string",
-              "options": [
-                {
-                  "name": "h1",
-                  "value": "h1"
-                },
-                {
-                  "name": "h2",
-                  "value": "h2"
-                },
-                {
-                  "name": "h3",
-                  "value": "h3"
-                },
-                {
-                  "name": "h4",
-                  "value": "h4"
-                },
-                {
-                  "name": "h5",
-                  "value": "h5"
-                },
-                {
-                  "name": "h6",
-                  "value": "h6"
-                },
-                {
-                  "name": "p",
-                  "value": "p"
-                }
-              ]
-            },
-            {
-              "component": "select",
-              "name": "subtitle-size",
-              "label": "Subtitle size",
-              "value": "",
-              "valueType": "string",
-              "options": [
-                {
-                  "name": "Default (from type)",
-                  "value": ""
-                },
-                {
-                  "name": "XXL",
-                  "value": "size-xxl"
-                },
-                {
-                  "name": "XL",
-                  "value": "size-xl"
-                },
-                {
-                  "name": "L",
-                  "value": "size-l"
-                },
-                {
-                  "name": "M",
-                  "value": "size-m"
-                },
-                {
-                  "name": "S",
-                  "value": "size-s"
-                },
-                {
-                  "name": "XS",
-                  "value": "size-xs"
-                }
-              ]
             }
           ]
         },

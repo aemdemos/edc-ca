@@ -352,8 +352,8 @@
           "model": "section-title",
           "plugins": {
             "da": {
-              "unsafeHTML": "<div class=\"section-title\"><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div></div>",
-              "rows": 9,
+              "unsafeHTML": "<div class=\"section-title\"><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div></div>",
+              "rows": 6,
               "columns": 1,
               "fields": [
                 {
@@ -377,20 +377,8 @@
                   "selector": "div:nth-child(5)>div"
                 },
                 {
-                  "name": "subtitle",
-                  "selector": "div:nth-child(6)>div"
-                },
-                {
-                  "name": "subtitleType",
-                  "selector": "div:nth-child(7)>div"
-                },
-                {
-                  "name": "subtitle-size",
-                  "selector": "div:nth-child(8)>div"
-                },
-                {
                   "name": "anchor-id",
-                  "selector": "div:nth-child(9)>div"
+                  "selector": "div:nth-child(6)>div"
                 }
               ]
             }
