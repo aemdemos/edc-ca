@@ -1,0 +1,9 @@
+/* multipletabs design tokens */
+:root {
+  --multipletabs-gap: var(--spacing-m);
+  --multipletabs-text-col-width: 14rem;
+  --multipletabs-panel-padding: var(--spacing-m);
+  --multipletabs-border-width: var(--border-width-s);
+  --multipletabs-border-color: var(--border-color);
+  --multipletabs-transition-duration: var(--transition-duration);
+}

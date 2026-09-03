@@ -298,6 +298,56 @@
           }
         },
         {
+          "title": "Multiple Tabs",
+          "id": "multipletabs",
+          "model": "multipletabs",
+          "filter": "multipletabs",
+          "plugins": {
+            "da": {
+              "columns": 0,
+              "rows": 0
+            }
+          }
+        },
+        {
+          "title": "Multiple Tabs Text",
+          "id": "multipletabs-text",
+          "model": "multipletabs-text",
+          "plugins": {
+            "da": {
+              "columns": 1,
+              "rows": 1,
+              "fields": [
+                {
+                  "name": "text",
+                  "selector": "div:nth-child(1)"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "title": "Multiple Tabs Item",
+          "id": "multipletabs-item",
+          "model": "multipletabs-item",
+          "plugins": {
+            "da": {
+              "columns": 2,
+              "rows": 1,
+              "fields": [
+                {
+                  "name": "name",
+                  "selector": "div:nth-child(1)"
+                },
+                {
+                  "name": "content",
+                  "selector": "div:nth-child(2)"
+                }
+              ]
+            }
+          }
+        },
+        {
           "title": "Overview Text",
           "id": "overviewtext",
           "model": "overviewtext",

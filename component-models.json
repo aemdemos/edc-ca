@@ -248,6 +248,39 @@
     ]
   },
   {
+    "id": "multipletabs-text",
+    "fields": [
+      {
+        "component": "richtext",
+        "name": "text",
+        "value": "text",
+        "valueType": "string",
+        "label": "Text",
+        "required": true
+      }
+    ]
+  },
+  {
+    "id": "multipletabs-item",
+    "fields": [
+      {
+        "component": "richtext",
+        "name": "name",
+        "value": "name",
+        "valueType": "string",
+        "label": "Tab Name",
+        "required": true
+      },
+      {
+        "component": "richtext",
+        "name": "content",
+        "value": "content",
+        "label": "Content",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "overviewtext",
     "fields": [
       {

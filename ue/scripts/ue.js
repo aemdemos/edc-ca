@@ -15,13 +15,15 @@ import { showSlide } from '../../scripts/slider.js';
 import { activateTabPanel, moveInstrumentation } from './ue-utils.js';
 
 /**
- * Load tabs resync only when needed. A static import of blocks/tabs/tabs.js would pull in scripts.js
- * while scripts.js is still awaiting this module on ue.da.live (circular dependency → broken UE page).
- * @returns {Promise<{ resyncTabsBlock: (el: Element) => void }>}
+ * Load a tabs-family block's module only when needed. A static import of blocks/tabs/tabs.js would
+ * pull in scripts.js while scripts.js is still awaiting this module on ue.da.live (circular
+ * dependency → broken UE page).
+ * @param {string} blockName 'tabs' or 'multipletabs'
+ * @returns {Promise<Record<string, (el: Element) => void>>}
  */
-function loadTabsModule() {
+function loadTabsFamilyModule(blockName) {
   const base = window.hlx?.codeBasePath ?? '';
-  return import(`${base}/blocks/tabs/tabs.js`);
+  return import(`${base}/blocks/${blockName}/${blockName}.js`);
 }
 
 /**
@@ -30,7 +32,8 @@ function loadTabsModule() {
  */
 function handleTabsInstrumentation(mutation) {
   const { addedNodes: addedElements, removedNodes: removedElements, target } = mutation;
-  if (removedElements.length === 1 && removedElements[0].attributes['data-aue-model']?.value === 'tabs-item') {
+  const removedModel = removedElements[0]?.attributes['data-aue-model']?.value;
+  if (removedElements.length === 1 && (removedModel === 'tabs-item' || removedModel === 'multipletabs-item')) {
     const resourceAttr = removedElements[0].getAttribute('data-aue-resource');
     if (resourceAttr) {
       const itemMatch = resourceAttr.match(/item-(\d+)/);
@@ -66,22 +69,30 @@ function handleTabsInstrumentation(mutation) {
 }
 
 /**
- * When tab rows are added or removed under div.tabs, rebuild the tablist (handles deletes from UE
- * even when data-aue-model on mutation.target is not "tabs").
+ * When tab rows are added or removed under div.tabs / div.multipletabs, rebuild the tablist (handles
+ * deletes from UE even when data-aue-model on mutation.target is not the block's own model). For
+ * multipletabs, rows can land either directly under the block or under its nested .multipletabs-group
+ * wrapper (a decoration-time artifact the authored resource tree doesn't know about), so both are
+ * treated as valid row containers.
  * @param {MutationRecord} mutation
  * @returns {boolean} true if resync + instrumentation were scheduled asynchronously
  */
 function scheduleTabsRowResyncIfNeeded(mutation) {
-  const tabsBlock = mutation.target.closest('div.tabs');
+  const tabsBlock = mutation.target.closest('div.tabs, div.multipletabs');
   if (!tabsBlock) {
     return false;
   }
 
-  const tablistEl = tabsBlock.querySelector(':scope > .tabs-list');
+  const isMultipleTabs = tabsBlock.classList.contains('multipletabs');
+  const rowContainer = (isMultipleTabs && tabsBlock.querySelector(':scope > .multipletabs-group')) || tabsBlock;
+
+  const tablistEl = rowContainer.querySelector(':scope > .tabs-list');
   const { addedNodes, removedNodes } = mutation;
 
   const addedRow = [...addedNodes].some(
-    (n) => n.nodeType === Node.ELEMENT_NODE && n.parentElement === tabsBlock && n !== tablistEl,
+    (n) => n.nodeType === Node.ELEMENT_NODE
+      && (n.parentElement === tabsBlock || n.parentElement === rowContainer)
+      && n !== tablistEl,
   );
 
   const removedTabRow = [...removedNodes].some(
@@ -91,6 +102,7 @@ function scheduleTabsRowResyncIfNeeded(mutation) {
         n.matches?.('.tabs-panel[role="tabpanel"]')
         || n.getAttribute?.('role') === 'tabpanel'
         || n.attributes?.['data-aue-model']?.value === 'tabs-item'
+        || n.attributes?.['data-aue-model']?.value === 'multipletabs-item'
       ),
   );
 
@@ -98,9 +110,12 @@ function scheduleTabsRowResyncIfNeeded(mutation) {
     return false;
   }
 
-  loadTabsModule()
-    .then(({ resyncTabsBlock }) => {
-      resyncTabsBlock(tabsBlock);
+  const blockName = isMultipleTabs ? 'multipletabs' : 'tabs';
+  const resyncExport = isMultipleTabs ? 'resyncMultipleTabsBlock' : 'resyncTabsBlock';
+
+  loadTabsFamilyModule(blockName)
+    .then((mod) => {
+      mod[resyncExport](tabsBlock);
       handleTabsInstrumentation(mutation);
     })
     .catch(() => {
@@ -110,7 +125,7 @@ function scheduleTabsRowResyncIfNeeded(mutation) {
 }
 
 const setupObservers = () => {
-  const mutatingBlocks = document.querySelectorAll('div.cards, div.carousel, div.accordion, div.tabs');
+  const mutatingBlocks = document.querySelectorAll('div.cards, div.carousel, div.accordion, div.tabs, div.multipletabs');
   const observer = new MutationObserver((mutations) => {
     mutations.forEach((mutation) => {
       if (mutation.type === 'childList' && mutation.target.tagName === 'DIV') {
@@ -177,6 +192,7 @@ const setupObservers = () => {
             }
             break;
           case 'tabs':
+          case 'multipletabs':
             if (!tabsRowResyncScheduled) {
               handleTabsInstrumentation(mutation);
             }
@@ -228,14 +244,14 @@ const setupUEEventHandlers = () => {
       }
 
       const blockModel = blockEl.getAttribute('data-aue-model');
-      const isTabsBlock = blockEl.matches('.tabs') || blockModel === 'tabs';
+      const isTabsBlock = blockEl.matches('.tabs, .multipletabs') || blockModel === 'tabs' || blockModel === 'multipletabs';
 
       if (isTabsBlock) {
         if (element !== blockEl) {
           let panel = element.closest('.tabs-panel');
           if ((!panel || !blockEl.contains(panel)) && blockEl.contains(element)) {
             const inner = blockEl.querySelector(
-              `:scope > .tabs-panel [data-aue-resource="${safe}"]`,
+              `.tabs-panel [data-aue-resource="${safe}"]`,
             );
             panel = inner?.closest('.tabs-panel');
           }
