@@ -115,6 +115,7 @@ main > .section.herobanner-container > div.herobanner-wrapper {
     width: var(--herobanner-icon-size-tablet);
     height: var(--herobanner-icon-size-tablet);
     left: var(--herobanner-icon-offset-tablet);
+    background-color: var(--herobanner-icon-color-tablet);
   }
 }
 

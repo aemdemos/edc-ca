@@ -16,6 +16,7 @@
   --herobanner-media-bleed-desktop: 5%;
   --herobanner-min-height-desktop: 480px;
   --herobanner-icon-color: rgb(26 101 178 / 15%);
+  --herobanner-icon-color-tablet: rgb(26 101 178 / 6%);
   --herobanner-icon-size: 90px;
   --herobanner-icon-size-tablet: 160px;
   --herobanner-icon-size-desktop: 230px;
