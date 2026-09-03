@@ -3,6 +3,7 @@
 main .section-title { /* @boilerplate */
   margin: 0; /* @boilerplate */
   padding: 0; /* @boilerplate */
+  scroll-margin: var(--spacing-xl);
 }
 
 main .section-title.size-xxl .title { /* @boilerplate */
