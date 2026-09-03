@@ -20,13 +20,8 @@ main .section.modifieddate-container:has(> .modifieddate-wrapper > .modifieddate
   display: none;
 }
 
-main .modifieddate .c-date-modified {
-  font-family: var(--body-font-family);
-}
-
 /* Values taken from the source .c-date-modified__date (12px / #3d3d3d / 0.5px tracking). */
 main .modifieddate .c-date-modified-date {
-  display: inline-block;
   font-size: 0.75rem;
   font-weight: 400;
   line-height: 1.5rem;
