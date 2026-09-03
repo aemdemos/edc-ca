@@ -14,6 +14,7 @@ import {
   toClassName,
   loadScript,
   buildBlock,
+  getMetadata,
 } from './aem.js';
 import { applySectionBackgroundDecorations, decorateNestedSections } from './feature-flags/sections.js';
 import loadThemeSpreadSheetConfig from './feature-flags/theme-sheet.js';
@@ -134,6 +135,30 @@ export function getBlockId(name) {
 async function loadFonts() {
   await loadCSS(`${window.hlx.codeBasePath}/styles/fonts.css`);
   if (!window.location.hostname.includes('localhost')) sessionStorage.setItem('fonts-loaded', 'true');
+}
+
+/**
+ * Loads CSS and JS for a page template on demand, mirroring loadBlock's load pattern.
+ * @param {Element} main The main container element
+ * @param {string} templateName The template folder/file name (first token of the `template` metadata)
+ */
+async function loadTemplate(main, templateName) {
+  try {
+    const cssLoaded = loadCSS(`${window.hlx.codeBasePath}/templates/${templateName}/${templateName}.css`);
+    const decorationComplete = (async () => {
+      try {
+        const mod = await import(`${window.hlx.codeBasePath}/templates/${templateName}/${templateName}.js`);
+        if (mod.default) await mod.default(main);
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.log(`failed to load module for template ${templateName}`, error);
+      }
+    })();
+    await Promise.all([cssLoaded, decorationComplete]);
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error(`failed to load template ${templateName}`, error);
+  }
 }
 
 /**
@@ -487,6 +512,9 @@ async function loadLazy(doc) {
 
   loadHeader(doc.querySelector('body > header'));
   loadFooter(doc.querySelector('body > footer'));
+
+  const templateName = toClassName(getMetadata('template').split(',')[0].trim());
+  if (templateName) await loadTemplate(main, templateName);
 
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   loadFonts();
