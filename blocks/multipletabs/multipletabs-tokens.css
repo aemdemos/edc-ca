@@ -3,7 +3,9 @@
   --multipletabs-gap: var(--spacing-m);
   --multipletabs-text-col-width: 14rem;
   --multipletabs-panel-padding: var(--spacing-m);
-  --multipletabs-border-width: var(--border-width-s);
+  --multipletabs-border-width: 2px;
   --multipletabs-border-color: var(--border-color);
-  --multipletabs-transition-duration: var(--transition-duration);
+  --multipletabs-border-bottom-color: rgb(202 202 202);
+  --multipletabs-border-bottom-selected-color: rgb(26 101 178);
+  --multipletabs-transition-duration: 0.5s;
 }
