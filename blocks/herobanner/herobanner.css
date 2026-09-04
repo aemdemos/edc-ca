@@ -8,10 +8,23 @@ main > .section.herobanner-container > div.herobanner-wrapper {
 .herobanner {
   position: relative;
   overflow: hidden;
+  min-height: var(--herobanner-min-height);
 }
 
-.herobanner > div:first-child {
-  clip-path: var(--herobanner-clip-mobile);
+.herobanner > div:first-child > div {
+  position: relative;
+}
+
+.herobanner > div:first-child > div::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  bottom: -1px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 0 var(--herobanner-cut-size) 103vw;
+  border-color: transparent transparent var(--herobanner-gradient-end) transparent;
 }
 
 .herobanner picture,
@@ -35,6 +48,7 @@ main > .section.herobanner-container > div.herobanner-wrapper {
   z-index: 1;
   padding: var(--herobanner-content-padding);
   text-align: center;
+  padding-bottom: 2.5rem;
 }
 
 .herobanner h1 {
@@ -50,6 +64,10 @@ main > .section.herobanner-container > div.herobanner-wrapper {
 
 .herobanner .button-wrapper {
   margin: var(--spacing-s) 0 0;
+}
+
+.herobanner .button {
+  font-size: var(--herobanner-button-font-size);
 }
 
 .herobanner.chevrons > div:last-child::before {
@@ -70,7 +88,6 @@ main > .section.herobanner-container > div.herobanner-wrapper {
     display: flex;
     flex-direction: row-reverse;
     align-items: stretch;
-    min-height: var(--herobanner-min-height-desktop);
   }
 
   .herobanner > div:first-child,
@@ -78,12 +95,8 @@ main > .section.herobanner-container > div.herobanner-wrapper {
     width: 50%;
   }
 
-  .herobanner > div:first-child {
-    position: relative;
-    z-index: 2;
-    clip-path: var(--herobanner-clip-desktop);
-    width: calc(50% + var(--herobanner-media-bleed-desktop));
-    margin-inline-start: calc(-1 * var(--herobanner-media-bleed-desktop));
+  .herobanner > div:first-child > div::after {
+    display: none;
   }
 
   .herobanner > div:first-child > div,
@@ -102,41 +115,19 @@ main > .section.herobanner-container > div.herobanner-wrapper {
     background: linear-gradient(to right, var(--herobanner-gradient-start) 0%, var(--herobanner-gradient-end) 100%);
   }
 
+  .herobanner > div:last-child::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: calc(-1 * var(--herobanner-cut-size));
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 100vw var(--herobanner-cut-size) 0 0;
+    border-color: var(--herobanner-gradient-end) transparent transparent transparent;
+  }
+
   .herobanner > div:last-child > div {
     text-align: left;
-    padding: var(--herobanner-content-padding-desktop);
-  }
-
-  .herobanner h1 {
-    font-size: var(--herobanner-title-font-size-tablet);
-  }
-
-  .herobanner.chevrons > div:last-child::before {
-    width: var(--herobanner-icon-size-tablet);
-    height: var(--herobanner-icon-size-tablet);
-    left: var(--herobanner-icon-offset-tablet);
-    background-color: var(--herobanner-icon-color-tablet);
-  }
-}
-
-@media (width >= 992px) {
-  .herobanner h1 {
-    font-size: var(--herobanner-title-font-size-desktop);
-  }
-
-  .herobanner p {
-    font-size: var(--herobanner-text-font-size-desktop);
-  }
-
-  .herobanner.chevrons > div:last-child::before {
-    width: var(--herobanner-icon-size-desktop);
-    height: var(--herobanner-icon-size-desktop);
-    left: var(--herobanner-icon-offset-desktop);
-  }
-}
-
-@media (width >= 1200px) {
-  .herobanner.chevrons > div:last-child::before {
-    left: var(--herobanner-icon-offset-wide);
   }
 }
