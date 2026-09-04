@@ -26,10 +26,10 @@
           "label": "Icon",
           "value": "",
           "valueType": "string",
-          "description": "Arrow icons are shown by default. Choose 'None' to hide them.",
+          "description": "No icon by default. Choose 'Arrow' to show a right-arrow before each link.",
           "options": [
-            { "name": "Arrow (default)", "value": "" },
-            { "name": "None", "value": "no-icon" }
+            { "name": "None (default)", "value": "" },
+            { "name": "Arrow", "value": "arrow" }
           ]
         }
       ]
