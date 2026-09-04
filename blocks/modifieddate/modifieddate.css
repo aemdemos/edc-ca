@@ -20,11 +20,19 @@ main .section.modifieddate-container:has(> .modifieddate-wrapper > .modifieddate
   display: none;
 }
 
-/* Values taken from the source .c-date-modified__date (12px / #3d3d3d / 0.5px tracking). */
+/* Values taken from the source .c-date-modified__date: mobile 0.75rem / 0.0313rem tracking. */
 main .modifieddate .c-date-modified-date {
   font-size: 0.75rem;
   font-weight: 400;
   line-height: 1.5rem;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.0313rem;
   color: #3d3d3d;
+}
+
+/* Source bumps the date to 0.875rem / 0.025rem tracking on desktop (min-width 992px). */
+@media (width >= 992px) {
+  main .modifieddate .c-date-modified-date {
+    font-size: 0.875rem;
+    letter-spacing: 0.025rem;
+  }
 }
