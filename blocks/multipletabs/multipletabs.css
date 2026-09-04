@@ -78,12 +78,14 @@
 
 .multipletabs .tabs-panel ul li {
   margin: 0.875rem 0;
-  padding-left: 1.0rem;
+  padding-left: 0.3rem;
+  list-style: none !important; /* override browser ::marker */
+  position: relative;
 }
 
 .multipletabs .tabs-panel ul li::before {
     content: "•";
-    left: 5px;
+    left: -2rem;
     position: absolute;
     top: 0;
 }
