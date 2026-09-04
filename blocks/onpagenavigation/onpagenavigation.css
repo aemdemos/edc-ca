@@ -1,0 +1,91 @@
+.onpagenavigation {
+  margin-bottom: var(--spacing-xl);
+  box-sizing: border-box;
+}
+
+.onpagenavigation * {
+  box-sizing: border-box;
+}
+
+.onpagenavigation .intro-text {
+  margin: var(--spacing-xl) 0 0;
+  color: var(--text-color);
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-m);
+  font-weight: 400;
+  line-height: 1.6842;
+}
+
+.onpagenavigation .links-list {
+  margin: var(--spacing-m) 0 0;
+  padding-left: 40px;
+  list-style: none;
+}
+
+.onpagenavigation .links-list li {
+  margin: 0;
+  padding-left: 0;
+}
+
+/* CSS arrow marker (chevron), shown by default. Reproduces the source's
+   icon-font glyph + hover-slide with no added font/image asset. */
+.onpagenavigation .links-list li::before {
+  content: '';
+  display: inline-block;
+  width: 0.4em;
+  height: 0.4em;
+  margin-left: -40px;
+  margin-right: 25px;
+  border-top: 2px solid var(--link-hover-color);
+  border-right: 2px solid var(--link-hover-color);
+  transform: rotate(45deg) translateY(0.15em);
+  transition: margin 0.5s cubic-bezier(0.65, 0.05, 0.36, 1);
+}
+
+.onpagenavigation .links-list li:hover::before {
+  margin-left: -30px;
+  margin-right: 15px;
+}
+
+.onpagenavigation .links-list li a {
+  font-family: var(--body-font-family);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.onpagenavigation .links-list li a:hover {
+  text-decoration: underline;
+}
+
+/* no-icon variant: remove the arrow marker entirely. */
+.onpagenavigation .links-list.no-list-icon li::before {
+  content: none;
+}
+
+.onpagenavigation .links-list.no-list-icon li {
+  padding-left: 0;
+}
+
+.onpagenavigation .links-list.no-list-icon {
+  padding-left: 0;
+  list-style: disc;
+}
+
+/* Tablet+ */
+@media (width >= 768px) {
+  .onpagenavigation .intro-text {
+    font-size: var(--body-font-size-l);
+  }
+}
+
+/* Desktop+ */
+@media (width >= 992px) {
+  .onpagenavigation {
+    margin-bottom: var(--spacing-xl);
+  }
+
+  .onpagenavigation .intro-text {
+    font-size: var(--body-font-size-l);
+    line-height: 1.6;
+  }
+}
