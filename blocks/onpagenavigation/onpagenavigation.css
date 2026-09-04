@@ -1,6 +1,13 @@
 .onpagenavigation {
   margin-bottom: var(--spacing-xl);
   box-sizing: border-box;
+
+  /* Source's own component padding, present at every breakpoint (widened to
+     8.3333% at tablet, back to a fixed 15px at desktop - see below). Without
+     it, the arrow's -40px overhang has nowhere near enough gutter on mobile
+     and renders off the left edge of the viewport. */
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 .onpagenavigation * {
@@ -24,7 +31,15 @@
 
 .onpagenavigation .links-list li {
   margin: 0;
-  padding-left: 0;
+
+  /* This 0.625rem left padding isn't arrow-specific styling - it's a generic
+     article-body list rule (`ul li` / `ol li`) that wins the cascade here
+     over a more-classed but less-element-specific on-page-navigation-only
+     selector (3 type selectors beats 2 extra classes). Confirmed against the
+     live source's actual computed style, not just its declared rules -
+     dropping it (as the previous version did) shifts the link text, and
+     visibly more so the hanging arrow before it, ~10px too far left. */
+  padding: 0.25rem 0 0.25rem 0.625rem;
 }
 
 .onpagenavigation .links-list li a {
@@ -34,30 +49,52 @@
   text-decoration: none;
 }
 
+/* Source has no hover effect at all on these links (color and decoration
+   stay put); only clicking one - which moves focus to it - changes its
+   colour, via a site-wide `a:focus { color: revert }` reset that falls
+   through to the browser's default (unstyled) link colour once focus lands
+   on it. That default is only reliably blue (rgb(0, 0, 238)) for links the
+   browser hasn't already recorded as visited - `revert` on a genuinely
+   visited link falls through to the UA's default *visited* colour instead
+   (purple), which is history-dependent and not what we want here, so the
+   colour is hardcoded rather than reverted, covering both states. */
 .onpagenavigation .links-list li a:hover {
-  text-decoration: underline;
+  color: var(--link-color);
+  text-decoration: none;
 }
 
-/* Arrow variant: a thin right-arrow (→) before each link, matching the source
-   icon-font glyph. Rendered as a masked SVG so it inherits the link colour and
-   needs no committed asset. The arrow slides on hover, like the source. */
+.onpagenavigation .links-list li a:focus,
+.onpagenavigation .links-list li a:visited:focus {
+  color: #00e;
+}
+
+/* Arrow variant: the source's icon-font glyph ("Carousel-Right", U+E916),
+   reproduced from its exact vector path so it renders at the same size and
+   proportions. Rendered as a masked SVG so it inherits the link colour and
+   needs no committed asset/font file. The arrow slides on hover, like the
+   source (which resolves, after cascade, to a plain 0.5s margin transition). */
 .onpagenavigation.arrow .links-list,
 .onpagenavigation.arrows .links-list {
-  padding-left: 40px;
+  /* Source's list padding-left is a generic 0.8125rem applied to any ul/ol in
+     the article body (not arrow-specific). The arrow's ::before margin-left
+     (-40px) + width (15px) + margin-right (25px) always sums to zero, so the
+     link text lands back at this padding edge regardless of its value - only
+     how far the arrow overhangs to the left of it changes. Matching the real
+     0.8125rem keeps the text close to the intro line above, like source. */
+  padding-left: 0.8125rem;
 }
 
 .onpagenavigation.arrow .links-list li::before,
 .onpagenavigation.arrows .links-list li::before {
   content: '';
   display: inline-block;
-  width: 20px;
+  width: 15px;
   height: 15px;
   margin-left: -40px;
   margin-right: 25px;
-  vertical-align: middle;
   background-color: var(--link-hover-color);
-  mask: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 18"%3E%3Cpath fill="none" stroke="%23000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M1 9h21M15 2l7 7-7 7"/%3E%3C/svg%3E') no-repeat center / contain;
-  transition: margin 0.5s cubic-bezier(0.65, 0.05, 0.36, 1);
+  mask: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"%3E%3Cpath transform="matrix(1 0 0 -1 0 960)" d="M866.133 467.2c0 2.133-2.133 2.133-2.133 2.133l-243.2 243.2c-8.533 8.533-21.333 8.533-29.867 0v0 0c-8.533-8.533-8.533-21.333 0-29.867v0l211.2-211.2h-631.467c-12.8 0-21.333-8.533-21.333-21.333s8.533-21.333 21.333-21.333h633.6l-213.333-213.333c-8.533-8.533-8.533-21.333 0-29.867s21.333-8.533 29.867 0l241.067 241.067c2.133 2.133 4.267 4.267 4.267 8.533 4.267 4.267 6.4 8.533 6.4 14.933 2.133 8.533-2.133 14.933-6.4 17.067z"/%3E%3C/svg%3E') no-repeat center / contain;
+  transition: margin 0.5s;
 }
 
 .onpagenavigation.arrow .links-list li:hover::before,
@@ -68,6 +105,11 @@
 
 /* Tablet+ */
 @media (width >= 768px) {
+  .onpagenavigation {
+    padding-left: 8.3333%;
+    padding-right: 8.3333%;
+  }
+
   .onpagenavigation .intro-text {
     font-size: var(--body-font-size-l);
   }
@@ -75,6 +117,24 @@
 
 /* Desktop+ */
 @media (width >= 992px) {
+  .onpagenavigation {
+    /* Source shifts/narrows the nav via two stacked layers relative to its
+       full article container (A): the article-body column gets
+       padding-left: calc(33.3333% + 15px) of its own 75%-of-A width, then
+       on-page-navigation is width: 66.6667%; margin-left: 8.3333% of that
+       already-narrowed column. Reduced algebraically to single values
+       relative to A, since our wrapper (with no reserved sidebar column)
+       plays the role of A directly: margin-left = 0.3333*0.75*A + 15 +
+       0.08333*(0.5A - 30) = 0.29167A + 12.5; width = 0.6667*(0.5A - 30) =
+       0.3333A - 20. Verified against the live source's computed styles at a
+       1440px viewport (measured margin-left 362.5px / width 380px against a
+       1200px container = exact match). */
+    width: calc(33.3333% - 20px);
+    margin-left: calc(29.1667% + 12.5px);
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
   .onpagenavigation .intro-text {
     font-size: var(--body-font-size-l);
     line-height: 1.6;
