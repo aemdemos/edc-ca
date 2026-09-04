@@ -272,6 +272,54 @@
           }
         },
         {
+          "title": "Hero Banner",
+          "id": "herobanner",
+          "model": "herobanner",
+          "plugins": {
+            "da": {
+              "unsafeHTML": "<div class=\"herobanner\"><div><div><picture><source type=\"image/webp\" srcset=\"\"><source type=\"image/jpeg\" srcset=\"\"><img loading=\"lazy\"></picture></div></div><div><div><h1></h1><p></p></div></div></div>",
+              "rows": 2,
+              "columns": 1,
+              "fields": [
+                {
+                  "name": "image",
+                  "selector": "div:nth-child(1)>div>picture>img[src]"
+                },
+                {
+                  "name": "imageAlt",
+                  "selector": "div:nth-child(1)>div>picture>img[alt]"
+                },
+                {
+                  "name": "text",
+                  "selector": "div:nth-child(2)>div"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "title": "Overview Text",
+          "id": "overviewtext",
+          "model": "overviewtext",
+          "plugins": {
+            "da": {
+              "unsafeHTML": "<div class=\"overviewtext\"><div><div></div></div><div><div></div></div></div>",
+              "rows": 2,
+              "columns": 1,
+              "fields": [
+                {
+                  "name": "title",
+                  "selector": "div:nth-child(1)>div"
+                },
+                {
+                  "name": "text",
+                  "selector": "div:nth-child(2)>div"
+                }
+              ]
+            }
+          }
+        },
+        {
           "title": "Page Level Feedback",
           "id": "pagelevelfeedback",
           "model": "pagelevelfeedback",

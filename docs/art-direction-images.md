@@ -41,7 +41,7 @@ In the section's metadata table, add a `Background Image` field and place 2–3 
 
 ### 1.6 Where this is available
 
-- **Image cells** (largest → smallest in one cell): `hero`, `columns`, `tabs` (per tab panel), `accordion` (per item body), `carousel` (per slide's image column).
+- **Image cells** (largest → smallest in one cell): `hero`, `herobanner`, `columns`, `tabs` (per tab panel), `accordion` (per item body), `carousel` (per slide's image column).
 - **Section backgrounds**: any section, via the metadata fields in [1.5](#15-section-backgrounds).
 
 ---
