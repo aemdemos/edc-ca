@@ -47,12 +47,12 @@ export function moveInstrumentation(from, to) {
 /**
  * Shows one tab panel and syncs tab buttons without calling click() (avoids focus-driven scroll-to-top in UE preview).
  * Keeps the tabs block in view similarly to carousel slide activation.
- * @param {Element} blockEl - Root .tabs block
+ * @param {Element} blockEl - Root .tabs or .multipletabs block
  * @param {Element} panelEl - .tabs-panel[role="tabpanel"] owned by blockEl
  */
 export function activateTabPanel(blockEl, panelEl) {
   if (
-    !blockEl?.matches?.('.tabs')
+    !blockEl?.matches?.('.tabs, .multipletabs')
     || !panelEl?.matches?.('.tabs-panel')
     || !blockEl.contains(panelEl)
   ) {

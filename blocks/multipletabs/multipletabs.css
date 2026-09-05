@@ -1,0 +1,126 @@
+@import url('./multipletabs-tokens.css');
+
+.multipletabs {
+  display: flex;
+  flex-direction: column;
+  gap: var(--multipletabs-gap);
+  padding: 4rem 1rem;
+}
+
+.multipletabs-text {
+  flex: none;
+}
+
+.multipletabs-text h2 {
+  text-align: left;
+  margin: 0 auto 16px;
+}
+
+.multipletabs-group {
+  flex: 1;
+  min-width: 0;
+}
+
+.multipletabs .tabs-list {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5ch;
+  max-width: 100%;
+  font-size: var(--body-font-size-xs);
+  overflow-x: auto;
+  border-bottom: 2px solid var(--multipletabs-border-bottom-color);
+}
+
+.multipletabs .tabs-list button {
+  flex: 0 0 max-content;
+  margin: 0;
+  background-color: var(--background-color);
+  border: none;
+  border-radius: 0;
+  padding: 23px 18px;
+  color: var(--multipletabs-button-color);
+  font-weight: bold;
+  line-height: unset;
+  text-align: initial;
+  text-overflow: unset;
+  overflow: unset;
+  white-space: unset;
+}
+
+.multipletabs .tabs-list button p {
+  margin: 0;
+}
+
+.multipletabs .tabs-list button[aria-selected='true'] {
+  border-bottom: var(--multipletabs-border-width) solid var(--multipletabs-border-bottom-selected-color);
+  cursor: initial;
+  color: var(--multipletabs-button-selected-color);
+  padding-bottom: 19px;
+  transition: border-bottom-color var(--multipletabs-transition-duration),
+    border-width var(--multipletabs-transition-duration),
+    padding-bottom var(--multipletabs-transition-duration);
+}
+
+.multipletabs .tabs-panel {
+  margin-top: 1rem;
+  overflow: auto;
+  font-size: var(--body-font-size-s);
+  color: var(--multipletabs-panel-text-color);
+}
+
+.multipletabs .tabs-panel[aria-hidden='true'] {
+  display: none;
+}
+
+.multipletabs .tabs-panel ul {
+  margin-top: 1rem;
+}
+
+.multipletabs .tabs-panel ul li {
+  margin: 0.875rem 0;
+  padding-left: 0.3rem;
+  list-style: none !important; /* override browser ::marker */
+  position: relative;
+}
+
+.multipletabs .tabs-panel ul li::before {
+    content: "•";
+    left: -2rem;
+    position: absolute;
+    top: 0;
+}
+
+@media (width >= 576px) {
+  .multipletabs .tabs-list {
+    font-size: var(--body-font-size-s);
+  }
+}
+
+@media (width >= 767px) {
+  .multipletabs-text h2 {
+    text-align: center;
+  }
+}
+
+@media (width >= 992px) {
+  .multipletabs {
+    flex-direction: row;
+  }
+
+  .multipletabs-group {
+    margin-left: 16.66%;
+  }
+
+  .multipletabs-text {
+    flex: 1;
+  }
+
+  .multipletabs-text h2 {
+    text-align: left;
+    margin: 2rem 0;
+  }
+
+  .multipletabs .tabs-list {
+    font-size: var(--body-font-size-m);
+  }
+}

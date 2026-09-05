@@ -1,0 +1,14 @@
+/* multipletabs design tokens */
+:root {
+  --multipletabs-gap: var(--spacing-m);
+  --multipletabs-text-col-width: 14rem;
+  --multipletabs-panel-padding: var(--spacing-m);
+  --multipletabs-border-width: 2px;
+  --multipletabs-button-color: rgb(115 115 115);
+  --multipletabs-button-selected-color: rgb(26 101 178);
+  --multipletabs-border-color: var(--border-color);
+  --multipletabs-panel-text-color: rgb(61 61 61);
+  --multipletabs-border-bottom-color: rgb(202 202 202);
+  --multipletabs-border-bottom-selected-color: rgb(26 101 178);
+  --multipletabs-transition-duration: 0.5s;
+}

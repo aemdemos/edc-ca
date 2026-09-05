@@ -72,6 +72,13 @@
     ]
   },
   {
+    "id": "multipletabs",
+    "components": [
+      "multipletabs-text",
+      "multipletabs-item"
+    ]
+  },
+  {
     "id": "table",
     "rte": {
       "toolbar": {
