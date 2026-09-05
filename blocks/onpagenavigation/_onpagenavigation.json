@@ -1,0 +1,39 @@
+{
+  "definitions": [
+    {
+      "title": "On-Page Navigation",
+      "id": "onpagenavigation",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "On-Page Navigation",
+              "model": "onpagenavigation"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "onpagenavigation",
+      "fields": [
+        {
+          "component": "select",
+          "name": "classes",
+          "label": "Icon",
+          "value": "",
+          "valueType": "string",
+          "description": "No icon by default. Choose 'Arrow' to show a right-arrow before each link.",
+          "options": [
+            { "name": "None (default)", "value": "" },
+            { "name": "Arrow", "value": "arrow" }
+          ]
+        }
+      ]
+    }
+  ],
+  "filters": []
+}

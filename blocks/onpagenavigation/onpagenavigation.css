@@ -1,0 +1,106 @@
+.onpagenavigation {
+  margin-bottom: var(--spacing-xl);
+  box-sizing: border-box;
+
+  /* Gutter for the arrow's -40px overhang (widens at tablet, resets at desktop). */
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.onpagenavigation * {
+  box-sizing: border-box;
+}
+
+.onpagenavigation .intro-text {
+  margin: var(--spacing-xl) 0 0;
+  color: var(--text-color);
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-m);
+  font-weight: 400;
+  line-height: 1.6842;
+}
+
+.onpagenavigation .links-list {
+  margin: var(--spacing-m) 0 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+.onpagenavigation .links-list li {
+  margin: 0;
+
+  /* Matches source's generic article-body list padding. */
+  padding: 0.25rem 0 0.25rem 0.625rem;
+}
+
+.onpagenavigation .links-list li a {
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-s);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* No hover change (matches source); focused links go blue. */
+.onpagenavigation .links-list li a:hover {
+  color: var(--link-color);
+  text-decoration: none;
+}
+
+.onpagenavigation .links-list li a:focus,
+.onpagenavigation .links-list li a:visited:focus {
+  color: #00e;
+}
+
+/* Arrow variant: source glyph (U+E916) as a masked SVG so it inherits the
+   link colour and needs no asset; slides on hover. */
+.onpagenavigation.arrow .links-list,
+.onpagenavigation.arrows .links-list {
+  padding-left: 0.8125rem;
+}
+
+.onpagenavigation.arrow .links-list li::before,
+.onpagenavigation.arrows .links-list li::before {
+  content: '';
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  margin-left: -40px;
+  margin-right: 25px;
+  background-color: var(--link-hover-color);
+  mask: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"%3E%3Cpath transform="matrix(1 0 0 -1 0 960)" d="M866.133 467.2c0 2.133-2.133 2.133-2.133 2.133l-243.2 243.2c-8.533 8.533-21.333 8.533-29.867 0v0 0c-8.533-8.533-8.533-21.333 0-29.867v0l211.2-211.2h-631.467c-12.8 0-21.333-8.533-21.333-21.333s8.533-21.333 21.333-21.333h633.6l-213.333-213.333c-8.533-8.533-8.533-21.333 0-29.867s21.333-8.533 29.867 0l241.067 241.067c2.133 2.133 4.267 4.267 4.267 8.533 4.267 4.267 6.4 8.533 6.4 14.933 2.133 8.533-2.133 14.933-6.4 17.067z"/%3E%3C/svg%3E') no-repeat center / contain;
+  transition: margin 0.5s;
+}
+
+.onpagenavigation.arrow .links-list li:hover::before,
+.onpagenavigation.arrows .links-list li:hover::before {
+  margin-left: -30px;
+  margin-right: 15px;
+}
+
+/* Tablet+ */
+@media (width >= 768px) {
+  .onpagenavigation {
+    padding-left: 8.3333%;
+    padding-right: 8.3333%;
+  }
+
+  .onpagenavigation .intro-text {
+    font-size: var(--body-font-size-l);
+  }
+}
+
+/* Desktop+ */
+@media (width >= 992px) {
+  .onpagenavigation {
+    /* Narrowed/indented to match source's nav column width and offset. */
+    width: calc(33.3333% - 20px);
+    margin-left: calc(29.1667% + 12.5px);
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .onpagenavigation .intro-text {
+    font-size: var(--body-font-size-l);
+    line-height: 1.6;
+  }
+}
