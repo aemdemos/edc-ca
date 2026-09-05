@@ -540,9 +540,24 @@ async function loadSidekick() {
   });
 }
 
+// Blocks can assign ids after decoration (e.g. an anchor field), so retry the browser's
+// one-shot native scroll-to-#fragment once all sections have decorated.
+function scrollToHashTarget() {
+  const { hash } = window.location;
+  if (!hash) return;
+  let target;
+  try {
+    target = document.getElementById(decodeURIComponent(hash.slice(1)));
+  } catch {
+    target = null;
+  }
+  if (target) target.scrollIntoView();
+}
+
 export async function loadPage() {
   await loadEager(document);
   await loadLazy(document);
+  scrollToHashTarget();
   loadDelayed();
   loadSidekick();
 }
