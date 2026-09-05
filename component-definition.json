@@ -352,35 +352,9 @@
           "model": "section-title",
           "plugins": {
             "da": {
-              "unsafeHTML": "<div class=\"section-title\"><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div></div>",
-              "rows": 6,
-              "columns": 1,
-              "fields": [
-                {
-                  "name": "title",
-                  "selector": "div:nth-child(1)>div"
-                },
-                {
-                  "name": "titleType",
-                  "selector": "div:nth-child(2)>div"
-                },
-                {
-                  "name": "title-size",
-                  "selector": "div:nth-child(3)>div"
-                },
-                {
-                  "name": "alignment",
-                  "selector": "div:nth-child(4)>div"
-                },
-                {
-                  "name": "classes",
-                  "selector": "div:nth-child(5)>div"
-                },
-                {
-                  "name": "anchor-id",
-                  "selector": "div:nth-child(6)>div"
-                }
-              ]
+              "unsafeHTML": "<div class=\"section-title\"><div><div>Title</div><div></div></div></div>",
+              "rows": 1,
+              "columns": 2
             }
           }
         },
